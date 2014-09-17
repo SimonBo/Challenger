@@ -1,6 +1,15 @@
 class ChallengesController < ApplicationController
-  before_action :set_challenge, only: [:show, :edit, :update, :destroy]
+  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :accept_challenge]
   respond_to :js
+
+  def accept_challenge
+    if current_user.accepted_challenges.include?(@challenge)
+      redirect_to :root, warning: "You already accepted this challenge" 
+    else
+      current_user.accepted_challenges << @challenge
+      redirect_to :root, notice: "You accepted #{@challenge.name}"
+    end 
+  end
 
   # GET /challenges
   # GET /challenges.json
