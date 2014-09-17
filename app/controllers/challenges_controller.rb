@@ -30,10 +30,10 @@ class ChallengesController < ApplicationController
     respond_to do |format|
       if @challenge.save
         format.html { redirect_to @challenge, notice: 'Challenge was successfully created.' }
-        format.js
+        format.js {render :create}
       else
         format.html { render :new }
-        format.js
+        format.js { flash[:notice] = 'Fail!'}
       end
     end
   end
