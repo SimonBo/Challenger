@@ -1,0 +1,9 @@
+- if user_signed_in?
+  = current_user.username
+  = link_to 'Edit account', edit_user_registration_path
+  = link_to 'Sign out', destroy_user_session_path, :method=>'delete'
+- else
+  = link_to new_user_session_path do
+    %button.btn.btn-sm.btn-default Sign in
+  = link_to new_user_registration_path do
+    %button.btn.btn-sm.btn-default Sign up

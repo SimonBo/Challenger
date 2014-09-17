@@ -1,5 +1,6 @@
 <% if @challenge.errors.messages.blank? %>
 	$('#challenges').append("<%= j(render @challenge) %>");
+	$('#errors').html("<h3>Created new challenge - <%= j(@challenge.name) %></h3>");
 <% else %>
 	$('#errors').html("<%= j(render 'errors') %>");
 <% end %>
