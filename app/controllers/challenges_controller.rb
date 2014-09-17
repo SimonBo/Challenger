@@ -1,5 +1,6 @@
 class ChallengesController < ApplicationController
   before_action :set_challenge, only: [:show, :edit, :update, :destroy]
+  respond_to :js
 
   # GET /challenges
   # GET /challenges.json
@@ -29,10 +30,10 @@ class ChallengesController < ApplicationController
     respond_to do |format|
       if @challenge.save
         format.html { redirect_to @challenge, notice: 'Challenge was successfully created.' }
-        format.json { render :show, status: :created, location: @challenge }
+        format.js
       else
         format.html { render :new }
-        format.json { render json: @challenge.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

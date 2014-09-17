@@ -1,23 +1,7 @@
 %h1 Listing challenges
 
-%table
-  %tr
-    %th User
-    %th Name
-    %th Description
-    %th
-    %th
-    %th
-
-  - @challenges.each do |challenge|
-    %tr
-      %td= challenge.user
-      %td= challenge.name
-      %td= challenge.description
-      %td= link_to 'Show', challenge
-      %td= link_to 'Edit', edit_challenge_path(challenge)
-      %td= link_to 'Destroy', challenge, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
+#challenges
+  = render @challenges
 %br
-
-= link_to 'New Challenge', new_challenge_path
+#new-challenge-form
+= link_to 'New Challenge', new_challenge_path, remote: true
