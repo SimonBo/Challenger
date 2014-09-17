@@ -1,5 +1,5 @@
 class ChallengesController < ApplicationController
-  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :accept_challenge]
+  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :accept_challenge, :challenge_others]
   respond_to :js
 
   def accept_challenge
@@ -11,6 +11,8 @@ class ChallengesController < ApplicationController
     end 
   end
 
+  def challenge_others
+  end
   # GET /challenges
   # GET /challenges.json
   def index

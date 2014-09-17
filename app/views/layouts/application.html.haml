@@ -7,9 +7,11 @@
 	= csrf_meta_tags
 	%body
 		.nav
-			= render "layouts/user"
+			
 		.container
 			.row
-				.col-sm-10
+				.col-sm-8
 					= render 'layouts/messages'
 					= yield
+				.col-sm-4
+					= render "layouts/user"

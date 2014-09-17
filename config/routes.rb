@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :challenges do
     member do
       get 'accept_challenge'
+      get 'challenge_others'
     end
   end
 

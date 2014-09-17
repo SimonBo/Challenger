@@ -2,8 +2,11 @@
   = current_user.username
   = link_to 'Edit account', edit_user_registration_path
   = link_to 'Sign out', destroy_user_session_path, :method=>'delete'
+  %h3 Accepted Challenges:
   - current_user.accepted_challenges.each do |challenge|
     = challenge.name
+    %br
+  %h3 People you have challenged:
 - else
   = link_to new_user_session_path do
     %button.btn.btn-sm.btn-default Sign in
