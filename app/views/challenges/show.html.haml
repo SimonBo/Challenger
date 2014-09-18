@@ -3,8 +3,7 @@
 %p
   %b Accepted by:
   - @challenge.dares.each do |i|
-    - User.where(id: i.acceptor_id).each do|user|
-      = user.username
+    = i.acceptor.username
 %p
   %b Name:
   = @challenge.name

@@ -4,7 +4,8 @@
   = link_to 'Sign out', destroy_user_session_path, :method=>'delete'
   %h3 Accepted Challenges:
   - current_user.dares.each do |i|
-    = link_to i.challenge.name, i.challenge
+    %p= link_to i.challenge.name, i.challenge
+
   %h3 People you have challenged:
 - else
   = link_to new_user_session_path do

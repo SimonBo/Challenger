@@ -4,4 +4,4 @@
 %p 
   Description: #{challenge.description}
 = link_to 'Accept', accept_challenge_challenge_path(challenge)
-= link_to 'Challenge others', challenge_others_challenge_path(challenge), remote: true
+= link_to 'Challenge others', select_user_challenge_path(challenge)
