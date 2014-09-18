@@ -10,4 +10,8 @@ class User < ActiveRecord::Base
   # has_and_belongs_to_many :accepted_challenges, :class_name => "Challenge"
   has_many :dares, foreign_key: :acceptor_id
   has_many :challenges, through: :dares
+
+  def to_s
+    "#{username}"
+  end
 end
