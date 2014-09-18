@@ -1,0 +1,35 @@
+As a user when i visit the site I’m presented with…
+	a short intro on challenges
+	a list of 
+		challenges #
+		most popular challenges
+		most active users
+	a link to:
+		create my own challenge #
+		challenge other users 
+		accept a challenge #
+		my profile
+
+My profile
+	list of
+		accepted challenges that are still active
+		successes
+		failures
+		other users i have challenged
+		challenges other users sent me
+		rewards
+
+
+
+Models:
+	User -> 
+		has_many :challenges
+		hbtm :accepted_challenges
+		has_many :challenged_users
+		has_many :owned_challenges
+		has_many :my_pending_challenges
+		has_many :others_pending_challenges
+
+	challenge ->
+		hbtm :challenged_users
+
