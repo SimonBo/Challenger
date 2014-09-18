@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     member do
       get 'accept_challenge'
       get 'challenge_others'
+      get 'challenge_user'
     end
   end
 
