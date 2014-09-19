@@ -1,7 +1,12 @@
+= form_tag challenges_path, method: :get do 
+	%p
+		= text_field_tag :query, params[:query]
+		= submit_tag "Search", name: nil
+
 %h1 Listing challenges
 
 #challenges
-  = render @challenges
+	= render @challenges
 %br
 #errors
 #new-challenge-form

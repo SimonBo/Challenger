@@ -27,7 +27,7 @@ class ChallengesController < ApplicationController
   # GET /challenges
   # GET /challenges.json
   def index
-    @challenges = Challenge.all
+    @challenges = Challenge.text_search(params[:query])
   end
 
   # GET /challenges/1
