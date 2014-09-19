@@ -6,7 +6,7 @@ class ChallengesController < ApplicationController
     if current_user.dares.map{ |e| e.challenge_id  }.include?(@challenge.id)
       redirect_to :root, alert: "You already accepted this challenge" 
     else
-      Dare.create(acceptor_id: current_user.id, challenge_id: @challenge.id, status: "Accepted")
+      Dare.create(acceptor_id: current_user.id, challenge_id: @challenge.id, challenger_id: current_user.id, status: "Accepted")
       redirect_to :root, notice: "You accepted #{@challenge.name}"
     end 
   end

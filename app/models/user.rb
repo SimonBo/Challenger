@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :dares, foreign_key: :acceptor_id
+  has_many :dares, foreign_key: :challenger_id
+  has_many :accepted_dares, class_name: "Dare", foreign_key: :acceptor_id
   has_many :challenges, through: :dares
 
  
