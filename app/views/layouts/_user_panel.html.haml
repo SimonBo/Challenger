@@ -5,13 +5,19 @@
 
   %h3 Accepted Challenges:
   - current_user.accepted_dares.each do |i|
-    %p= link_to i.challenge.name, i.challenge
+    %p
+      = link_to i.challenge.name, i.challenge
+      finishes
+      %time{"data-livestamp" => (i.created_at + 7.days).to_i}
 
-  %h3 People you have challenged:
+  %h3 You have challenged:
   - @challenged.each do |i|
     %p
-      = link_to i.acceptor.username 
-      \- #{link_to i.challenge.name, i.challenge}
+      = link_to i.acceptor.username
+      to 
+      = link_to "#{i.challenge.name},", i.challenge
+      finishes 
+      %time{"data-livestamp" => (i.created_at + 7.days).to_i}
 
   = link_to 'New Challenge', new_challenge_path
 

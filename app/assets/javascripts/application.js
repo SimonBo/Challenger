@@ -12,5 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require moment
+//= require livestamp
 //= require bootstrap-sprockets
 //= require_tree .
