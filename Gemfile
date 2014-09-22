@@ -9,6 +9,7 @@ group :development do
   gem 'binding_of_caller'
 end
 
+gem 'pg_search'
 gem 'devise'
 gem 'simple_form'
 gem 'pry'

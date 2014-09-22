@@ -1,14 +1,19 @@
 class Challenge < ActiveRecord::Base
   
   has_many :dares
-  has_many :users, through: :dares
+  has_many :users, through: :dares, source: :challenges
 
   validates :name, presence: true, uniqueness: true, length: { in: 2..50 }
   validates :description, presence: true, length: { in: 2..500 }
 
+  include PgSearch
+  pg_search_scope :search, against: [:name, :description],
+                  using: {tsearch: {prefix: true, dictionary: "english" }}
+
+
   def self.text_search(query)
     if query.present?
-      where("name @@ :q or description @@ :q", q: query)
+      search(query)
     else
       where(nil)
     end
