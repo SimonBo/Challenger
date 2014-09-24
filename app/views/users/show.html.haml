@@ -1,0 +1,21 @@
+%h2= @user.username
+%h3= @user.email
+
+%h4
+	= @user.username 
+	has accepted:
+	= pluralize @user.accepted_dares.count, 'challenge'
+
+- @user.accepted_dares.each do |dare|
+	%p
+		= link_to dare.challenge.name, dare.challenge
+
+
+%h4 
+	= @user.username 
+	has challenged:
+	= pluralize @challenged_users.count, 'user'
+
+- @challenged_users.each do |i|
+	%p
+		= link_to i.acceptor.username, i.acceptor

@@ -1,0 +1,7 @@
+- @challenged.each do |i|
+	%p
+		= link_to i.acceptor.username
+		to 
+		= link_to "#{i.challenge.name},", i.challenge
+		finishes 
+		%time{"data-livestamp" => (i.created_at + 7.days).to_i}
