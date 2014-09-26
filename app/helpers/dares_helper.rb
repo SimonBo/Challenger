@@ -1,0 +1,2 @@
+module DaresHelper
+end

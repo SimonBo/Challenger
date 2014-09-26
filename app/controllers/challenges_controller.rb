@@ -21,8 +21,6 @@ class ChallengesController < ApplicationController
     end
   end
 
-  def select_user 
-  end
 
   # GET /challenges
   # GET /challenges.json

@@ -1,8 +1,19 @@
-- current_user.my_pending_challenges.each do |n|
+- current_user.my_pending_challenges.each do |dare|
 	%p
 		You have been challenged by 
-		= link_to n.challenger.username, n.challenger
+		= link_to dare.challenger.username, dare.challenger
 		to accept
-		= link_to n.challenge.name, n.challenge
-	%button.btn.btn-primary.btn-sm{:type => "button"} Accept
-	%button.btn.btn-danger.btn-sm{:type => "button"} Reject
+		= link_to dare.challenge.name, dare.challenge
+	= form_for([dare.challenge, dare]) do |f|
+		- dare.status = "Accepted"
+		= f.hidden_field :status
+		= f.submit "Accept", class: "btn btn-primary"
+
+
+- current_user.challenges_ending_tomorrow.each do |c|
+	%p
+		Your time to finish
+		= c.challenge.name
+		is ending in
+		= c.finishing_in
+		days

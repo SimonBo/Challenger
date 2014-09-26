@@ -10,6 +10,7 @@ class Challenge < ActiveRecord::Base
   pg_search_scope :search, against: [:name, :description],
                   using: {tsearch: {prefix: true, dictionary: "english" }}
 
+  # after_save :create_dare
 
   def self.text_search(query)
     if query.present?
@@ -18,4 +19,11 @@ class Challenge < ActiveRecord::Base
       where(nil)
     end
   end
+
+  def create_dare
+    # if something
+      #Dare.create(acceptor_id: current_user.id, challenge_id: @challenge.id, challenger_id: current_user.id, status: "Accepted")
+    # end
+  end
+
 end

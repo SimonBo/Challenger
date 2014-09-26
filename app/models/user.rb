@@ -15,4 +15,8 @@ class User < ActiveRecord::Base
   def my_challenged_users
     self.dares.where.not(acceptor_id: self.id)
   end
+
+  def challenges_ending_tomorrow
+    self.accepted_dares.where(["created_at >= ?", 6.days.ago])
+  end
 end
