@@ -8,5 +8,11 @@ class User < ActiveRecord::Base
   has_many :accepted_dares, class_name: "Dare", foreign_key: :acceptor_id
   has_many :challenges, through: :dares
 
- 
+  def my_pending_challenges
+    self.accepted_dares.where("acceptor_id = ? AND status = ?", self.id, 'Pending')
+  end
+
+  def my_challenged_users
+    self.dares.where.not(acceptor_id: self.id)
+  end
 end

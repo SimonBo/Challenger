@@ -1,0 +1,8 @@
+- current_user.my_pending_challenges.each do |n|
+	%p
+		You have been challenged by 
+		= link_to n.challenger.username, n.challenger
+		to accept
+		= link_to n.challenge.name, n.challenge
+	%button.btn.btn-primary.btn-sm{:type => "button"} Accept
+	%button.btn.btn-danger.btn-sm{:type => "button"} Reject

@@ -1,0 +1,23 @@
+- if user_signed_in?
+  = render 'users/user_info'
+
+  %h3 Notifications:
+  = render 'users/user_notifications'
+
+
+  %h3 Accepted Challenges:
+  = render 'accepted_challenges'
+
+  %h3 You have challenged:
+  = render 'i_challenged'
+
+  = link_to 'New Challenge', new_challenge_path
+
+
+- else
+  = link_to new_user_session_path do
+    %button.btn.btn-sm.btn-default Sign in
+  = link_to new_user_registration_path do
+    %button.btn.btn-sm.btn-default Sign up
+
+ 

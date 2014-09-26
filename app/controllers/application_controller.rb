@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :users_challenged_by_me
 
   def users_challenged_by_me
-    @challenged = current_user.dares.where.not(acceptor_id: current_user.id)
+    if user_signed_in?  
+      @challenged = current_user.dares.where.not(acceptor_id: current_user.id)
+    end 
   end
 end

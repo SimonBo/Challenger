@@ -7,11 +7,11 @@
 	= csrf_meta_tags
 	%body
 		.nav
-			
+			= link_to 'Home', challenges_path
 		.container
 			.row
 				.col-sm-8
 					= render 'layouts/messages'
 					= yield
 				.col-sm-4
-					= render "layouts/user_panel"
+					= render "users/user_panel"
