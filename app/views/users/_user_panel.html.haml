@@ -11,7 +11,8 @@
   %h3 You have challenged:
   = render 'i_challenged'
 
-  = link_to 'New Challenge', new_challenge_path
+  = link_to new_challenge_path do
+    %button.btn.btn-lg.btn-info New Challenge
 
 
 - else

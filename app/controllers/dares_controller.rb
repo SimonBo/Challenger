@@ -13,7 +13,6 @@ class DaresController < ApplicationController
 
   def update
     @dare = Dare.find(params[:id])
-    binding.pry
     if @dare.update(dare_params)
       redirect_to root_path
     else

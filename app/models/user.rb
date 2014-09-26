@@ -19,4 +19,8 @@ class User < ActiveRecord::Base
   def challenges_ending_tomorrow
     self.accepted_dares.where(["created_at >= ?", 6.days.ago])
   end
+
+  def my_accepted_challenges
+    self.accepted_dares.where("status = ?", 'Accepted')
+  end
 end

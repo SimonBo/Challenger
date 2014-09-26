@@ -1,5 +1,9 @@
-- current_user.accepted_dares.each do |i|
+- current_user.my_accepted_challenges.each do |i|
 	%p
 		= link_to i.challenge.name, i.challenge
 		finishes
 		%time{"data-livestamp" => (i.created_at + 7.days).to_i}
+	= form_for([i.challenge, i]) do |f|
+		- i.status = "Finished"
+		= f.hidden_field :status
+		= f.submit "Finished", class: "btn btn-success btn-xs"
