@@ -1,15 +1,16 @@
 - if user_signed_in?
   = render 'users/user_info'
 
-  %h3 Notifications:
-  = render 'users/user_notifications'
+  #notifications  
+    %h3 Notifications:
+    = render 'users/user_notifications'
 
 
   %h3 Accepted Challenges:
-  = render 'accepted_challenges'
+  = render 'challenges/accepted_challenges'
 
   %h3 You have challenged:
-  = render 'i_challenged'
+  = render 'challenges/i_challenged'
 
   = link_to new_challenge_path do
     %button.btn.btn-lg.btn-info New Challenge
