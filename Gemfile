@@ -1,4 +1,8 @@
 source 'https://rubygems.org'
+
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+
+
 gem 'haml'
 gem 'haml-rails', :group => :development
 gem 'bootstrap-sass'
