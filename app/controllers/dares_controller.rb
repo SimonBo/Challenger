@@ -1,14 +1,15 @@
 class DaresController < ApplicationController
 
   def create
-    @user = User.find(params[:user])
     @challenge = Challenge.find(params[:challenge_id])
+    @user = params[:user] ? User.find(params[:user]) : current_user
+
     if @user.dares.map{ |e| e.challenge_id  }.include?(@challenge.id)
-      redirect_to :root, alert: "#{@user.username} already accepted this challenge" 
+      redirect_to :root, alert: "You already accepted this challenge" 
     else
-      Dare.create(acceptor_id: @user.id, challenger_id: current_user.id, challenge_id: @challenge.id)
-      redirect_to :root, notice: "You challenged #{@user.username} to #{@challenge.name}"
-    end
+      Dare.create(acceptor_id: @user.id, challenge_id: @challenge.id, challenger_id: @user.id, status: "Accepted")
+      redirect_to :root, notice: "#{@user.username} accepted #{@challenge.name}"
+    end 
   end
 
   def update
@@ -23,7 +24,7 @@ class DaresController < ApplicationController
   private
 
   def dare_params
-    params.require(:dare).permit(:status)
+    params.require(:dare).permit(:status, :acceptor_id, :challenger_id, :challenge_id)
   end
 
 end

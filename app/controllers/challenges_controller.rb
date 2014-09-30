@@ -2,25 +2,6 @@ class ChallengesController < ApplicationController
   before_action :set_challenge, except: [:index,:new]
   respond_to :js
 
-  def accept_challenge
-    if current_user.dares.map{ |e| e.challenge_id  }.include?(@challenge.id)
-      redirect_to :root, alert: "You already accepted this challenge" 
-    else
-      Dare.create(acceptor_id: current_user.id, challenge_id: @challenge.id, challenger_id: current_user.id, status: "Accepted")
-      redirect_to :root, notice: "You accepted #{@challenge.name}"
-    end 
-  end
-
-  def challenge_user
-    @user = User.find(params[:user])
-    if @user.dares.map{ |e| e.challenge_id  }.include?(@challenge.id)
-      redirect_to :root, alert: "#{@user.username} already accepted this challenge" 
-    else
-      Dare.create(acceptor_id: @user.id, challenger_id: current_user.id, challenge_id: @challenge.id, status: "Pending")
-      redirect_to :root, notice: "You challenged #{@user.username} to #{@challenge.name}"
-    end
-  end
-
 
   # GET /challenges
   # GET /challenges.json

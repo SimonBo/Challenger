@@ -1,14 +1,15 @@
 Rails.application.routes.draw do
   resources :challenges do
-    resources :dares, :only => [:update]
+    resources :dares, :only => [:update, :create]
     member do
-      get 'accept_challenge'
-      get 'challenge_user'
       get 'select_user'
     end
   end
 
   devise_for :users
+  # get "/challenges/:id/dares" => 'dares#create'
+
+
   get 'users/:id' => 'users#show', as: 'user'
   get 'notifications' => 'notifications#index'
 
