@@ -37,3 +37,12 @@
 - @user.failed_challenges.each do |failed_challenge|
 	%p
 		= link_to failed_challenge.name, failed_challenge
+
+%h4
+	= @user.username 
+	has rejected:
+	= pluralize @user.rejected_challenges.count, 'challenge'
+
+- @user.rejected_challenges.each do |rejected_challenge|
+	%p
+		= link_to rejected_challenge.challenge.name, rejected_challenge.challenge

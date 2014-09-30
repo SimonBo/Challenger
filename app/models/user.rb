@@ -31,4 +31,8 @@ class User < ActiveRecord::Base
   def failed_challenges
     self.accepted_dares.where("status = ?", 'Failed')
   end
+
+  def rejected_challenges
+    self.accepted_dares.where("status = ?", 'Rejected')
+  end
 end

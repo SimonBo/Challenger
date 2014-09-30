@@ -9,10 +9,10 @@
 			- dare.status = "Accepted"
 			= f.hidden_field :status
 			= f.submit "Accept", class: "btn btn-primary"
-		= form_for([dare.challenge, dare]) do |f|
-			- dare.status = "Rejected"
-			= f.hidden_field :status
-			= f.submit "Reject", class: "btn btn-danger"
+			= form_for([dare.challenge, dare]) do |f|
+				- dare.status = "Rejected"
+				= f.hidden_field :status
+				= f.submit "Reject", class: "btn btn-danger"
 
 	- current_user.challenges_ending_tomorrow.each do |c|
 		%p

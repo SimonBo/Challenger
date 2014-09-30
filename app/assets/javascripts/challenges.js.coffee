@@ -1,9 +1,9 @@
 NotificationPoller =
   poll: ->
-    setTimeout @request, 5000
+    setTimeout @request, 30000
 
   request: ->
-    $("#notifications").html "<%= j (render: 'users/user_notifications') %>"
+    $.getScript "/notifications"
     console.log "Request"
     NotificationPoller.poll()
 
