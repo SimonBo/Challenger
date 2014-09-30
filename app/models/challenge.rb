@@ -26,4 +26,15 @@ class Challenge < ActiveRecord::Base
     # end
   end
 
+  def rejected_by
+    self.dares.where("status = ?", 'Rejected')
+  end
+
+  def accepted_by
+    self.dares.where("status = ?", 'Accepted')
+  end  
+
+  def completed_by
+    self.dares.where("status = ?", 'Completed')
+  end 
 end

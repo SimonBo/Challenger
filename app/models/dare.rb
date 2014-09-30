@@ -20,4 +20,5 @@ class Dare < ActiveRecord::Base
     end
   end
 
+
 end

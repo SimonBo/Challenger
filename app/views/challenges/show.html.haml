@@ -1,9 +1,23 @@
 %p#notice= notice
 
 %p
+  %b Completed by:
+  = pluralize @challenge.completed_by.count, 'user'
+  - @challenge.completed_by.each do |i|
+    = link_to i.acceptor.username, i.acceptor
+
+%p
   %b Accepted by:
-  - @challenge.dares.each do |i|
-    = i.acceptor.username
+  = pluralize @challenge.accepted_by.count, 'user'
+  - @challenge.accepted_by.each do |i|
+    = link_to i.acceptor.username, i.acceptor
+
+%p
+  %b Rejected by:
+  = pluralize @challenge.rejected_by.count, 'user'
+  - @challenge.rejected_by.each do |i|
+    = link_to i.acceptor.username, i.acceptor
+
 %p
   %b Name:
   = @challenge.name
