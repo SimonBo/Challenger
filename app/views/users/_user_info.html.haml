@@ -1,3 +1,6 @@
-= link_to current_user.username, current_user
-= link_to 'Edit account', edit_user_registration_path
-= link_to 'Sign out', destroy_user_session_path, :method=>'delete'
+%p
+	= link_to current_user.username, current_user
+%p
+	= link_to 'Edit account', edit_user_registration_path
+%p
+	= link_to 'Sign out', destroy_user_session_path, :method=>'delete'

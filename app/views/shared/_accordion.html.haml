@@ -1,0 +1,42 @@
+- if user_signed_in?
+  #accordion.panel-group
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title
+          %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseFour"}
+            Your account:
+      #collapseFour.panel-collapse.collapse.in
+        .panel-body
+          = render 'users/user_info'
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title
+          %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne"}
+            Notifications:
+      #collapseOne.panel-collapse.collapse.in.panel-body
+        = render 'users/user_notifications'
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title
+          %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseTwo"}
+            Accepted Challenges:
+      #collapseTwo.panel-collapse.in.collapse
+        .panel-body
+          = render 'challenges/accepted_challenges' 
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title
+          %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseThree"}
+            You have challenged:
+      #collapseThree.panel-collapse.in.collapse
+        .panel-body
+          = render 'challenges/i_challenged'
+  = link_to new_challenge_path do
+    %button.btn.btn-lg.btn-info New Challenge
+- else
+  = link_to new_user_session_path do
+    %button.btn.btn-sm.btn-default Sign in
+  = link_to new_user_registration_path do
+    %button.btn.btn-sm.btn-default Sign up
+
+ 
