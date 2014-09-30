@@ -23,4 +23,12 @@ class User < ActiveRecord::Base
   def my_accepted_challenges
     self.accepted_dares.where("status = ?", 'Accepted')
   end
+
+  def completed_challanges
+    self.accepted_dares.where("status = ?", 'Completed')
+  end
+
+  def failed_challenges
+    self.accepted_dares.where("status = ?", 'Failed')
+  end
 end

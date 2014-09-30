@@ -19,3 +19,21 @@
 - @challenged_users.each do |i|
 	%p
 		= link_to i.acceptor.username, i.acceptor
+
+%h4
+	= @user.username 
+	has completed:
+	= pluralize @user.completed_challanges.count, 'challenge'
+
+- @user.completed_challanges.each do |completed_challenge|
+	%p
+		= link_to completed_challenge.name, completed_challenge
+
+%h4
+	= @user.username 
+	has failed at:
+	= pluralize @user.failed_challenges.count, 'challenge'
+
+- @user.failed_challenges.each do |failed_challenge|
+	%p
+		= link_to failed_challenge.name, failed_challenge
