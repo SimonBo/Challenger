@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140930195155) do
+ActiveRecord::Schema.define(version: 20141001210055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20140930195155) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "amount"
+    t.string   "vid_link"
   end
 
   create_table "mailboxer_conversation_opt_outs", force: true do |t|
