@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
-
+gem 'youtube_addy'
 
 gem 'haml'
 gem 'haml-rails', :group => :development
