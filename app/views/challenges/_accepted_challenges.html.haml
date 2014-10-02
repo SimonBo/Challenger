@@ -1,6 +1,6 @@
 - current_user.my_accepted_challenges.each do |dare|
 	%p
-		= link_to dare.challenge.name, dare.challenge
+		= link_to dare.challenge.name, challenge_dare_path
 		finishes
 		%time{"data-livestamp" => (dare.created_at + 7.days).to_i}
 	= form_for([dare.challenge, dare]) do |f|

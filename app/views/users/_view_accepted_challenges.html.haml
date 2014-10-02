@@ -1,5 +1,0 @@
-- current_user.accepted_dares.each do |i|
-	%p
-		= link_to i.challenge.name, i.challenge
-		finishes
-		%time{"data-livestamp" => (i.created_at + 7.days).to_i}

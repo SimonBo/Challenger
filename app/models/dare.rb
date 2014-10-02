@@ -31,8 +31,20 @@ class Dare < ActiveRecord::Base
     state.any? {|str| self.status.include? str}
   end
 
+  def votes_for
+    self.votes.where("vote_for = ?", true).count
+  end
+
+  def votes_against
+    self.votes.where("vote_for = ?", false).count
+  end 
+
   def proof
     self.vid_link?
+  end
+
+  def up_for_voting
+    self.times_up && self.unresolved
   end
 
   # def calculate_votes
