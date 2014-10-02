@@ -24,7 +24,7 @@ class DaresController < ApplicationController
       utube_link = YouTubeAddy.extract_video_id(@dare.vid_link)
       @dare.vid_link = utube_link
       @dare.save
-      redirect_to root_path
+      redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
     else
       render "/challenges/index"
     end
