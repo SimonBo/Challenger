@@ -21,6 +21,9 @@ class DaresController < ApplicationController
   def update
     @dare = Dare.find(params[:id])
     if @dare.update(dare_params)
+      utube_link = YouTubeAddy.extract_video_id(@dare.vid_link)
+      @dare.vid_link = utube_link
+      @dare.save
       redirect_to root_path
     else
       render "/challenges/index"
