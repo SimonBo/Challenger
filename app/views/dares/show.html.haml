@@ -1,0 +1,19 @@
+%h1
+  Challenge:
+  = @dare.challenge.name
+
+%h2
+  Challenger:  
+  = @dare.challenger.username
+  %br
+
+  Accepted by:
+  = @dare.acceptor.username
+  
+  %br
+  Started on:
+  = @dare.created_at
+
+  %br
+  Finishing in:
+  %time{"data-livestamp" => (@dare.created_at + 7.days).to_i}

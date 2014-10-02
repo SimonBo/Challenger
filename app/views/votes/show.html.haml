@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b For:
+  = @vote.for
+%p
+  %b User:
+  = @vote.user
+%p
+  %b Dare:
+  = @vote.dare
+
+= link_to 'Edit', edit_vote_path(@vote)
+\|
+= link_to 'Back', votes_path

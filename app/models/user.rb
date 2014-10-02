@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :dares, foreign_key: :challenger_id
   has_many :accepted_dares, class_name: "Dare", foreign_key: :acceptor_id
   has_many :challenges, through: :dares
+  has_many :votes
 
   def my_pending_challenges
     self.accepted_dares.where("acceptor_id = ? AND status = ?", self.id, 'Pending')

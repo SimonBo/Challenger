@@ -1,5 +1,8 @@
 class DaresController < ApplicationController
 
+  def show
+    @dare = Dare.find(params[:id])
+  end
   def create
     @dare = Dare.new(dare_params)
 

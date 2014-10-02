@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  for: 
+  user_id: 
+  dare_id: 
+
+two:
+  for: 
+  user_id: 
+  dare_id: 

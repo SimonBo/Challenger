@@ -4,6 +4,8 @@ class Dare < ActiveRecord::Base
   belongs_to :acceptor, class_name: "User"
   belongs_to :challenger, class_name: "User"
 
+  has_many :votes
+
   before_save :change_status
 
   def finishing_in

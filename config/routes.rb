@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  resources :votes
+
   resources :challenges do
-    resources :dares, :only => [:update, :create, :new]
+    resources :dares
     member do
       get 'select_user'
     end
