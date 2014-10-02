@@ -14,7 +14,7 @@ class Dare < ActiveRecord::Base
 
   def change_status
     if status.blank?
-      if self.acceptor == self.challenger
+      if self.acceptor_id == self.challenger_id
         self.status = "Accepted"
       else
         self.status = "Pending"
