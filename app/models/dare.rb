@@ -62,9 +62,10 @@ class Dare < ActiveRecord::Base
   end
 
   def up_for_voting?
-    if self.times_up? && self.unresolved?
-      self.votes.create
-      true
+    self.times_up? && self.unresolved?
+    # if self.times_up? && self.unresolved? && self.votes.nil?
+    #   self.votes.create
+    #   true
   end
 
   # def calculate_votes
