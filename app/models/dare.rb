@@ -22,13 +22,15 @@ class Dare < ActiveRecord::Base
     end
   end
 
-  def times_up
+  def times_up?
     self.created_at <= 7.days.ago
   end
 
-  def unresolved
-    state = ['Success', 'Failed', 'Rejected']
-    state.any? {|str| self.status.include? str}
+  def unresolved?
+    # state = ['Pending', 'Accepted']
+    # state.any? {|str| d.status.include? str}
+
+    self.status.include?("Pending") || self.status.include?("Accepted")
   end
 
   def votes_for
@@ -39,12 +41,30 @@ class Dare < ActiveRecord::Base
     self.votes.where("vote_for = ?", false).count
   end 
 
-  def proof
+  def voting_start_date
+    self.votes.first.created_at
+  end 
+
+  def voting_end_date
+    self.voting_start_date + 5.days
+  end
+
+  def voting_finished?
+    self.voting_end_date <= DateTime.now
+  end
+
+  def voting_result
+    self.vote_for >= self.votes_against
+  end
+
+  def proof?
     self.vid_link?
   end
 
-  def up_for_voting
-    self.times_up && self.unresolved
+  def up_for_voting?
+    if self.times_up? && self.unresolved?
+      self.votes.create
+      true
   end
 
   # def calculate_votes

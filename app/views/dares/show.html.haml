@@ -17,3 +17,8 @@
   %br
   Finishing in:
   %time{"data-livestamp" => (@dare.created_at + 7.days).to_i}
+
+- if @dare.up_for_voting?
+  = render 'voting', {dare: @dare}
+- elsif @dare.voting_finished?
+  = render 'voting_result', {dare: @dare}
