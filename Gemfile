@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'delayed_job_active_record'
+
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'youtube_addy'
 

@@ -22,6 +22,10 @@ class Dare < ActiveRecord::Base
     end
   end
 
+
+
+
+
   def times_up?
     self.start_date <= 7.days.ago
   end
@@ -32,6 +36,14 @@ class Dare < ActiveRecord::Base
 
     self.status.include?("Pending") || self.status.include?("Accepted")
   end
+
+  def no_proof_fail?
+    self.utube_link.blank? && self.times_up? && self.unresolved?
+  end
+
+
+
+
 
   def votes_for
     self.votes.where("vote_for = ?", true).count

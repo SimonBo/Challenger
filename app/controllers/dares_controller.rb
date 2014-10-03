@@ -22,10 +22,11 @@ class DaresController < ApplicationController
 
       fail_alert = params[:user] ? "#{@user.username} already accepted this challenge" : "You have already accepted #{@challenge.name}"
       success_alert = params[:user] ? "You challenged #{@user.username} to #{@challenge.name} challenge" : "You accepted #{@challenge.name}"
+      
         if @user.dares.map{ |e| e.challenge_id  }.include?(@challenge.id)
           redirect_to :root, alert: fail_alert 
         else
-          Dare.create(acceptor_id: @user.id, challenge_id: @challenge.id, challenger_id: @user.id, status: "Accepted")
+          Dare.create(acceptor_id: @user.id, challenge_id: @challenge.id, challenger_id: @user.id, status: "Accepted", :start_date: DateTime.now)
           redirect_to :root, notice: success_alert
         end    
     end
