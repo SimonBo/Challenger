@@ -19,11 +19,11 @@ class User < ActiveRecord::Base
   end
 
   def challenges_ending_tomorrow
-    self.accepted_dares.where(["created_at >= ?", 6.days.ago])
+    self.accepted_dares.where(["start_date >= ?", 6.days.ago])
   end
 
   def my_accepted_challenges
-    self.accepted_dares.where("status = ?", 'Accepted')
+    self.accepted_dares.where("status = ? and end_date IS NOT NULL", 'Accepted')
   end
 
   def completed_challanges

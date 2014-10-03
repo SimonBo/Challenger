@@ -2,12 +2,17 @@
   Challenge with a bet!
 
 = form_for([@challenge, @dare]) do |f|
+  - @dare.challenger_id = current_user.id
+  - @dare.challenge_id = @challenge.id
   
   = hidden_field_tag :stripe_card_token
+  = f.hidden_field :challenger_id
+  = f.hidden_field :challenge_id
+
 
   .field
     = collection_select(:dare, :acceptor_id, User.all, :id, :username)
-
+    
   .field
     = f.number_field :amount
     = f.label :amount

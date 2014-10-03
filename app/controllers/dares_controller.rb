@@ -1,17 +1,47 @@
 class DaresController < ApplicationController
 
   def show
-    @dare = Dare.find(params[:id])
+    dare = Dare.find(params[:id])
   end
-  def create
-    @dare = Dare.new(dare_params)
 
-    if @dare.save_with_payment(params[:stripe_card_token], current_user)
-      redirect_to root_path, :notice => "Thank you for betting!"
+
+
+
+  def create
+    if params[:dare]
+      @dare = Dare.new(dare_params)
+      if @dare.save_with_payment(params[:stripe_card_token], current_user)
+        redirect_to root_path, :notice => "Thank you for betting!"
+      else
+        redirect_to new_challenge_dare_path, notice: 'Failed'
+      end
+
     else
-      redirect_to new_challenge_dare_path, notice: 'Failed'
+      @challenge = Challenge.find(params[:challenge_id])
+      @user = params[:user] ? User.find(params[:user]) : current_user
+
+      fail_alert = params[:user] ? "#{@user.username} already accepted this challenge" : "You have already accepted #{@challenge.name}"
+      success_alert = params[:user] ? "You challenged #{@user.username} to #{@challenge.name} challenge" : "You accepted #{@challenge.name}"
+        if @user.dares.map{ |e| e.challenge_id  }.include?(@challenge.id)
+          redirect_to :root, alert: fail_alert 
+        else
+          Dare.create(acceptor_id: @user.id, challenge_id: @challenge.id, challenger_id: @user.id, status: "Accepted")
+          redirect_to :root, notice: success_alert
+        end    
     end
+
+    
   end
+
+
+
+
+
+
+
+
+
+
 
   def new
     @dare = Dare.new
@@ -21,24 +51,27 @@ class DaresController < ApplicationController
   def update
     @dare = Dare.find(params[:id])
     if @dare.update(dare_params)
-      if params[:dare][:vid_link].empty?
-        redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Link to video not provided'
-      elsif params[:dare][:vid_link]
-        vid_link = YouTubeAddy.extract_video_id(params[:dare][:vid_link])
-        @dare.utube_link = @dare.utube_link + [vid_link]
-        @dare.save
-        redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
+      if params[:dare][:vid_link]
+        if params[:dare][:vid_link].empty?
+          redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Link to video not provided'
+        else
+          vid_link = YouTubeAddy.extract_video_id(params[:dare][:vid_link])
+          @dare.utube_link = @dare.utube_link + [vid_link]
+          @dare.save
+          redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
+        end
       end
+      redirect_to root_path
       # redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Dare updated'
     else
-      redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Something went wrong'
+      redirect_to root_path, notice: 'Something went wrong'
     end
   end
 
   private
 
   def dare_params
-    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link)
+    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link, :start_date, :end_date)
   end
 
 end

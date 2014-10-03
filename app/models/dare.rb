@@ -9,7 +9,7 @@ class Dare < ActiveRecord::Base
   before_save :change_status
 
   def finishing_in
-    (((self.created_at + 7.days) - Time.now)/86400).floor
+    (((self.start_date + 7.days) - Time.now)/86400).floor
   end
 
   def change_status
@@ -23,12 +23,12 @@ class Dare < ActiveRecord::Base
   end
 
   def times_up?
-    self.created_at <= 7.days.ago
+    self.start_date <= 7.days.ago
   end
 
   def unresolved?
     # state = ['Pending', 'Accepted']
-    # state.any? {|str| d.status.include? str}
+    # state.any? {|str| self.status.include? str}
 
     self.status.include?("Pending") || self.status.include?("Accepted")
   end
@@ -62,10 +62,7 @@ class Dare < ActiveRecord::Base
   end
 
   def up_for_voting?
-    self.times_up? && self.unresolved?
-    # if self.times_up? && self.unresolved? && self.votes.nil?
-    #   self.votes.create
-    #   true
+    self.times_up? && self.unresolved? && self.proof?
   end
 
   # def calculate_votes
@@ -88,6 +85,7 @@ class Dare < ActiveRecord::Base
       customer = Stripe::Charge.create(description: user.email, amount: amount*100, card: stripe_card_token, currency: 'usd')
       user.stripe_customer_token = customer.id
       user.save
+      save!
     end
   rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while creating customer: #{e.message}"

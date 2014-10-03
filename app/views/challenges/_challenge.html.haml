@@ -4,5 +4,5 @@
 %p 
   Description: #{challenge.description}
 = link_to 'Accept', challenge_dares_path(challenge), :method => :post
-= link_to 'Challenge others', select_user_challenge_path(challenge)
-= link_to 'Challenge with a bet', new_challenge_dare_path(challenge)
+/ = link_to 'Challenge others', select_user_challenge_path(challenge)
+= link_to 'Challenge others', new_challenge_dare_path(challenge)

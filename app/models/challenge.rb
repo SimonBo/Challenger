@@ -20,11 +20,6 @@ class Challenge < ActiveRecord::Base
     end
   end
 
-  def create_dare
-    # if something
-      #Dare.create(acceptor_id: current_user.id, challenge_id: @challenge.id, challenger_id: current_user.id, status: "Accepted")
-    # end
-  end
 
   def rejected_by
     self.dares.where("status = ?", 'Rejected')

@@ -7,11 +7,15 @@
 			= link_to dare.challenge.name, dare.challenge
 		= form_for([dare.challenge, dare]) do |f|
 			- dare.status = "Accepted"
+			- dare.start_date = DateTime.now
 			= f.hidden_field :status
+			= f.hidden_field :start_date
 			= f.submit "Accept", class: "btn btn-primary"
 			= form_for([dare.challenge, dare]) do |f|
 				- dare.status = "Rejected"
+				- dare.end_date = DateTime.now
 				= f.hidden_field :status
+				= f.hidden_field :end_date
 				= f.submit "Reject", class: "btn btn-danger"
 
 	- current_user.challenges_ending_tomorrow.each do |c|
@@ -19,6 +23,7 @@
 			Your time to finish
 			= link_to c.challenge.name, c.challenge
 			is ending in
-			= c.finishing_in
-			days
+			- if c.start_date
+				= c.finishing_in
+				days
 
