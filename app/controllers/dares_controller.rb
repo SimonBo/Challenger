@@ -21,12 +21,17 @@ class DaresController < ApplicationController
   def update
     @dare = Dare.find(params[:id])
     if @dare.update(dare_params)
-      vid_link = YouTubeAddy.extract_video_id(params[:dare][:vid_link])
-      @dare.utube_link = @dare.utube_link + [vid_link]
-      @dare.save
-      redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
+      if params[:dare][:vid_link].empty?
+        redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Link to video not provided'
+      elsif params[:dare][:vid_link]
+        vid_link = YouTubeAddy.extract_video_id(params[:dare][:vid_link])
+        @dare.utube_link = @dare.utube_link + [vid_link]
+        @dare.save
+        redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
+      end
+      # redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Dare updated'
     else
-      render "/challenges/index"
+      redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Something went wrong'
     end
   end
 
