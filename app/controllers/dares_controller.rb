@@ -21,8 +21,8 @@ class DaresController < ApplicationController
   def update
     @dare = Dare.find(params[:id])
     if @dare.update(dare_params)
-      utube_link = YouTubeAddy.extract_video_id(@dare.vid_link)
-      @dare.vid_link = utube_link
+      vid_link = YouTubeAddy.extract_video_id(params[:dare][:vid_link])
+      @dare.utube_link = @dare.utube_link + [vid_link]
       @dare.save
       redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
     else
@@ -33,7 +33,7 @@ class DaresController < ApplicationController
   private
 
   def dare_params
-    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :vid_link)
+    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link)
   end
 
 end

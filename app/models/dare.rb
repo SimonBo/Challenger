@@ -58,7 +58,7 @@ class Dare < ActiveRecord::Base
   end
 
   def proof?
-    self.vid_link?
+    self.utube_link?
   end
 
   def up_for_voting?

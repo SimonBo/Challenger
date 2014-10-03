@@ -18,16 +18,22 @@
   Finishing in:
   %time{"data-livestamp" => (@dare.created_at + 7.days).to_i}
 
-- if @dare.vid_link?
-  .embed-responsive.embed-responsive-16by9
-    %iframe.embed-responsive-item{:src => "http://www.youtube.com/embed/#{@dare.vid_link}"}
-
 - if current_user.accepted_dares.include? @dare 
   - unless @dare.times_up? && @dare.unresolved?
     = form_for([@dare.challenge, @dare]) do |f|
       = f.label :vid_link
       = f.text_field :vid_link
-      = f.submit "Upload Youtube vid", class: "btn btn-success"
+      = f.submit "Upload Youtube Video", class: "btn btn-success"
+
+- if @dare.utube_link?
+  %h3
+    Proof uploaded by #{@dare.acceptor.username}
+  - @dare.utube_link.each do |vid|
+    .embed-responsive.embed-responsive-16by9
+      %iframe.embed-responsive-item{:src => "http://www.youtube.com/embed/#{vid}"}
+    %br
+
+
 
 / - if @dare.up_for_voting?
 /   = render 'voting', {dare: @dare}
