@@ -37,4 +37,8 @@ class User < ActiveRecord::Base
   def rejected_challenges
     self.accepted_dares.where("status = ?", 'Rejected')
   end
+
+  def user_voted?(dare)
+    self.votes.where("dare_id = ?", dare.id)
+  end
 end

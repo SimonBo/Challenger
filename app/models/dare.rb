@@ -110,20 +110,6 @@ class Dare < ActiveRecord::Base
     end
   end
 
-  # def calculate_votes
-  #   self.votes
-  # end
-
-  # def resolve
-  #   if self.times_up && self.unresolved
-  #     if self.proof
-  #       self.calculate_votes
-  #     else
-  #       self.status = 'Failed'
-  #     end
-  #   end
-  # end
-
   def save_with_payment(stripe_card_token, user)
 
     if valid?
