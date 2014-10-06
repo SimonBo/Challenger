@@ -2,7 +2,7 @@ class DaresController < ApplicationController
 
   def show
     @dare = Dare.find(params[:id])
-    @vote = @dare.votes.build(user_id: current_user.id)
+    @vote = Vote.new
   end
 
 

@@ -1,8 +1,13 @@
 %p
-  Name: #{challenge.name}
+	Name: #{challenge.name}
 
 %p 
-  Description: #{challenge.description}
-= link_to 'Accept', challenge_dares_path(challenge), :method => :post
+	Description: #{challenge.description}
+= link_to 'Accept', challenge_dares_path(challenge, acceptor_id: current_user, challenger_id: current_user), :method => :post
 / = link_to 'Challenge others', select_user_challenge_path(challenge)
 = link_to 'Challenge others', new_challenge_dare_path(challenge)
+
+= form_for [challenge, Dare.new(acceptor_id: current_user.id, challenger_id: current_user.id)] do |f|
+	= f.hidden_field :acceptor_id
+	= f.hidden_field :challenger_id
+	= f.submit "Accept"

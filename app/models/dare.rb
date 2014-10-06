@@ -6,10 +6,14 @@ class Dare < ActiveRecord::Base
 
   has_many :votes
 
+  before_save :acceptor_valid?
+
+
 
   before_save :change_status
   # before_save :queue_delayed_job
 
+  
   def finishing_in
     (((self.start_date + 7.days) - Time.now)/86400).floor
   end
@@ -29,7 +33,9 @@ class Dare < ActiveRecord::Base
   #   self.delay.change_status(:do_this_when)
   # end
 
-
+  def rejected?
+    self.status.include? "Rejected"
+  end
 
   def times_up?
     self.start_date <= 7.days.ago if self.start_date
@@ -76,7 +82,7 @@ class Dare < ActiveRecord::Base
   end 
   
   def won_voting?
-    self.vote_for >= self.votes_against
+    self.votes_for >= self.votes_against
   end
 
   def voting_end_date
@@ -84,20 +90,26 @@ class Dare < ActiveRecord::Base
   end
 
   def voting_finished?
-    if self.voting_end_date <= DateTime.now
-      if self.won_voting?
-        self.status = 'Voting-Success'
-      else
-        self.status = 'Voting-Failed'
+    unless self.after_voting?
+      if self.voting_end_date <= DateTime.now
+        if self.won_voting?
+          self.status = 'Voting-Success'
+        else
+          self.status = 'Voting-Failed'
+        end
+        save!
       end
-      save!
     end
+
   end
 
   def after_voting?
-    self.status = 'Voting-Success' || self.status = 'Voting-Failed'
+    self.status == 'Voting-Success' || self.status == 'Voting-Failed'
   end
 
+  def voting_in_progress?
+    self.status == 'Voting'
+  end
 
 
   def proof?

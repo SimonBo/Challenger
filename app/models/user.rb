@@ -39,6 +39,6 @@ class User < ActiveRecord::Base
   end
 
   def user_voted?(dare)
-    self.votes.where("dare_id = ?", dare.id)
+    self.votes.where("dare_id = ?", dare.id).any?
   end
 end

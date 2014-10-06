@@ -8,8 +8,13 @@
 %h4
 	Voting ends on: #{@dare.voting_end_date}
 
-- unless current_user.user_voted?(@dare)
-	= form_for @vote, :url => challenge_dare_votes_path(params[:challenge_id], @dare.id) do |f|
-		= f.label :vote_for
-		= f.select :vote_for, [['For', true], ['Against', false]]
-		= f.submit "Vote!", class: "btn btn-success"
+-if user_signed_in?
+	- if current_user.user_voted?(@dare)
+		You already voted!
+	- else
+		= form_for @vote, :url => challenge_dare_votes_path(params[:challenge_id], @dare.id) do |f|
+			= f.label :vote_for
+			= f.select :vote_for, [['For', true], ['Against', false]]
+			= f.submit "Vote!", class: "btn btn-success"
+- else
+	Sign in to vote!

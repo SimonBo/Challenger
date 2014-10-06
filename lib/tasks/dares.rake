@@ -1,5 +1,5 @@
 namespace :dares do
-  desc "Fail dares that have no proof and 7 days passed since start_date"
+  desc "Filter all dares"
   task fail_no_proof: :environment do
 
     Dare.all.each do |dare|
