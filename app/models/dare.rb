@@ -6,7 +6,10 @@ class Dare < ActiveRecord::Base
 
   has_many :votes
 
+  accepts_nested_attributes_for :votes
+
   before_save :change_status
+  # before_save :queue_delayed_job
 
   def finishing_in
     (((self.start_date + 7.days) - Time.now)/86400).floor
@@ -22,12 +25,15 @@ class Dare < ActiveRecord::Base
     end
   end
 
-
+  # def queue_delayed_job
+  #   if status.changed?
+  #   self.delay.change_status(:do_this_when)
+  # end
 
 
 
   def times_up?
-    self.start_date <= 7.days.ago
+    self.start_date <= 7.days.ago if self.start_date
   end
 
   def unresolved?
@@ -38,9 +44,26 @@ class Dare < ActiveRecord::Base
   end
 
   def no_proof_fail?
-    self.utube_link.blank? && self.times_up? && self.unresolved?
+    if self.utube_link.blank? && self.times_up? && self.unresolved?
+      self.status = 'Failed'
+      save!
+    end
   end
 
+  def proof_not_validated?
+    self.status != "Proof Accepted" && self.status != "Proof Rejected"
+  end
+
+  def time_for_proof_validation_ended?
+        self.start_date <= 12.days.ago 
+  end
+
+  def success_unvalidated?
+    if self.proof? && self.time_for_proof_validation_ended? && self.proof_not_validated?
+      self.status = 'Success'
+      save!
+    end
+  end
 
 
 
@@ -52,29 +75,40 @@ class Dare < ActiveRecord::Base
   def votes_against
     self.votes.where("vote_for = ?", false).count
   end 
-
-  def voting_start_date
-    self.votes.first.created_at
-  end 
+  
+  def won_voting?
+    self.vote_for >= self.votes_against
+  end
 
   def voting_end_date
     self.voting_start_date + 5.days
   end
 
   def voting_finished?
-    self.voting_end_date <= DateTime.now
+    if self.voting_end_date <= DateTime.now
+      if self.won_voting?
+        self.status = 'Voting-Success'
+      else
+        self.status = 'Voting-Failed'
+      end
+      save!
+    end
   end
 
-  def voting_result
-    self.vote_for >= self.votes_against
+  def after_voting?
+    self.status = 'Voting-Success' || self.status = 'Voting-Failed'
   end
+
+
 
   def proof?
     self.utube_link?
   end
 
   def up_for_voting?
-    self.times_up? && self.unresolved? && self.proof?
+    if self.times_up? && self.unresolved? && self.proof?
+      self.voting_start_date = DateTime.now
+    end
   end
 
   # def calculate_votes

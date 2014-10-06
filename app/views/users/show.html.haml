@@ -8,7 +8,7 @@
 
 - @user.accepted_dares.each do |dare|
 	%p
-		= link_to dare.challenge.name, dare.challenge
+		= link_to dare.challenge.name, challenge_dare_path(challenge_id: dare.challenge.id, id: dare.id)
 
 
 %h4 
@@ -36,7 +36,7 @@
 
 - @user.failed_challenges.each do |failed_challenge|
 	%p
-		= link_to failed_challenge.name, failed_challenge
+		= link_to failed_challenge.challenge.name, user_path(failed_challenge)
 
 %h4
 	= @user.username 

@@ -1,10 +1,10 @@
 %h3
-	This challenge was put to the vote on #{dare.voting_start_date}
+	This challenge was put to the vote on #{@dare.voting_start_date}
 
 %h4
 	Voters decided that  
 
-- if dare.voting_result
-	#{dare.acceptor.username} accomplished the challenge
+- if @dare.won_voting?
+	#{@dare.acceptor.username} accomplished the challenge
 - else
-	#{dare.acceptor.username} failed
+	#{@dare.acceptor.username} failed

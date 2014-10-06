@@ -2,8 +2,17 @@
 	Votes:
 
 %h4
-	For: #{dare.votes_for}
+	For: #{@dare.votes_for}
 %h4	
-	Against: #{dare.votes_against}
+	Against: #{@dare.votes_against}
 %h4
-	Voting ends in: #{dare.voting_end_date}
+	Voting ends on: #{@dare.voting_end_date}
+
+= form_for @dare, :url => challenge_dare_path do |f|
+
+
+	= f.fields_for :votes do |vote_builder|
+		= vote_builder.label :vote_for
+		= vote_builder.select :vote_for, [['For', true], ['Against', false]]
+
+	= f.submit "Vote!", class: "btn btn-success"

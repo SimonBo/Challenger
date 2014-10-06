@@ -1,7 +1,8 @@
 class DaresController < ApplicationController
 
   def show
-    dare = Dare.find(params[:id])
+    @dare = Dare.find(params[:id])
+    @vote = @dare.votes.build(user_id: current_user.id)
   end
 
 
@@ -26,7 +27,7 @@ class DaresController < ApplicationController
         if @user.dares.map{ |e| e.challenge_id  }.include?(@challenge.id)
           redirect_to :root, alert: fail_alert 
         else
-          Dare.create(acceptor_id: @user.id, challenge_id: @challenge.id, challenger_id: @user.id, status: "Accepted", :start_date: DateTime.now)
+          Dare.create(acceptor_id: @user.id, challenge_id: @challenge.id, challenger_id: @user.id, status: "Accepted", start_date: DateTime.now)
           redirect_to :root, notice: success_alert
         end    
     end
@@ -72,7 +73,7 @@ class DaresController < ApplicationController
   private
 
   def dare_params
-    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link, :start_date, :end_date)
+    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link, :start_date, :end_date, votes_attributes: [:id, :vote_for, :user_id, :_destroy])
   end
 
 end
