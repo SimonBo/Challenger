@@ -73,7 +73,7 @@ class DaresController < ApplicationController
   private
 
   def dare_params
-    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link, :start_date, :end_date, votes_attributes: [:id, :vote_for, :user_id, :_destroy])
+    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link, :start_date, :end_date)
   end
 
 end

@@ -15,6 +15,7 @@ class VotesController < ApplicationController
   # GET /votes/new
   def new
     @vote = Vote.new
+
   end
 
   # GET /votes/1/edit
@@ -24,13 +25,14 @@ class VotesController < ApplicationController
   # POST /votes
   # POST /votes.json
   def create
-    @dare = Dare.find(params[:dare_id])
-    @vote = @dare.votes.create(votes_params)
+    @vote = Vote.new(vote_params)
     @vote.user_id = current_user.id
+    @vote.dare_id = params[:dare_id]
+
 
     respond_to do |format|
       if @vote.save
-        format.html { redirect_to @vote, notice: 'Vote was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Vote was successfully created.' }
         format.json { render :show, status: :created, location: @vote }
       else
         format.html { render :new }

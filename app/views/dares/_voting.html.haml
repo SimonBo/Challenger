@@ -8,11 +8,9 @@
 %h4
 	Voting ends on: #{@dare.voting_end_date}
 
-= form_for @dare, :url => challenge_dare_path do |f|
+= form_for @vote, :url => challenge_dare_votes_path(params[:challenge_id], @dare.id) do |f|
 
-
-	= f.fields_for :votes do |vote_builder|
-		= vote_builder.label :vote_for
-		= vote_builder.select :vote_for, [['For', true], ['Against', false]]
+	= f.label :vote_for
+	= f.select :vote_for, [['For', true], ['Against', false]]
 
 	= f.submit "Vote!", class: "btn btn-success"

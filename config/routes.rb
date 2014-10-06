@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  resources :votes
 
   resources :challenges do
-    resources :dares
+    resources :dares do
+      resources :votes
+    end
     member do
       get 'select_user'
     end

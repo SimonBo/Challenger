@@ -6,7 +6,6 @@ class Dare < ActiveRecord::Base
 
   has_many :votes
 
-  accepts_nested_attributes_for :votes
 
   before_save :change_status
   # before_save :queue_delayed_job
