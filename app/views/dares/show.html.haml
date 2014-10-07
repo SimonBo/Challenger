@@ -12,15 +12,26 @@
 - else
   Started on:
   = @dare.created_at
-
+  
+  %p
+    Status:
+    = @dare.status
   - if @dare.times_up?
-    Time for finishing this challenge has ended on 
+    Time for finishing this challenge has ended on
+  - elsif @dare.resolved?   
+    %h4
+      This challenged has already finished
   - else
     %br
     Finishing in:
     %time{"data-livestamp" => (@dare.created_at + 7.days).to_i}
 
-  - if user_signed_in? && current_user.accepted_dares.include?(@dare) && @dare.still_have_time? && @dare.unresolved?
+
+  - if @dare.status == 'Success'
+    %h4
+      #{@dare.acceptor.username} has successfully accomplished the #{@dare.challenge.name} challenge!
+
+  - elsif user_signed_in? && current_user.is_acceptor?(@dare) && @dare.still_have_time? && @dare.unresolved?
     = form_for([@dare.challenge, @dare]) do |f|
       = f.label :vid_link
       = f.text_field :vid_link
@@ -34,7 +45,12 @@
       .embed-responsive.embed-responsive-16by9
         %iframe.embed-responsive-item{:src => "http://www.youtube.com/embed/#{vid}"}
       %br
-      = link_to 'Delete proof', delete_proof_path(@dare.challenge_id, @dare, vid), method: :put
+      - if current_user.is_acceptor?(@dare)
+        = link_to 'Delete proof', delete_proof_path(@dare.challenge_id, @dare, vid), method: :put
+      - if current_user.is_challenger?(@dare) && @dare.proof_not_validated? && @dare.unresolved?
+        = link_to 'Accept proof', accept_proof_path(@dare.challenge_id, @dare.id), method: :put
+  
+
 
   - if @dare.voting_in_progress?
     = render 'voting'

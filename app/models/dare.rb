@@ -13,6 +13,10 @@ class Dare < ActiveRecord::Base
   before_save :set_proof_array
   # before_save :queue_delayed_job
 
+  def resolved?
+    self.status.include?("Success") || self.status.include?("Failed")
+  end
+
   def set_proof_array
     if self.utube_link.nil?
       self.utube_link = []
@@ -76,7 +80,7 @@ class Dare < ActiveRecord::Base
   end
 
   def proof_not_validated?
-    self.status != "Proof Accepted" && self.status != "Proof Rejected"
+    self.proof_status != "Proof Accepted" && self.proof_status != "Proof Rejected"
   end
 
   def time_for_proof_validation_ended?

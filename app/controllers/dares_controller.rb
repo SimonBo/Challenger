@@ -1,7 +1,18 @@
 class DaresController < ApplicationController
+  before_action :set_dare, only: [:show, :edit, :update, :destroy, :delete_proof, :accept_proof]
+
+
+  def accept_proof
+    @dare.status = 'Success'
+    @dare.proof_status = 'Accepted'
+    if @dare.save
+      redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Yay!'
+    else
+      redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Fail!'
+    end
+  end
 
   def delete_proof
-    @dare = Dare.find(params[:id])
     @dare.utube_link.delete(params[:proof_id])
     @dare.utube_link_will_change!
     if @dare.save
@@ -13,7 +24,6 @@ class DaresController < ApplicationController
   end
 
   def show
-    @dare = Dare.find(params[:id])
     @vote = Vote.new
   end
 
@@ -52,7 +62,6 @@ class DaresController < ApplicationController
 
 
   def update
-    @dare = Dare.find(params[:id])
     if @dare.update(dare_params)
       if params[:dare][:vid_link]
         if params[:dare][:vid_link].empty?
@@ -74,7 +83,6 @@ class DaresController < ApplicationController
   end
 
   def destroy
-    @dare = Dare.find(params[:id])
     @dare.destroy
     respond_to do |format|
       format.html { redirect_to root_path, notice: 'Dare was successfully destroyed.' }
@@ -84,6 +92,10 @@ class DaresController < ApplicationController
 
 
   private
+
+  def set_dare
+    @dare = Dare.find(params[:id])
+  end
 
   def dare_params
     params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link, :start_date, :end_date, :with_bet, :vid_link)
