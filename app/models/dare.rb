@@ -8,14 +8,15 @@ class Dare < ActiveRecord::Base
 
   # validates :with_bet, acceptance: true
   validate :unaccepted_this_dare?
-
-
-
-
-
-
   before_save :change_status
+  before_save :create_start_date
   # before_save :queue_delayed_job
+
+  def create_start_date
+    if status == 'Accepted' && start_date.blank?
+      self.start_date = DateTime.now
+    end
+  end
 
   def unaccepted_this_dare?
     if self.acceptor.accepted_dares && self.acceptor.accepted_dares.map{|e| e.challenge_id}.include?(self.challenge_id)
@@ -25,7 +26,7 @@ class Dare < ActiveRecord::Base
   end
 
   def finishing_in
-    (((self.start_date + 7.days) - Time.now)/86400).floor
+    (((self.start_date.midnight + 7.days) - Time.now)/86400).floor
   end
 
   def change_status
@@ -38,17 +39,14 @@ class Dare < ActiveRecord::Base
     end
   end
 
-  # def queue_delayed_job
-  #   if status.changed?
-  #   self.delay.change_status(:do_this_when)
-  # end
+
 
   def rejected?
     self.status.include? "Rejected"
   end
 
   def times_up?
-    self.start_date <= 7.days.ago if self.start_date
+    self.start_date.midnight <= 7.days.ago if self.start_date
   end
 
   def unresolved?
@@ -70,7 +68,7 @@ class Dare < ActiveRecord::Base
   end
 
   def time_for_proof_validation_ended?
-        self.start_date <= 12.days.ago 
+        self.start_date.midnight <= 12.days.ago 
   end
 
   def success_unvalidated?
@@ -96,7 +94,7 @@ class Dare < ActiveRecord::Base
   end
 
   def voting_end_date
-    self.voting_start_date + 5.days
+    self.voting_start_date.midnight + 5.days
   end
 
   def voting_finished?
@@ -129,6 +127,7 @@ class Dare < ActiveRecord::Base
   def up_for_voting?
     if self.times_up? && self.unresolved? && self.proof?
       self.voting_start_date = DateTime.now
+      save!
     end
   end
 

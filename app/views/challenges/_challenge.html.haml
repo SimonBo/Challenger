@@ -7,7 +7,8 @@
 - if user_signed_in?
 	= link_to 'Challenge others', new_challenge_dare_path(challenge)
 	- unless current_user.already_accepted_this_challenge?(challenge)
-		= form_for [challenge, Dare.new(acceptor_id: current_user.id, challenger_id: current_user.id)] do |f|
+		= form_for [challenge, Dare.new(acceptor_id: current_user.id, challenger_id: current_user.id, challenge_id: challenge.id)] do |f|
 			= f.hidden_field :acceptor_id
 			= f.hidden_field :challenger_id
+			= f.hidden_field :challenge_id
 			= f.submit "Accept"

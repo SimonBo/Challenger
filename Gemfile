@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'whenever', :require => false
 gem 'delayed_job_active_record'
 
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'

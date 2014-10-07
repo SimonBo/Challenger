@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
 
   def my_pending_challenges
-    self.accepted_dares.where("acceptor_id = ? AND status = ?", self.id, 'Pending')
+    self.accepted_dares.where("status = ?", 'Pending')
   end
 
   def my_challenged_users
@@ -19,19 +19,19 @@ class User < ActiveRecord::Base
   end
 
   def challenges_ending_tomorrow
-    self.accepted_dares.where(["start_date >= ?", 6.days.ago])
+    self.accepted_dares.where(["start_date <= ? and status = ?", 6.days.ago, "Accepted"])
   end
 
   def already_accepted_this_challenge?(challenge)
     self.accepted_dares.where("challenge_id = ?", challenge.id).exists?
   end
-  
+
   def my_accepted_challenges
-    self.accepted_dares.where("status = ? and end_date IS NOT NULL", 'Accepted')
+    self.accepted_dares.where("status = ?", 'Accepted')
   end
 
   def completed_challanges
-    self.accepted_dares.where("status = ?", 'Completed')
+    self.accepted_dares.where("status = ? OR status = ?", "Success", "Voting-Success")
   end
 
   def failed_challenges

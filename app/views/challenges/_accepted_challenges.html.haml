@@ -2,8 +2,6 @@
 	%p
 		= link_to dare.challenge.name, challenge_dare_path(dare.challenge, dare)
 		finishes
-		%time{"data-livestamp" => (dare.created_at + 7.days).to_i}
-	= form_for([dare.challenge, dare]) do |f|
-		- dare.status = "Completed"
-		= f.hidden_field :status
-		= f.submit "Completed", class: "btn btn-success btn-xs"
+		%time{"data-livestamp" => (dare.start_date + 7.days).to_i}
+	
+	
