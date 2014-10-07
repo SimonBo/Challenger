@@ -3,9 +3,13 @@ class DaresController < ApplicationController
   def delete_proof
     @dare = Dare.find(params[:id])
     @dare.utube_link.delete(params[:proof_id])
-    @dare.save
-    binding.pry
-    redirect_to challenge_dare_url(@dare.challenge_id, @dare.id)
+    @dare.utube_link_will_change!
+    if @dare.save
+      redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Yay!'
+    else
+      redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Fail!'
+    end
+
   end
 
   def show
@@ -79,10 +83,10 @@ class DaresController < ApplicationController
   end
 
 
-private
+  private
 
-def dare_params
-  params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link, :start_date, :end_date, :with_bet, :vid_link)
-end
+  def dare_params
+    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link, :start_date, :end_date, :with_bet, :vid_link)
+  end
 
 end
