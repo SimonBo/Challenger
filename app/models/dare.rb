@@ -7,10 +7,18 @@ class Dare < ActiveRecord::Base
   has_many :votes
 
   # validates :with_bet, acceptance: true
-  validate :unaccepted_this_dare?
+  # validate :unaccepted_this_dare?
   before_save :change_status
   before_save :create_start_date
+  before_save :set_proof_array
   # before_save :queue_delayed_job
+
+  def set_proof_array
+    if self.utube_link.nil?
+      self.utube_link = []
+      save!
+    end
+  end
 
   def create_start_date
     if status == 'Accepted' && start_date.blank?
@@ -47,6 +55,10 @@ class Dare < ActiveRecord::Base
 
   def times_up?
     self.start_date.midnight <= 7.days.ago if self.start_date
+  end
+
+  def still_have_time?
+    self.start_date.midnight > 7.days.ago if self.start_date
   end
 
   def unresolved?

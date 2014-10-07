@@ -1,7 +1,7 @@
-- current_user.my_challenged_users.each do |i|
+- current_user.my_challenged_users.each do |dare|
 	%p
-		= link_to i.acceptor.username, i.acceptor
+		= link_to dare.acceptor.username, dare.acceptor
 		to 
-		= link_to "#{i.challenge.name},", i.challenge
+		= link_to "#{dare.challenge.name},", challenge_dare_path(dare.challenge, dare)
 		finishes 
-		%time{"data-livestamp" => (i.created_at + 7.days).to_i}
+		%time{"data-livestamp" => (dare.created_at + 7.days).to_i}

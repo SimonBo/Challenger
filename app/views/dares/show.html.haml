@@ -1,6 +1,9 @@
-
-%h2
-  #{@dare.challenger.username} has challenged #{@dare.acceptor.username} to #{@dare.challenge.name} challenge!
+- if @dare.acceptor_id == @dare.challenger_id
+  %h3    
+    #{@dare.challenger.username} has challenged himself to #{@dare.challenge.name} challenge!
+-else
+  %h3
+    #{@dare.challenger.username} has challenged #{@dare.acceptor.username} to #{@dare.challenge.name} challenge!
 
 - if @dare.rejected?
   %h2
@@ -17,22 +20,21 @@
     Finishing in:
     %time{"data-livestamp" => (@dare.created_at + 7.days).to_i}
 
-  -if user_signed_in?
-    - if current_user.accepted_dares.include? @dare 
-      - unless @dare.times_up? && @dare.unresolved?
-        = form_for([@dare.challenge, @dare]) do |f|
-          = f.label :vid_link
-          = f.text_field :vid_link
-          = f.submit "Upload Youtube Video", class: "btn btn-success"
+  - if user_signed_in? && current_user.accepted_dares.include?(@dare) && @dare.still_have_time? && @dare.unresolved?
+    = form_for([@dare.challenge, @dare]) do |f|
+      = f.label :vid_link
+      = f.text_field :vid_link
+      = f.submit "Upload Youtube Video", class: "btn btn-success"
+
 
   - if @dare.utube_link?
     %h3
       Proof uploaded by #{@dare.acceptor.username}
-    - @dare.utube_link.each do |vid|
+    - @dare.utube_link.each_with_index do |vid, index|
       .embed-responsive.embed-responsive-16by9
         %iframe.embed-responsive-item{:src => "http://www.youtube.com/embed/#{vid}"}
       %br
-
+      = link_to 'Destroy', @dare.utube_link[index], :method => :delete, :data => { :confirm => 'Are you sure?' }
 
   - if @dare.voting_in_progress?
     = render 'voting'

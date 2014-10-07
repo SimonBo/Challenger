@@ -42,25 +42,40 @@ class DaresController < ApplicationController
     if @dare.update(dare_params)
       if params[:dare][:vid_link]
         if params[:dare][:vid_link].empty?
-          redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Link to video not provided'
+          redirect_to challenge_dare_path(params[:challenge_id], @dare), alert: 'Link to video not provided'
         else
           vid_link = YouTubeAddy.extract_video_id(params[:dare][:vid_link])
-          @dare.utube_link = @dare.utube_link + [vid_link]
-          @dare.save
-          redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
+            if vid_link.length == 11
+              @dare.utube_link = @dare.utube_link + [vid_link]
+              @dare.save
+              redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
+            else
+              redirect_to challenge_dare_path(params[:challenge_id], @dare), alert: 'The link is not a valid Youtube link'
+            end
         end
       end
-      redirect_to root_path
+      # redirect_to root_path
       # redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Dare updated'
     else
       redirect_to root_path, notice: 'Something went wrong'
     end
   end
 
+  def destroy
+    binding.pry
+    @dare = Dare.find(params[:id])
+    binding.pry
+    @dare.destroy
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: 'Dare was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def dare_params
-    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link, :start_date, :end_date, :with_bet)
+    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link, :start_date, :end_date, :with_bet, :vid_link)
   end
 
 end

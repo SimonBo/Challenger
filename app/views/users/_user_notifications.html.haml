@@ -4,7 +4,7 @@
 			You have been challenged by 
 			= link_to dare.challenger.username, dare.challenger
 			to accept
-			= link_to dare.challenge.name, dare.challenge
+			= link_to dare.challenge.name, challenge_dare_path(dare.challenge, dare)
 		= form_for([dare.challenge, dare]) do |f|
 			- dare.status = "Accepted"
 			- dare.start_date = DateTime.now
@@ -21,7 +21,7 @@
 	- current_user.challenges_ending_tomorrow.each do |c|
 		%p
 			Your time to finish
-			= link_to c.challenge.name, c.challenge
+			= link_to c.challenge.name, challenge_dare_path(c.challenge, c)
 			is ending in
 			- if c.start_date
 				= c.finishing_in
