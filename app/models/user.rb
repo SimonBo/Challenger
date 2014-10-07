@@ -22,6 +22,10 @@ class User < ActiveRecord::Base
     self.accepted_dares.where(["start_date >= ?", 6.days.ago])
   end
 
+  def already_accepted_this_challenge?(challenge)
+    self.accepted_dares.where("challenge_id = ?", challenge.id).exists?
+  end
+  
   def my_accepted_challenges
     self.accepted_dares.where("status = ? and end_date IS NOT NULL", 'Accepted')
   end

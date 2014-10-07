@@ -6,14 +6,24 @@ class Dare < ActiveRecord::Base
 
   has_many :votes
 
-  before_save :acceptor_valid?
+  # validates :with_bet, acceptance: true
+  validate :unaccepted_this_dare?
+
+
+
 
 
 
   before_save :change_status
   # before_save :queue_delayed_job
 
-  
+  def unaccepted_this_dare?
+    if self.acceptor.accepted_dares && self.acceptor.accepted_dares.map{|e| e.challenge_id}.include?(self.challenge_id)
+      errors.add :base, 'Already accepted'
+      false
+    end
+  end
+
   def finishing_in
     (((self.start_date + 7.days) - Time.now)/86400).floor
   end
@@ -122,13 +132,15 @@ class Dare < ActiveRecord::Base
     end
   end
 
-  def save_with_payment(stripe_card_token, user)
+
+
+  def prepare_with_payment(stripe_card_token, user)
 
     if valid?
       customer = Stripe::Charge.create(description: user.email, amount: amount*100, card: stripe_card_token, currency: 'usd')
       user.stripe_customer_token = customer.id
       user.save
-      save!
+
     end
   rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while creating customer: #{e.message}"
