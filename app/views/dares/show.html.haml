@@ -34,7 +34,7 @@
       .embed-responsive.embed-responsive-16by9
         %iframe.embed-responsive-item{:src => "http://www.youtube.com/embed/#{vid}"}
       %br
-      = link_to 'Destroy', @dare.utube_link[index], :method => :delete, :data => { :confirm => 'Are you sure?' }
+      = link_to 'Delete proof', delete_proof_path(@dare.challenge_id, @dare, vid), method: :put
 
   - if @dare.voting_in_progress?
     = render 'voting'
