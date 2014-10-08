@@ -1,0 +1,5 @@
+-  Dare.newest_voting.each do |dare|
+	%p
+		= link_to dare.challenge.name, challenge_dare_path(dare.challenge, dare) 
+		was put to the vote
+	

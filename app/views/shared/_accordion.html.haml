@@ -3,9 +3,9 @@
     .panel.panel-default
       .panel-heading
         %h4.panel-title
-          %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseFour"}
+          %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseZero"}
             Your account:
-      #collapseFour.panel-collapse.collapse.in
+      #collapseZero.panel-collapse.collapse.in
         .panel-body
           = render 'users/user_info'
     .panel.panel-default
@@ -31,6 +31,14 @@
       #collapseThree.panel-collapse.in.collapse
         .panel-body
           = render 'challenges/i_challenged'
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title
+          %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseFour"}
+            Recently put to the vote:
+      #collapseFour.panel-collapse.in.collapse
+        .panel-body
+          = render 'shared/newest_voting'
   = link_to new_challenge_path do
     %button.btn.btn-lg.btn-info New Challenge
 - else

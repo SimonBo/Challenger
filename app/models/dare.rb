@@ -13,6 +13,10 @@ class Dare < ActiveRecord::Base
   before_save :set_proof_array
   # before_save :queue_delayed_job
 
+  def self.newest_voting
+    where(status: 'Voting').order("voting_start_date desc")
+  end
+  
   def resolved?
     self.status.include?("Success") || self.status.include?("Failed")
   end
