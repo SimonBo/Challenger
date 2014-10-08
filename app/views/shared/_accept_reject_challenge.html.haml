@@ -4,9 +4,9 @@
 	= f.hidden_field :status
 	= f.hidden_field :start_date
 	= f.submit "Accept", class: "btn btn-primary"
-= form_for([dare.challenge, dare]) do |f|
-	- dare.status = "Rejected"
-	- dare.end_date = DateTime.now
-	= f.hidden_field :status
-	= f.hidden_field :end_date
-	= f.submit "Reject", class: "btn btn-danger"
+	= form_for([dare.challenge, dare]) do |f|
+		- dare.status = "Rejected"
+		- dare.end_date = DateTime.now
+		= f.hidden_field :status
+		= f.hidden_field :end_date
+		= f.submit "Reject", class: "btn btn-danger"

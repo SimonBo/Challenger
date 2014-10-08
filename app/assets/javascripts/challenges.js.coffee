@@ -1,7 +1,7 @@
 NotificationPoller =
 	poll: ->
 		# old_nr_of_nots = notifications.text().length
-		setTimeout @request, 10000
+		setTimeout @request, 30000
 
 	request: ->
 		$.getScript "/notifications"

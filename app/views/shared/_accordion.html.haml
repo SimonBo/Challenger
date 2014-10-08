@@ -3,14 +3,6 @@
     .panel.panel-default
       .panel-heading
         %h4.panel-title
-          %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseZero"}
-            Your account:
-      #collapseZero.panel-collapse.collapse.in
-        .panel-body
-          = render 'users/user_info'
-    .panel.panel-default
-      .panel-heading
-        %h4.panel-title
           %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne"}
             Notifications:
             %span#pending-notifications= current_user.my_pending_challenges.count if current_user.my_pending_challenges.any?
@@ -43,10 +35,6 @@
           = render 'shared/newest_voting'
   = link_to new_challenge_path do
     %button.btn.btn-lg.btn-info New Challenge
-- else
-  = link_to new_user_session_path do
-    %button.btn.btn-sm.btn-default Sign in
-  = link_to new_user_registration_path do
-    %button.btn.btn-sm.btn-default Sign up
+
 
  
