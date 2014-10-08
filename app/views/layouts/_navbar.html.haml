@@ -12,33 +12,25 @@
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li.active
-          = link_to 'Challenges', challenges_path
+          = link_to 'Choose your destiny!', challenges_path
+        / %li.dropdown
+        /   %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+        /     Rankings
+        /     %span.caret
+        /   %ul.dropdown-menu{:role => "menu"}
         %li
-          %a{:href => "#"} Link
-        %li.dropdown
-          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-            Dropdown
-            %span.caret
-          %ul.dropdown-menu{:role => "menu"}
-            %li
-              %a{:href => "#"} Action
-            %li
-              %a{:href => "#"} Another action
-            %li
-              %a{:href => "#"} Something else here
-            %li.divider
-            %li
-              %a{:href => "#"} Separated link
-            %li.divider
-            %li
-              %a{:href => "#"} One more separated link
-      %form.navbar-form.navbar-left{:role => "search"}
-        .form-group
-          %input.form-control{:placeholder => "Search", :type => "text"}/
-        %button.btn.btn-default{:type => "submit"} Submit
+          %a{:href => "#"} Check out these challenges
+        %li
+          %a{:href => "#"} Challenge aficionados
+        %li
+          %a{:href => "#"} These need your vote!
+      / %form.navbar-form.navbar-left{:role => "search"}
+      /   .form-group
+      /     = form_tag challenges_path, method: :get do 
+      /       %p
+      /         = text_field_tag :query, params[:query]
+      /         = submit_tag "Search", name: nil
       %ul.nav.navbar-nav.navbar-right
-        %li
-          %a{:href => "#"} Link
         - if user_signed_in?
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
