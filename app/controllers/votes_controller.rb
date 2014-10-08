@@ -32,10 +32,10 @@ class VotesController < ApplicationController
 
     respond_to do |format|
       if @vote.save
-        format.html { redirect_to root_path, notice: 'Vote was successfully created.' }
+        format.html { redirect_to challenge_dare_url(challenge_id, dare_id), notice: 'Vote accepted!' }
         format.json { render :show, status: :created, location: @vote }
       else
-        format.html { render :new }
+        format.html { redirect_to challenge_dare_url(challenge_id, dare_id), notice: 'Something went wrong, sorry!'  }
         format.json { render json: @vote.errors, status: :unprocessable_entity }
       end
     end

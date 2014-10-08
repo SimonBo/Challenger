@@ -1,5 +1,5 @@
 class ChallengesController < ApplicationController
-  before_action :set_challenge, except: [:index,:new]
+  before_action :set_challenge, except: [:index,:new, :create]
   respond_to :js
 
 

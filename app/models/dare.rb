@@ -110,25 +110,29 @@ class Dare < ActiveRecord::Base
   end
 
   def voting_end_date
-    self.voting_start_date.midnight + 5.days
+    self.voting_start_date.midnight + 5.days if self.voting_start_date
   end
 
   def voting_finished?
     unless self.after_voting?
       if self.voting_end_date <= DateTime.now
         if self.won_voting?
-          self.status = 'Voting-Success'
+          self.status = 'Success'
+          self.voting_status = 'Success'
         else
-          self.status = 'Voting-Failed'
+          self.status = 'Failed'
+          self.voting_status = 'Failed'
         end
         save!
+      else
+        false
       end
     end
 
   end
 
   def after_voting?
-    self.status == 'Voting-Success' || self.status == 'Voting-Failed'
+    self.voting_status == 'Success' || self.voting_status == 'Failed'
   end
 
   def voting_in_progress?
@@ -141,8 +145,9 @@ class Dare < ActiveRecord::Base
   end
 
   def up_for_voting?
-    if self.times_up? && self.unresolved? && self.proof?
+    if self.times_up? && self.unresolved? && self.proof? && self.status != 'Voting'
       self.voting_start_date = DateTime.now
+      self.status = 'Voting'
       save!
     end
   end

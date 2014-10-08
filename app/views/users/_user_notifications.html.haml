@@ -5,18 +5,7 @@
 			= link_to dare.challenger.username, dare.challenger
 			to accept
 			= link_to dare.challenge.name, challenge_dare_path(dare.challenge, dare)
-		= form_for([dare.challenge, dare]) do |f|
-			- dare.status = "Accepted"
-			- dare.start_date = DateTime.now
-			= f.hidden_field :status
-			= f.hidden_field :start_date
-			= f.submit "Accept", class: "btn btn-primary"
-			= form_for([dare.challenge, dare]) do |f|
-				- dare.status = "Rejected"
-				- dare.end_date = DateTime.now
-				= f.hidden_field :status
-				= f.hidden_field :end_date
-				= f.submit "Reject", class: "btn btn-danger"
+		= render partial: 'shared/accept_reject_challenge', locals: {:dare => dare}
 
 	- current_user.challenges_ending_tomorrow.each do |c|
 		%p
@@ -26,4 +15,3 @@
 			- if c.start_date
 				= c.finishing_in
 				days
-

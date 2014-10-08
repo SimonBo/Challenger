@@ -1,5 +1,5 @@
 class DaresController < ApplicationController
-  before_action :set_dare, only: [:show, :edit, :update, :destroy, :delete_proof, :accept_proof]
+  before_action :set_dare, only: [:show, :edit, :update, :destroy, :delete_proof, :accept_proof, :reject_proof]
 
 
   def accept_proof
@@ -12,6 +12,17 @@ class DaresController < ApplicationController
     end
   end
 
+  def reject_proof
+    @dare.status = 'Voting'
+    @dare.proof_status = 'Rejected'
+    @dare.voting_start_date = DateTime.now
+    if @dare.save
+      redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'You rejected the proof!'
+    else
+      redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Something went wrong!'
+    end
+  end
+
   def delete_proof
     @dare.utube_link.delete(params[:proof_id])
     @dare.utube_link_will_change!
@@ -20,14 +31,12 @@ class DaresController < ApplicationController
     else
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Fail!'
     end
-
   end
+
 
   def show
     @vote = Vote.new
   end
-
-
 
 
   def create
@@ -43,16 +52,6 @@ class DaresController < ApplicationController
       redirect_to root_path, alert: 'There was a problem, try again!'
     end  
   end
-
-
-
-
-
-
-
-
-
-
 
   def new
     @dare = Dare.new

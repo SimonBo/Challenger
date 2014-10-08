@@ -21,6 +21,9 @@
   - elsif @dare.resolved?   
     %h4
       This challenged has already finished
+  - elsif @dare.voting_in_progress?
+    %h4
+      We are not sure whether the challenge has been accomplished, help us decide whether the proof uploaded are valid
   - else
     %br
     Finishing in:
@@ -49,6 +52,7 @@
         = link_to 'Delete proof', delete_proof_path(@dare.challenge_id, @dare, vid), method: :put
       - if current_user.is_challenger?(@dare) && @dare.proof_not_validated? && @dare.unresolved?
         = link_to 'Accept proof', accept_proof_path(@dare.challenge_id, @dare.id), method: :put
+        = link_to 'Reject proof', reject_proof_path(@dare.challenge_id, @dare.id), method: :put
   
 
 

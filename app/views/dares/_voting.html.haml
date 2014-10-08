@@ -11,6 +11,9 @@
 -if user_signed_in?
 	- if current_user.user_voted?(@dare)
 		You already voted!
+	- elsif current_user.is_challenger?(@dare) || current_user.is_acceptor?(@dare)
+		%h4
+			You can't vote in challenges you are a part of, sorry!
 	- else
 		= form_for @vote, :url => challenge_dare_votes_path(params[:challenge_id], @dare.id) do |f|
 			= f.label :vote_for

@@ -9,12 +9,14 @@ class User < ActiveRecord::Base
   has_many :challenges, through: :dares
   has_many :votes
 
+
+
   def is_acceptor?(dare)
-    self.accepted_dares.where('id = ?', dare.id)
+    self.accepted_dares.where('id = ?', dare.id).present?
   end
 
   def is_challenger?(dare)
-    self.dares.where('id = ?', dare.id)
+    self.dares.where('id = ?', dare.id).present?
   end
 
   def my_pending_challenges

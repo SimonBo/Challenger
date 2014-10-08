@@ -1,4 +1,4 @@
-= form_for @challenge, remote: true do |f|
+= form_for @challenge do |f|
   - if @challenge.errors.any?
     #error_explanation
       = render 'errors'

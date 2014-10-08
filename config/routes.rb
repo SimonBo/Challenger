@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get 'notifications' => 'notifications#index'
   put 'challenges/:challenge_id/dares/:id/delete_proof/:proof_id' => 'dares#delete_proof', as: 'delete_proof'
   put 'challenges/:challenge_id/dares/:id/accept_proof' =>  'dares#accept_proof', as: 'accept_proof'
+  put 'challenges/:challenge_id/dares/:id/reject_proof' =>  'dares#reject_proof', as: 'reject_proof'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
