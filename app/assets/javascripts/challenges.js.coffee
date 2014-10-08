@@ -1,12 +1,22 @@
 NotificationPoller =
-  poll: ->
-    setTimeout @request, 30000
+	poll: ->
+		# old_nr_of_nots = notifications.text().length
+		setTimeout @request, 10000
 
-  request: ->
-    $.getScript "/notifications"
-    console.log "Request"
-    NotificationPoller.poll()
+	request: ->
+		$.getScript "/notifications"
+		console.log "Request"
+		NotificationPoller.poll()
+		# new_nr_of_nots = notifications.text().length
+		# if nr_of_nots > old_nr_of_nots
+		# 	alert 'New notifications!'
+
 
 jQuery ->
-  if $('#notifications').length > 0
-    NotificationPoller.poll()
+	notifications = $('#notifications')
+
+	if notifications.length > 0
+		NotificationPoller.poll()
+		
+
+

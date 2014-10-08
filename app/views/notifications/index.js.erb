@@ -1,1 +1,2 @@
 $("#notifications").html("<%= j (render 'users/user_notifications') %>");
+$('#pending-notifications').html("<%= current_user.my_pending_challenges.count %>");

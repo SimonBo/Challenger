@@ -13,6 +13,8 @@
         %h4.panel-title
           %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne"}
             Notifications:
+            %span#pending-notifications= current_user.my_pending_challenges.count if current_user.my_pending_challenges.any?
+
       #collapseOne.panel-collapse.collapse.in.panel-body
         = render 'users/user_notifications'
     .panel.panel-default

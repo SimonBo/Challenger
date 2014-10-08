@@ -75,6 +75,8 @@ class DaresController < ApplicationController
             redirect_to challenge_dare_path(params[:challenge_id], @dare), alert: 'The link is not a valid Youtube link'
           end
         end
+      else
+        redirect_to root_path, notice: 'Yay!'
       end
     else
       redirect_to root_path, notice: 'Something went wrong'
