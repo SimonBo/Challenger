@@ -43,8 +43,7 @@ class DaresController < ApplicationController
     @challenge = Challenge.find(params[:challenge_id])
     @dare = Dare.new(dare_params)
     if params[:dare][:with_bet] == "1"
-      @dare.prepare_with_payment(params[:stripe_card_token], current_user)
-      # acceptor = User.find(params[:dare][:acceptor_id])      
+      @dare.prepare_with_payment(params[:stripe_card_token], current_user)      
     end
     if @dare.save
       redirect_to root_path, notice: 'Success'

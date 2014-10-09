@@ -20,6 +20,17 @@ class Challenge < ActiveRecord::Base
     end
   end
 
+  def self.newest
+    order(:created_at)
+  end
+
+  def self.sort_by_name
+    order(:name)
+  end
+
+  def self.sort(choice)
+    order(choice)
+  end
 
   def rejected_by
     self.dares.where("status = ?", 'Rejected')

@@ -1,3 +1,9 @@
+%h4
+	Sort by:
+= link_to 'Name', challenges_path(choice: 'name'), remote: true
+= link_to 'Added on', challenges_path(choice: "created_at DESC"), remote: true
+= link_to 'Popular', challenges_path(choice: "created_at DESC"), remote: true
+
 
 %h1 Listing challenges
 

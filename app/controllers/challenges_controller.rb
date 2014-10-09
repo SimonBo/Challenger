@@ -3,28 +3,20 @@ class ChallengesController < ApplicationController
   respond_to :js
 
 
-  # GET /challenges
-  # GET /challenges.json
   def index
     @challenges = Challenge.text_search(params[:query])
   end
 
-  # GET /challenges/1
-  # GET /challenges/1.json
   def show
   end
 
-  # GET /challenges/new
   def new
     @challenge = Challenge.new
   end
 
-  # GET /challenges/1/edit
   def edit
   end
 
-  # POST /challenges
-  # POST /challenges.json
   def create
     @challenge = Challenge.new(challenge_params)
 
@@ -39,8 +31,6 @@ class ChallengesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /challenges/1
-  # PATCH/PUT /challenges/1.json
   def update
     respond_to do |format|
       if @challenge.update(challenge_params)
@@ -53,8 +43,6 @@ class ChallengesController < ApplicationController
     end
   end
 
-  # DELETE /challenges/1
-  # DELETE /challenges/1.json
   def destroy
     @challenge.destroy
     respond_to do |format|
@@ -64,12 +52,12 @@ class ChallengesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_challenge
       @challenge = Challenge.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+
     def challenge_params
       params.require(:challenge).permit(:user_id, :name, :description)
     end
