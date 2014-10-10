@@ -70,9 +70,6 @@ class Dare < ActiveRecord::Base
   end
 
   def unresolved?
-    # state = ['Pending', 'Accepted']
-    # state.any? {|str| self.status.include? str}
-
     self.status.include?("Pending") || self.status.include?("Accepted")
   end
 

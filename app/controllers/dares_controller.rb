@@ -16,12 +16,12 @@ class DaresController < ApplicationController
     @dare.status = 'Rejected'
     @dare.end_date = DateTime.now
     if @dare.save
-      redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'You rejected the challenge!'
+      redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), alert: 'You rejected the challenge!'
     else
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Something went wrong!'
     end
   end
-  
+
   def accept_proof
     @dare.status = 'Success'
     @dare.proof_status = 'Accepted'

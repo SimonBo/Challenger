@@ -27,7 +27,7 @@
 
 - @user.completed_challanges.each do |completed_challenge|
 	%p
-		= link_to completed_challenge.name, completed_challenge
+		= link_to completed_challenge.challenge.name, challenge_dare_path(challenge_id: completed_challenge.challenge.id, id: completed_challenge.id)
 
 %h4
 	= @user.username 

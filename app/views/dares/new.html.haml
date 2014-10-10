@@ -1,11 +1,12 @@
 %h1
   Challenge with a bet!
 
-%h2
-  = "#{pluralize(@dare.errors.count, "error")} prohibited this dare from being saved:"
-  %ul
-    - @dare.errors.full_messages.each do |msg|
-      %li= msg
+- if @dare.errors.any?
+  %h2
+    = "#{pluralize(@dare.errors.count, "error")} prohibited this dare from being saved:"
+    %ul
+      - @dare.errors.full_messages.each do |msg|
+        %li= msg
 
 = form_for([@challenge, @dare]) do |f|
   - @dare.challenger_id = current_user.id

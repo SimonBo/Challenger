@@ -4,7 +4,7 @@
 %h4
 	Voters decided that  
 
-- if @dare.won_voting?
-	#{@dare.acceptor.username} accomplished the challenge
-- else
-	#{@dare.acceptor.username} failed
+	- if @dare.won_voting?
+		#{@dare.acceptor.username} accomplished the challenge.
+	- else
+		#{@dare.acceptor.username} failed.

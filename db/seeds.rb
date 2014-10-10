@@ -1,10 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
 
 10.times do |i|
   User.create(username: "user#{i}", email: "user#{i}@email.com", password: 'useruser', password_confirmation: 'useruser')
@@ -17,6 +10,11 @@ description = "Integer posuere erat a ante venenatis dapibus posuere velit aliqu
   Challenge.create(name: challenge_name[i], description: description)
 end
 
-5.times do |i|
-  Dare.create(acceptor_id: rand(1..9), challenge_id: rand(1..5), challenger_id: rand(1..9))
-end
+
+Dare.create(acceptor_id: 1, challenge_id: 1, challenger_id: 2)
+Dare.create(acceptor_id: 1, challenge_id: 3, challenger_id: 5)
+Dare.create(acceptor_id: 3, challenge_id: 1, challenger_id: 1, utube_link: ["-huwiIHUDSc"])
+Dare.create(acceptor_id: 5, challenge_id: 2, challenger_id: 1, utube_link: ["56R3hU-fWZY"])
+Dare.create(acceptor_id: 6, challenge_id: 4, challenger_id: 3, status: 'Voting', voting_start_date: DateTime.now, utube_link: ["dl7CLaZFG1c"])
+Dare.create(acceptor_id: 1, challenge_id: 5, challenger_id: 6, status: 'Success', voting_start_date: 7.days.ago, utube_link: ["dl7CLaZFG1c"], voting_status: 'Success')
+
