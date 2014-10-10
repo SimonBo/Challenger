@@ -1,6 +1,5 @@
 class VotesController < ApplicationController
   before_action :set_vote, only: [:show, :edit, :update, :destroy]
-
   # GET /votes
   # GET /votes.json
   def index
@@ -25,6 +24,7 @@ class VotesController < ApplicationController
   # POST /votes
   # POST /votes.json
   def create
+
     @vote = Vote.new(vote_params)
     @vote.user_id = current_user.id
     @vote.dare_id = params[:dare_id]
@@ -32,7 +32,7 @@ class VotesController < ApplicationController
 
     respond_to do |format|
       if @vote.save
-        format.html { redirect_to challenge_dare_url(challenge_id, dare_id), notice: 'Vote accepted!' }
+        format.html { redirect_to challenge_dare_url(params[:challenge_id], params[:dare_id]), notice: 'Vote accepted!' }
         format.json { render :show, status: :created, location: @vote }
       else
         format.html { redirect_to challenge_dare_url(challenge_id, dare_id), notice: 'Something went wrong, sorry!'  }
@@ -71,8 +71,9 @@ class VotesController < ApplicationController
       @vote = Vote.find(params[:id])
     end
 
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def vote_params
       params.require(:vote).permit(:vote_for, :user_id, :dare_id)
     end
-end
+  end

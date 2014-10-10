@@ -6,14 +6,17 @@ class ChallengesController < ApplicationController
   def index
     @challenges = Challenge.text_search(params[:query])
 
-    direction = params[:direction] || "DESC"
+    if params[:choice]
+
+      direction = params[:choice].end_with?("1") ? "ASC" : "DESC"
+    end
 
     @sorted_challenges = case params[:choice]
-    when "popular"
+    when "popular", "popular1"
       Challenge.order("dares_count #{direction}")
-    when "date"
+    when "date", "date1"
       Challenge.order("created_at #{direction}")
-    when "name"
+    when "name", "name1"
       Challenge.order("name #{direction}")
     end
   end
@@ -69,12 +72,12 @@ class ChallengesController < ApplicationController
 
   private
 
-    def set_challenge
-      @challenge = Challenge.find(params[:id])
-    end
+  def set_challenge
+    @challenge = Challenge.find(params[:id])
+  end
 
 
-    def challenge_params
-      params.require(:challenge).permit(:user_id, :name, :description)
-    end
+  def challenge_params
+    params.require(:challenge).permit(:user_id, :name, :description)
+  end
 end

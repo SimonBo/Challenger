@@ -12,8 +12,8 @@ NotificationPoller =
 jQuery ->
 	notifications = $('#notifications')
 
-	if notifications.length > 0
-		NotificationPoller.poll()
+	# if notifications.length > 0
+	# 	NotificationPoller.poll()
 		
 
 

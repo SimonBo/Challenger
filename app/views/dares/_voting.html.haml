@@ -10,7 +10,8 @@
 
 -if user_signed_in?
 	- if current_user.user_voted?(@dare)
-		You already voted!
+		%h4
+			You already voted!
 	- elsif current_user.is_challenger?(@dare) || current_user.is_acceptor?(@dare)
 		%h4
 			You can't vote in challenges you are a part of, sorry!

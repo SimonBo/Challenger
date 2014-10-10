@@ -2,6 +2,10 @@ Rails.application.routes.draw do
 
   resources :challenges do
     resources :dares do
+      member do
+        put 'accept_challenge'
+        put 'reject_challenge'
+      end
       resources :votes
     end
   end
