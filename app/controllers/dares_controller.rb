@@ -1,6 +1,9 @@
 class DaresController < ApplicationController
-  before_action :set_dare, except: [:index, :new, :create]
+  before_action :set_dare, except: [:index, :new, :create, :show_voting]
 
+  def show_voting
+    @dares_voting = Dare.where('status = ?', 'Voting')
+  end
 
   def accept_challenge
     @dare.status = 'Accepted'

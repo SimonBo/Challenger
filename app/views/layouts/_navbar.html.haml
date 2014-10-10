@@ -7,7 +7,7 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a.navbar-brand{:href => "#"} Challenger
+      = link_to 'Challenger', challenges_path, class: "navbar-brand"
     / Collect the nav links, forms, and other content for toggling
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       %ul.nav.navbar-nav
@@ -21,9 +21,9 @@
         %li
           %a#notification-link{:href => "#notifications"} Notifications
         %li
-          %a{:href => "#"} Challenge aficionados
+          = link_to 'Challenge aficionados', users_path
         %li
-          %a{:href => "#"} These need your vote!
+          = link_to "These need your vote!", dares_voting_path
       / %form.navbar-form.navbar-left{:role => "search"}
       /   .form-group
       /     = form_tag challenges_path, method: :get do 

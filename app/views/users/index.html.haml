@@ -1,0 +1,8 @@
+%h1
+	Challenge aficionados
+
+- @users.each do |user|
+	%h3	
+		= link_to user.username, user_path(user)
+		has completed
+		= pluralize user.dare_count, 'challenge'

@@ -9,8 +9,6 @@ class User < ActiveRecord::Base
   has_many :challenges, through: :dares
   has_many :votes
 
-
-
   def is_acceptor?(dare)
     self.accepted_dares.where('id = ?', dare.id).present?
   end
@@ -53,5 +51,9 @@ class User < ActiveRecord::Base
 
   def user_voted?(dare)
     self.votes.where("dare_id = ?", dare.id).any?
+  end
+
+  def self.sorted_by_accepted_dares
+    self.joins(:accepted_dares).select("count(dares.*) as dare_count, users.*").where("dares.status = ?","Success").group("users.id").order("dare_count DESC")
   end
 end

@@ -1,0 +1,6 @@
+%h1
+	These need your vote!
+
+- @dares_voting.each do |dare|
+	%h3
+		= link_to "#{dare.acceptor.username}'s #{dare.challenge.name}", challenge_dare_path(dare.challenge, dare)

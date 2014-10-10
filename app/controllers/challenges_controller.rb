@@ -7,7 +7,6 @@ class ChallengesController < ApplicationController
     @challenges = Challenge.text_search(params[:query])
 
     if params[:choice]
-
       direction = params[:choice].end_with?("1") ? "ASC" : "DESC"
     end
 
