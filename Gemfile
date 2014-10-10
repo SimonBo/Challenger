@@ -1,5 +1,11 @@
 source 'https://rubygems.org'
 
+group :production do
+  gem 'thin'
+  gem 'rails_12factor'
+end
+
+
 gem 'whenever', :require => false
 gem 'delayed_job_active_record'
 

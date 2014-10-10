@@ -1,6 +1,6 @@
 NotificationPoller =
 	poll: ->
-		setTimeout @request, 30000
+		setTimeout @request, 20000
 
 	request: ->
 		$.getScript "/notifications"
@@ -12,8 +12,8 @@ NotificationPoller =
 jQuery ->
 	notifications = $('#notifications')
 
-	# if notifications.length > 0
-	# 	NotificationPoller.poll()
+	if notifications.length > 0
+		NotificationPoller.poll()
 		
 
 
