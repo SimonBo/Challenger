@@ -5,6 +5,14 @@ group :production do
   gem 'rails_12factor'
 end
 
+group :test do
+  gem "faker", "~> 1.4.3"
+  gem "capybara", "~> 2.4.3"
+  gem "database_cleaner", "~> 1.3.0"
+  gem "launchy", "~> 2.4.2"
+  gem "selenium-webdriver", "~> 2.43.0"
+  gem "shoulda-matchers", "~> 2.2.0"
+end
 
 gem 'whenever', :require => false
 gem 'delayed_job_active_record'
@@ -22,11 +30,14 @@ group :development do
   gem 'binding_of_caller'
   gem 'quiet_assets'
   gem 'pry-byebug'
+  gem 'guard-rspec', require: false
+  gem 'rb-fsevent', '~> 0.9.3'
 end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'factory_girl_rails'
+  gem 'spring-commands-rspec', '~> 1.0.2'
 end
 
 gem 'pg_search'

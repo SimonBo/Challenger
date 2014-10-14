@@ -1,5 +1,6 @@
 class DaresController < ApplicationController
   before_action :set_dare, except: [:index, :new, :create, :show_voting]
+  before_action :authenticate_user!
 
   def show_voting
     @dares_voting = Dare.where('status = ?', 'Voting')

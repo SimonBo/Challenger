@@ -1,40 +1,58 @@
-require 'spec_helper'
 require 'rails_helper'
 
-describe DaresController, :type => :controller do
-  describe 'PATCH update' do 
-    it 'save the youtube link to dare' do
-      @challenger = FactoryGirl::create(:user)
-      @acceptor = FactoryGirl::create(:user)
-      @challenge = FactoryGirl::create(:challenge)
+describe DaresController do
+  let(:challenger) { create(:user) }
+  let(:acceptor) { create(:user) }
+  let(:challenge) { create(:challenge) }
+  let(:dare) { create(:dare) }
 
-      @dare = Dare.create(acceptor: @acceptor, challenge: @challenge, challenger: @challenger, status: 'Accepted')
-      patch :update, {challenge_id: @challenge.id, id: @dare, dare: {vid_link: "https://www.youtube.com/watch?v=dOV9RZ5u_68"}}
-      @dare.reload.utube_link.should == ["dOV9RZ5u_68"]
+  before :each do
 
+  end
+
+
+  describe 'Guest access to dares' do
+
+    describe 'GET #show' do
+      it "redirects to root" do
+        get :show, id: dare.id, challenge_id: challenge.id
+        expect(response).to require_login
+      end
     end
 
-    it 'not save the invalid link to dare' do
-      @challenger = FactoryGirl::create(:user)
-      @acceptor = FactoryGirl::create(:user)
-      @challenge = FactoryGirl::create(:challenge)
+    describe 'GET #new' do
+      it "redirects to root" do
+        get :new, id: dare, challenge_id: challenge.id
+        expect(response).to require_login
+      end
+    end
+    
+    # describe 'GET #edit' do
+    #   it "redirects to root" do
+    #     get :edit, id: dare, challenge_id: challenge.id
+    #     expect(response).to require_login
+    #   end
+    # end
 
-      @dare = Dare.create(acceptor: @acceptor, challenge: @challenge, challenger: @challenger, status: 'Accepted')
-      patch :update, {challenge_id: @challenge.id, id: @dare, dare: {vid_link: "https://www.google.com"}}
-      @dare.reload.utube_link.should == []
-
+    describe 'POST #create' do
+      it "redirects to root" do
+        post :create, id: dare, challenge_id: challenge.id
+        expect(response).to require_login
+      end
     end
 
-    it 'show msg when link not provided' do
-      @challenger = FactoryGirl::create(:user)
-      @acceptor = FactoryGirl::create(:user)
-      @challenge = FactoryGirl::create(:challenge)
+    describe 'PATCH #update' do
+      it "redirects to root" do
+        patch :update, id: dare, challenge_id: challenge.id
+        expect(response).to require_login
+      end
+    end
 
-      @dare = Dare.create(acceptor: @acceptor, challenge: @challenge, challenger: @challenger, status: 'Accepted')
-      patch :update, {challenge_id: @challenge.id, id: @dare, dare: {vid_link: ""}}
-      @dare.reload.utube_link.should == []
-      flash.should_not be_nil
-
+    describe 'DELETE #destroy' do
+      it "redirects to root" do
+        delete :destroy, id: dare, challenge_id: challenge.id
+        expect(response).to require_login
+      end
     end
   end
 end

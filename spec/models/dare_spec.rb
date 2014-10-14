@@ -1,23 +1,27 @@
 require 'rails_helper'
 
-RSpec.describe Dare, :type => :model do
+describe Dare do
+  let(:dare) { build_stubbed(:dare) }
+
+  it "has a valid factory" do
+    expect(dare).to be_valid
+  end
 
   it "has a challenge, acceptor and challenger" do
-    dare = Dare.new(challenge_id: 1, acceptor_id: 1, challenger_id: 3)
-    expect(dare.acceptor_id).to eq 1
-    expect(dare.challenge_id).to eq 1
-    expect(dare.challenger_id).to eq 3
+    expect(dare.challenge_id).to_not be_nil
+    expect(dare.challenger_id).to_not be_nil
+    expect(dare.acceptor_id).to_not be_nil
   end
 
   it "has status 'pending' when created by a user to challenge a different user" do
-
-    dare = Dare.create(challenger_id: 1, acceptor_id: 2)
-    expect(dare.reload.status).to eq 'Pending'
+    new_dare = create(:dare, challenger_id: 1, acceptor_id: 2)
+    expect(new_dare.status).to eq 'Pending'
   end
 
   it "has status 'Failed' if status was 'Accepted', 7 days passed since it's creation and no proof has been uploaded" do
-  	dare = Dare.new(challenge_id: 1, acceptor_id: 1, challenger_id: 3, status: "Accepted", created_at: DateTime.now - 8.days)
-  	expect(dare.proof?).to eq false
-  	expect(dare.unresolved?).to eq true
+    new_dare = create(:dare, challenger_id: 1, acceptor_id: 2, status: 'Accepted', start_date: 8.day.ago, utube_link: [])
+    new_dare.no_proof_fail?
+    expect(new_dare.status).to eq 'Failed'
   end
+
 end
