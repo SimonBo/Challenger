@@ -6,12 +6,10 @@ class Dare < ActiveRecord::Base
 
   has_many :votes
 
-  # validates :with_bet, acceptance: true
-  # validate :unaccepted_this_dare?
   before_save :change_status
   before_save :create_start_date
   before_save :set_proof_array
-  # before_save :queue_delayed_job
+
 
   def self.newest_voting
     where(status: 'Voting').order("voting_start_date desc")

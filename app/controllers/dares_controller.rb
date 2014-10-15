@@ -70,7 +70,7 @@ class DaresController < ApplicationController
       @dare.prepare_with_payment(params[:stripe_card_token], current_user)      
     end
     if @dare.save
-      redirect_to root_path, notice: 'Success'
+      redirect_to root_path, notice: 'You accepted the challenge!'
     else
       redirect_to root_path, alert: 'There was a problem, try again!'
     end  

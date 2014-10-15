@@ -19,6 +19,16 @@ describe Dare do
     expect(new_dare.status).to eq 'Pending'
   end
 
+  it "has status 'Accepted' when acceptor and challenger are the same user" do
+    new_dare = create(:dare, challenger_id: 1, acceptor_id:1)
+    expect(new_dare.status).to eq 'Accepted'
+  end
+
+  it "is initiated with an empty array for proofs" do
+    new_dare = create(:dare)
+    expect(new_dare.utube_link).to eq []
+  end
+
   it "has status 'Failed' if status was 'Accepted', 7 days passed since it's creation and no proof has been uploaded" do
     new_dare = create(:dare, challenger_id: 1, acceptor_id: 2, status: 'Accepted', start_date: 8.day.ago, utube_link: [])
     new_dare.no_proof_fail?
@@ -51,4 +61,6 @@ describe Dare do
     expect(new_dare.status).to eq 'Failed'
     expect(new_dare.voting_status).to eq 'Failed'
   end
+
+
 end

@@ -11,7 +11,7 @@
 				= f.hidden_field :acceptor_id
 				= f.hidden_field :challenger_id
 				= f.hidden_field :challenge_id
-				= f.submit "Accept", class: "btn btn-success"
+				= f.submit "Accept", class: "btn btn-success challenge-yourself"
 		= link_to new_challenge_dare_path(challenge) do
-			%button.btn.btn-primary Challenge others
+			%button.btn.btn-primary.challenge-others Challenge others
 		

@@ -9,6 +9,11 @@ class Vote < ActiveRecord::Base
         # flash[:alert] = 'You already voted!'
         errors.add :base, 'You already voted!'
       end
+
+      if self.user_id == self.dare.acceptor_id || self.user_id == self.dare.challenger_id
+        errors.add :base, "You can't vote in your own challenge!"
+      end
     end
+
 
 end

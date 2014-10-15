@@ -3,8 +3,8 @@ class Challenge < ActiveRecord::Base
   has_many :dares
   has_many :users, through: :dares, source: :challenges
 
-  validates :name, presence: true, uniqueness: true, length: { in: 2..100 }
-  validates :description, presence: true, length: { in: 2..500 }
+  validates :name, presence: true, uniqueness: true, length: { in: 5..100 }
+  validates :description, presence: true, length: { in: 10..500 }
 
   include PgSearch
   pg_search_scope :search, against: [:name, :description],

@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :challenges, through: :dares
   has_many :votes
 
+  validates :username, presence: true, uniqueness: true, length: { in: 2..50 }
+
   def is_acceptor?(dare)
     self.accepted_dares.where('id = ?', dare.id).present?
   end
