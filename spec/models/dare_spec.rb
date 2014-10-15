@@ -54,9 +54,9 @@ describe Dare do
     expect(new_dare.voting_status).to eq 'Success'
   end
 
-  it "has status 'Failed' and voting_status 'Failed' if after voting finished, there are more votes agains than for" do
+  it "has status 'Failed' and voting_status 'Failed' if after voting finished, there are more votes against than for" do
     new_dare = create(:dare, status: 'Voting', voting_start_date: 5.days.ago, utube_link: [1])
-    new_vote = create(:vote, dare_id: new_dare.id, vote_for: false)
+    new_vote = create(:vote, dare_id: new_dare.id, vote_for: false, user_id: user.id)
     new_dare.voting_finished?
     expect(new_dare.status).to eq 'Failed'
     expect(new_dare.voting_status).to eq 'Failed'

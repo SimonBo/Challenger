@@ -12,6 +12,7 @@ group :test do
   gem "launchy", "~> 2.4.2"
   gem "selenium-webdriver", "~> 2.43.0"
   gem "shoulda-matchers", "~> 2.2.0"
+  gem 'capybara-screenshot'
 end
 
 gem 'whenever', :require => false
