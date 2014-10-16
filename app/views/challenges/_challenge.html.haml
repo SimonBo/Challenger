@@ -14,4 +14,7 @@
 				= f.submit "Accept", class: "btn btn-success challenge-yourself"
 		= link_to new_challenge_dare_path(challenge) do
 			%button.btn.btn-primary.challenge-others Challenge others
+- else
+	= link_to new_user_session_path do
+		%button.btn.btn-primary Sign in to use this challenge!
 		
