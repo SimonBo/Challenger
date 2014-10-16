@@ -3,6 +3,7 @@ require "rails_helper"
 feature "Challenge users" do
   let!(:challenge) { create(:challenge)}
   let(:user) { create(:user)}
+  
   context "as a registered user" do
     before :each do
       log_in(user)
