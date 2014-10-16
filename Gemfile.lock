@@ -106,6 +106,8 @@ GEM
     faker (1.4.3)
       i18n (~> 0.5)
     ffi (1.9.6)
+    figaro (1.0.0)
+      thor (~> 0.14)
     formatador (0.2.5)
     guard (2.6.1)
       formatador (>= 0.2.4)
@@ -294,6 +296,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   faker (~> 1.4.3)
+  figaro
   guard-rspec
   haml
   haml-rails
