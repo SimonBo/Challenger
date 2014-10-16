@@ -13,6 +13,7 @@ describe DaresController do
 
     describe 'GET #show' do
       it "redirects to root" do
+        sign_in nil
         get :show, id: dare.id, challenge_id: challenge.id
         expect(response).to require_login
       end

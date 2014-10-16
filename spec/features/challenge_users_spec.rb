@@ -5,7 +5,7 @@ feature "Challenge users" do
   let(:user) { create(:user)}
   context "as a registered user" do
     before :each do
-      sign_in(user)
+      log_in(user)
     end
     scenario "challenges himself" do
 

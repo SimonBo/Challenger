@@ -1,5 +1,5 @@
 module LoginMacros
-	def sign_in(user)
+	def log_in(user)
 		user = create(:user)
 		visit root_path
 		click_link 'Sign in'
