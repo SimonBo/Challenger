@@ -11,5 +11,9 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) << :stripe_customer_token
     devise_parameter_sanitizer.for(:sign_up) << :username
     devise_parameter_sanitizer.for(:account_update) << :username
+    devise_parameter_sanitizer.for(:sign_up) << :provider
+    devise_parameter_sanitizer.for(:account_update) << :provider
+    devise_parameter_sanitizer.for(:sign_up) << :uid
+    devise_parameter_sanitizer.for(:account_update) << :uid
   end
 end
