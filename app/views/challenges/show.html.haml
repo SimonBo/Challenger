@@ -25,6 +25,13 @@
   %b Description:
   = @challenge.description
 
-= link_to 'Edit', edit_challenge_path(@challenge)
-\|
-= link_to 'Back', challenges_path
+
+%h5.display-inline
+  Invite you friend to try out this challenge!
+
+.fb-send{"data-colorscheme" => "light", "data-href" => "http://simon-challenger.herokuapp.com"}
+
+.control-buttons
+  = link_to 'Edit', edit_challenge_path(@challenge)
+  \|
+  = link_to 'Back', challenges_path

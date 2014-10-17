@@ -18,3 +18,5 @@ Dare.create(acceptor_id: 5, challenge_id: 2, challenger_id: 1, utube_link: ["56R
 Dare.create(acceptor_id: 6, challenge_id: 4, challenger_id: 3, status: 'Voting', voting_start_date: DateTime.now, utube_link: ["dl7CLaZFG1c"])
 Dare.create(acceptor_id: 1, challenge_id: 5, challenger_id: 6, status: 'Success', voting_start_date: 7.days.ago, utube_link: ["dl7CLaZFG1c"], voting_status: 'Success')
 
+
+Challenge.create(name: "Make it rain!", description: "Have a look at http://www.urbandictionary.com/define.php?term=make%20it%20rain. Accept the challenge and make us all proud you're a member of the human race!")
