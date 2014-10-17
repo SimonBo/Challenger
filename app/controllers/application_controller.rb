@@ -24,7 +24,14 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) << :oauth_expires_at
     devise_parameter_sanitizer.for(:sign_in) << :oauth_expires_at
     devise_parameter_sanitizer.for(:account_update) << :oauth_expires_at
-
-
   end
+
+  def after_sign_in_path_for(resource_or_scope)
+    challenges_path
+  end
+
+  def after_sign_out_path_for(resource_or_scope)
+    challenges_path
+  end
+  
 end
