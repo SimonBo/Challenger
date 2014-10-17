@@ -1,6 +1,6 @@
 NotificationPoller =
 	poll: ->
-		setTimeout @request, 10000
+		setTimeout @request, 30000
 
 	cleanup: ->
 		$('.collapsed:has(a)').each ->

@@ -18,13 +18,19 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth)
+    oauth = Koala::Facebook::OAuth.new(ENV["fb_app_id"], ENV["fb_app_secret"])
+    new_access_info = oauth.exchange_access_token_info auth.credentials.token
+
+    new_access_token = new_access_info["access_token"]
+    new_access_expires_at = DateTime.now + new_access_info["expires"].to_i.seconds
+
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
       user.username = auth.info.name   # assuming the user model has a name
       # user.image = auth.info.image # assuming the user model has an image
-      user.oauth_token = auth.credentials.token
-      user.oauth_expires_at = Time.at(auth.credentials.expires_at)
+      user.oauth_token = new_access_token
+      user.oauth_expires_at = new_access_expires_at
     end
   end
 
