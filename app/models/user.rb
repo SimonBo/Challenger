@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
+  def friends_counter
+    facebook.get_connection("me", "friends").count
+  end
+
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)

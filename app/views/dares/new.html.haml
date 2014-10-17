@@ -1,5 +1,5 @@
 %h1
-  Challenge with a bet!
+  Who do you want to challenge?
 
 - if @dare.errors.any?
   %h2
@@ -19,24 +19,25 @@
 
   .field
     = collection_select(:dare, :acceptor_id, User.all, :id, :username)
-    
-  .field
-    = f.label :with_bet, 'Add a bet?'
-    = f.check_box :with_bet
-  .field.betting_fields
-    = f.number_field :amount
-    = f.label :amount
-
-  .field.betting_fields
-    = label_tag :card_number, "Credit Card Number"
-    = text_field_tag :card_number, nil, name: nil
-  .field.betting_fields
-    = label_tag :card_code, "Security Code on Card (CVV)"
-    = text_field_tag :card_code, nil, name: nil
-  .field.betting_fields
-    = label_tag :card_month, "Card Expiration"
-    = select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"}
-    = select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year"}
-  #stripe_error.betting_fields
-    %noscript JavaScript is not enabled and is required for this form. First enable it in your web browser settings.
   = f.submit "Bet", id: 'bet'
+    
+/   .field
+/     = f.label :with_bet, 'Add a bet?'
+/     = f.check_box :with_bet
+/   .field.betting_fields
+/     = f.number_field :amount
+/     = f.label :amount
+
+/   .field.betting_fields
+/     = label_tag :card_number, "Credit Card Number"
+/     = text_field_tag :card_number, nil, name: nil
+/   .field.betting_fields
+/     = label_tag :card_code, "Security Code on Card (CVV)"
+/     = text_field_tag :card_code, nil, name: nil
+/   .field.betting_fields
+/     = label_tag :card_month, "Card Expiration"
+/     = select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"}
+/     = select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year"}
+/   #stripe_error.betting_fields
+/     %noscript JavaScript is not enabled and is required for this form. First enable it in your web browser settings.
+/   = f.submit "Bet", id: 'bet'
