@@ -12,6 +12,16 @@ class User < ActiveRecord::Base
 
   validates :username, presence: true, uniqueness: true, length: { in: 2..50 }
 
+  attr_accessor :login
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions).where(["username = :value OR lower(email) = lower(:value)", { :value => login }]).first
+    else
+      where(conditions).first
+    end
+  end
 
   def facebook
     @facebook ||= Koala::Facebook::API.new(oauth_token)
