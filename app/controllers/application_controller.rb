@@ -15,5 +15,9 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) << :provider
     devise_parameter_sanitizer.for(:sign_up) << :uid
     devise_parameter_sanitizer.for(:account_update) << :uid
+    devise_parameter_sanitizer.for(:sign_up) << :oauth_token
+    devise_parameter_sanitizer.for(:account_update) << :oauth_token
+    devise_parameter_sanitizer.for(:sign_up) << :oauth_expires_at
+    devise_parameter_sanitizer.for(:account_update) << :oauth_expires_at
   end
 end

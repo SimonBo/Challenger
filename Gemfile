@@ -48,6 +48,8 @@ gem 'pry'
 gem "figaro"
 
 gem 'omniauth-facebook'
+gem "koala", "~> 1.10.0rc"
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
 # Use postgresql as the database for Active Record
