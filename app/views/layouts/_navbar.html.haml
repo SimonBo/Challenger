@@ -31,6 +31,7 @@
       /         = text_field_tag :query, params[:query]
       /         = submit_tag "Search", name: nil
       %ul.nav.navbar-nav.navbar-right
+        .fb-login-button{"data-auto-logout-link" => "true", "data-max-rows" => "1", "data-show-faces" => "true", "data-size" => "large"}
         - if user_signed_in?
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
