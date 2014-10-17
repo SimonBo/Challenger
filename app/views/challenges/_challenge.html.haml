@@ -4,6 +4,8 @@
 %p 
 	Description: #{challenge.description}
 
+.fb-like{"data-send" => "true", "data-show-faces" => "true", "data-width" => "450"}
+
 - if user_signed_in?
 	.btn-group
 		- unless current_user.already_accepted_this_challenge?(challenge)
