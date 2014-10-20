@@ -14,7 +14,7 @@
       %h4.panel-title
         %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#friends"}
           Friends
-    #friends.panel-collapse.collapse.in
+    #friends.panel-collapse.collapse.in.select_user
       .panel-body
         Friends go here
   .panel.panel-default
@@ -22,7 +22,7 @@
       %h4.panel-title
         %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#unhonored"}
           Champions
-    #unhonored.panel-collapse.collapse
+    #unhonored.panel-collapse.collapse.select_user
       .panel-body
         Fill in later
   .panel.panel-default
@@ -30,16 +30,17 @@
       %h4.panel-title
         %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#search_box"}
           Find by name/email
-    #search_box.panel-collapse.collapse
+    #search_box.panel-collapse.collapse.select_user
       .panel-body
         = form_tag users_search_path, method: :get, remote: true do 
           %p
             = hidden_field_tag 'challenge', params[:challenge_id]
             = text_field_tag :query, params[:query], data: {autocomplete_source: users_autocomplete_path}
             = submit_tag "Search", name: nil, id: 'search_for_users'
+      #user_search_result
 
 
 
-#user_search_result
+
 
 
