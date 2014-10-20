@@ -10,6 +10,14 @@ class Dare < ActiveRecord::Base
   before_save :create_start_date
   before_save :set_proof_array
 
+  validate :cannot_challenge_if_acceptor_already_accepted
+
+  def cannot_challenge_if_acceptor_already_accepted
+    if self.acceptor.my_pending_challenges.where("challenge_id = ?", self.challenge_id).any? or
+      self.acceptor.my_accepted_challenges.where("challenge_id = ?", self.challenge_id).any?
+      errors[:base] << 'That user already accepted that challenge!'
+    end
+  end
 
   def self.newest_voting
     where(status: 'Voting').order("voting_start_date desc")
@@ -83,7 +91,7 @@ class Dare < ActiveRecord::Base
   end
 
   def time_for_proof_validation_ended?
-        self.start_date.midnight <= 12.days.ago 
+    self.start_date.midnight <= 12.days.ago 
   end
 
   def success_unvalidated?

@@ -109,6 +109,10 @@ class User < ActiveRecord::Base
     self.accepted_dares.where("challenge_id = ?", challenge.id).exists?
   end
 
+  def my_pending_challenges
+    self.accepted_dares.where("status = ?", 'Pending')
+  end
+
   def my_accepted_challenges
     self.accepted_dares.where("status = ?", 'Accepted')
   end

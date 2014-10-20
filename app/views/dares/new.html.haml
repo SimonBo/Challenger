@@ -3,7 +3,7 @@
 
 - if @dare.errors.any?
   %h2
-    = "#{pluralize(@dare.errors.count, "error")} prohibited this dare from being saved:"
+    = "There was a problem:"
     %ul
       - @dare.errors.full_messages.each do |msg|
         %li= msg
