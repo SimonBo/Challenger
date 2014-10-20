@@ -1,0 +1,8 @@
+- unless @users.nil?	
+	- @users.each do |user|
+		%h3	
+			= link_to user.username, user_path(user)
+			has completed
+			= pluralize user.accepted_dares.where('status = ?', 'Success').count, 'challenge'
+		= link_to challenges_path  do
+			%button.btn.btn-lg.btn-info Challenge!

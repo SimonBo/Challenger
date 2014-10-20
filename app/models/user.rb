@@ -12,7 +12,20 @@ class User < ActiveRecord::Base
 
   validates :username, presence: true, uniqueness: true, length: { in: 2..50 }
 
+
+  include PgSearch
+  pg_search_scope :search, against: [:username, :email],
+                  using: {tsearch: {prefix: true, dictionary: "english" }}
+
   attr_accessor :login
+
+  def self.text_search(query)
+    if query.present?
+      search(query)
+    else
+      where(nil)
+    end
+  end
 
   def friends_counter
     facebook.get_connection("me", "friends").count
