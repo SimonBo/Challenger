@@ -1,7 +1,7 @@
 .text-center
   %h1
     Who do you want to challenge to 
-  %h1
+  %h1.text-danger
     = @challenge.name
     ?
 
@@ -28,12 +28,7 @@
           They need more challenges!
     #unhonored.panel-collapse.collapse.select_user
       .panel-body
-        - User.sorted_by_failed_accepted_dares.each do |user|
-          %h5
-            = link_to user.username, user_path(user)
-            has failed
-            = pluralize user.failed_dare_count, 'challenge'
-            = render partial: 'users/challenge_user', locals: {:user => user}
+        = render 'users/most_failed'
   .panel.panel-default
     .panel-heading
       %h4.panel-title
@@ -41,12 +36,7 @@
           The Fearless ones!
     #champions.panel-collapse.collapse.select_user
       .panel-body
-        - User.sorted_by_accepted_dares.each do |user|
-          %h5
-            = link_to user.username, user_path(user)
-            has completed
-            = pluralize user.dare_count, 'challenge'
-            = render partial: 'users/challenge_user', locals: {:user => user}
+        = render 'users/most_success'
   .panel.panel-default
     .panel-heading
       %h4.panel-title
@@ -54,11 +44,7 @@
           Find by name/email
     #search_box.panel-collapse.collapse.select_user
       .panel-body
-        = form_tag users_search_path, method: :get, remote: true do 
-          %p
-            = hidden_field_tag 'challenge', params[:challenge_id]
-            = text_field_tag :query, params[:query], data: {autocomplete_source: users_autocomplete_path}
-            = submit_tag "Search", name: nil, id: 'search_for_users'
+        = render 'users/search_box'
 
 #user_search_result
 

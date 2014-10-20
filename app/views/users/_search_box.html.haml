@@ -1,0 +1,5 @@
+= form_tag users_search_path, method: :get, remote: true do 
+	%p
+		= hidden_field_tag 'challenge', params[:challenge_id]
+		= text_field_tag :query, params[:query], data: {autocomplete_source: users_autocomplete_path}
+		= submit_tag "Search", name: nil, id: 'search_for_users'

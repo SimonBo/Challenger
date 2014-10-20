@@ -1,0 +1,6 @@
+- User.sorted_by_accepted_dares.each do |user|
+	%h5
+		= link_to user.username, user_path(user)
+		has completed
+		= pluralize user.dare_count, 'challenge'
+		= render partial: 'users/challenge_user', locals: {:user => user}
