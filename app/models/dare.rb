@@ -13,8 +13,7 @@ class Dare < ActiveRecord::Base
   validate :cannot_challenge_if_acceptor_already_accepted
 
   def cannot_challenge_if_acceptor_already_accepted
-    if self.acceptor.my_pending_challenges.where("challenge_id = ?", self.challenge_id).any? or
-      self.acceptor.my_accepted_challenges.where("challenge_id = ?", self.challenge_id).any?
+    if self.acceptor.my_accepted_challenges.where("challenge_id = ?", self.challenge_id).any?
       errors[:base] << 'That user already accepted that challenge!'
     end
   end

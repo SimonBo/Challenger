@@ -1,0 +1,10 @@
+
+= form_for([@challenge, @dare]) do |f|
+	- @dare.challenger_id = current_user.id
+	- @dare.challenge_id = @challenge.id
+	- @dare.acceptor_id = user.id
+
+	= f.hidden_field :challenger_id
+	= f.hidden_field :challenge_id
+	= f.hidden_field :acceptor_id
+	= f.submit "Challenge!"

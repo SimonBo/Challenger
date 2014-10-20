@@ -1,5 +1,9 @@
-%h1
-  Who do you want to challenge?
+.text-center
+  %h1
+    Who do you want to challenge to 
+  %h1
+    = @challenge.name
+    ?
 
 - if @dare.errors.any?
   %h2
@@ -21,10 +25,28 @@
     .panel-heading
       %h4.panel-title
         %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#unhonored"}
-          Champions
+          They need more challenges!
     #unhonored.panel-collapse.collapse.select_user
       .panel-body
-        Fill in later
+        - User.sorted_by_failed_accepted_dares.each do |user|
+          %h5
+            = link_to user.username, user_path(user)
+            has failed
+            = pluralize user.failed_dare_count, 'challenge'
+            = render partial: 'users/challenge_user', locals: {:user => user}
+  .panel.panel-default
+    .panel-heading
+      %h4.panel-title
+        %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#champions"}
+          The Fearless ones!
+    #champions.panel-collapse.collapse.select_user
+      .panel-body
+        - User.sorted_by_accepted_dares.each do |user|
+          %h5
+            = link_to user.username, user_path(user)
+            has completed
+            = pluralize user.dare_count, 'challenge'
+            = render partial: 'users/challenge_user', locals: {:user => user}
   .panel.panel-default
     .panel-heading
       %h4.panel-title
@@ -37,8 +59,8 @@
             = hidden_field_tag 'challenge', params[:challenge_id]
             = text_field_tag :query, params[:query], data: {autocomplete_source: users_autocomplete_path}
             = submit_tag "Search", name: nil, id: 'search_for_users'
-      #user_search_result
 
+#user_search_result
 
 
 
