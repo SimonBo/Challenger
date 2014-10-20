@@ -1,4 +1,7 @@
-- unless @users.nil?	
+- if @users.empty?	
+	%h4
+		Sorry, we ain't have nobody like that
+- else
 	- @users.each do |user|
 		%h3	
 			= link_to user.username, user_path(user)
