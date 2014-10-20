@@ -1,0 +1,11 @@
+jQuery ->
+	$('#fb_post').click (e) ->
+	    console.log 'Clicked fb post'
+	    user_token = $('#user_fb_token').attr('data-token')
+	    e.preventDefault()
+	    FB.api "/me/feed?", "post", message: "Test btn", access_token: {user_token}, (response) ->
+	      if not response or response.error
+	        console.log "Couldn't Publish Data"
+	        console.log response.error
+	      else
+	        alert "Message successfully posted to your wall"
