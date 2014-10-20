@@ -4,17 +4,17 @@ NotificationPoller =
 
 	cleanup: ->
 		$('.collapsed:has(a)').each ->
-			console.log 'Showing divs'
+			# console.log 'Showing divs'
 			$(this).removeClass('collapsed').collapse('show')
 		$('.collapse:not(:has(a))').each ->
 			unless $(this).hasClass('collapsed')
-				console.log 'Hiding divs'
+				# console.log 'Hiding divs'
 				$(this).addClass('collapsed').collapse('hide')
 
 	request: ->
 		$.getScript "/notifications"
 		NotificationPoller.cleanup()
-		console.log "Request"
+		# console.log "Request"
 
 		
 		NotificationPoller.poll()
