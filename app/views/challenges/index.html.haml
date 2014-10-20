@@ -1,13 +1,18 @@
 
-.fb-like{"data-action" => "like", "data-href" => "http://simon-challenger.herokuapp.com/", "data-layout" => "button_count", "data-share" => "true", "data-show-faces" => "true"}
-%br
-/ .fb-comments{"data-colorscheme" => "light", "data-href" => "http://simon-challenger.herokuapp.com/", "data-numposts" => "5"}
-.fb-send{"data-colorscheme" => "light", "data-href" => "http://simon-challenger.herokuapp.com/"}
+/ .fb-like{"data-action" => "like", "data-href" => "http://simon-challenger.herokuapp.com/", "data-layout" => "button_count", "data-share" => "true", "data-show-faces" => "true"}
+/ %br
+/ .fb-send{"data-colorscheme" => "light", "data-href" => "http://simon-challenger.herokuapp.com/"}
 %h4
 	Sort by:
-= link_to 'Name', challenges_path(choice: 'name'), remote: true, class: 'sort_link horizontal-break'
+= link_to 'Name', challenges_path(choice: 'name'), remote: true, class: 'sort_link'
+%span.sort-arrow-up.hidden &#x25B2
+%span.sort-arrow-down &#x25BC
 = link_to 'Added on', challenges_path(choice: "date"), remote: true, class: 'sort_link horizontal-break'
-= link_to 'Popular', challenges_path(choice: "popular"), remote: true, class: 'sort_link'
+%span.sort-arrow-up.hidden &#x25B2
+%span.sort-arrow-down &#x25BC
+= link_to 'Popular', challenges_path(choice: "popular"), remote: true, class: 'sort_link horizontal-break'
+%span.sort-arrow-up.hidden &#x25B2
+%span.sort-arrow-down &#x25BC
 
 / #search_direction{data: {direction: "DESC"}}
 

@@ -29,7 +29,7 @@
 %h5.display-inline
   Invite you friend to try out this challenge!
 
-.fb-send{"data-colorscheme" => "light", "data-href" => "http://simon-challenger.herokuapp.com"}
+.fb-send{"data-colorscheme" => "light", "data-href" => "http://simon-challenger.herokuapp.com/challenges/#{@challenge.id}"}
 
 .control-buttons
   = link_to 'Edit', edit_challenge_path(@challenge)

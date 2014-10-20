@@ -151,19 +151,4 @@ class Dare < ActiveRecord::Base
     end
   end
 
-
-
-  def prepare_with_payment(stripe_card_token, user)
-
-    if valid?
-      customer = Stripe::Charge.create(description: user.email, amount: amount*100, card: stripe_card_token, currency: 'usd')
-      user.stripe_customer_token = customer.id
-      user.save
-
-    end
-  rescue Stripe::InvalidRequestError => e
-    logger.error "Stripe error while creating customer: #{e.message}"
-    errors.add :base, "There was a problem with your credit card."
-    false
-  end
 end

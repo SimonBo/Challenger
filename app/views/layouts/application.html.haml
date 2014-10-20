@@ -4,9 +4,8 @@
 		%title Challenger
 	%meta{:content => "width=device-width, initial-scale=1, maximum-scale=1", :name => "viewport"}/
 	= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-	= javascript_include_tag 'application', "https://js.stripe.com/v1/", 'data-turbolinks-track' => true
+	= javascript_include_tag 'application', 'data-turbolinks-track' => true
 	= csrf_meta_tags
-	= tag :meta, :name => "stripe-key", :content => ENV['STRIPE_PUBLIC_KEY']
 	%body
 		.nav
 			= render 'layouts/navbar'
