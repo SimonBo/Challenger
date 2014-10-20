@@ -1,0 +1,35 @@
+jQuery ->
+
+  $.ajax
+    url: "//connect.facebook.net/en_US/sdk.js"
+    dataType: 'script'
+    cache: true
+    version: 'v2.1'
+
+  $('#fb_post').click (e) ->
+    console.log 'Clicked fb post'
+    user_token = $('#user_fb_token').attr('data-token')
+    e.preventDefault()
+    FB.api "/me/feed?", "post", message: "Test btn", access_token: {user_token}, (response) ->
+      if not response or response.error
+        console.log "Couldn't Publish Data"
+        console.log response.error
+      else
+        alert "Message successfully posted to your wall"
+
+
+
+window.fbAsyncInit = ->
+  FB.init(appId: '<%= ENV["fb_app_id"] %>', cookie: true)
+
+  $('#sign_in').click (e) ->
+    e.preventDefault()
+    FB.login (response) ->
+      window.location = '/users/auth/facebook/callback' if response.authResponse
+    , scope: "publish_actions, email, user_friends"
+
+  $('#sign_out').click (e) ->
+    FB.getLoginStatus (response) ->
+      FB.logout() if response.authResponse
+    true
+
