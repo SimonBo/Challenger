@@ -3,8 +3,10 @@ class UsersController < ApplicationController
   respond_to :js
 
   def index
-    # @users = User.sorted_by_accepted_dares
+    @users = User.sorted_by_accepted_dares
+  end
 
+  def autocomplete
     @users = User.order("username, email").where("username ILIKE ? OR email ILIKE ?", "%#{params[:term]}%", "%#{params[:term]}%")
     render json: @users.map(&:username)
   end

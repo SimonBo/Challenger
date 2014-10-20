@@ -72,7 +72,7 @@ class DaresController < ApplicationController
         redirect_to challenges_path, notice: 'You accepted the challenge!'
       else
         acceptor = User.find(params[:dare][:acceptor_id]).username
-        redirect_to challenges_path, notice: 'You challenged #{acceptor} to #{@challenge.name}!'
+        redirect_to challenges_path, notice: "You challenged #{acceptor} to #{@challenge.name}!"
       end
     else
       render :new

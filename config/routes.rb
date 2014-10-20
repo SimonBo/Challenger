@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   # end
 
   get 'users/search' => 'users#search'
+  get 'users/autocomplete' => 'users#autocomplete'
   get 'users/:id' => 'users#show', as: 'user'
   get 'users' => 'users#index', as: 'users'
   get 'dares_voting' => 'dares#show_voting', as: 'dares_voting'
