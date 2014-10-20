@@ -3,7 +3,10 @@ class UsersController < ApplicationController
   respond_to :js
 
   def index
-    @users = User.sorted_by_accepted_dares
+    # @users = User.sorted_by_accepted_dares
+
+    @users = User.order(:username).where("username ILIKE ?", "%#{params[:term]}%")
+    render json: @users.map(&:username)
   end
 
   def search
