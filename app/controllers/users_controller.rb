@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def index
     # @users = User.sorted_by_accepted_dares
 
-    @users = User.order(:username).where("username ILIKE ?", "%#{params[:term]}%")
+    @users = User.order("username, email").where("username ILIKE ? OR email ILIKE ?", "%#{params[:term]}%", "%#{params[:term]}%")
     render json: @users.map(&:username)
   end
 
