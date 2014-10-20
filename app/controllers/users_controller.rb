@@ -8,6 +8,8 @@ class UsersController < ApplicationController
 
   def search
     @users = User.text_search(params[:query])
+    @dare = Dare.new
+    @challenge = Challenge.find(params[:challenge])
   end
 
   

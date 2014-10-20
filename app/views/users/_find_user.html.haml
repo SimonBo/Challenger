@@ -7,5 +7,12 @@
 			= link_to user.username, user_path(user)
 			has completed
 			= pluralize user.accepted_dares.where('status = ?', 'Success').count, 'challenge'
-		= link_to challenges_path  do
-			%button.btn.btn-lg.btn-info Challenge!
+		= form_for([@challenge, @dare]) do |f|
+			- @dare.challenger_id = current_user.id
+			- @dare.challenge_id = @challenge.id
+			-@dare.acceptor_id = user.id
+
+			= f.hidden_field :challenger_id
+			= f.hidden_field :challenge_id
+			= f.hidden_field :acceptor_id
+			= f.submit "Challenge!"

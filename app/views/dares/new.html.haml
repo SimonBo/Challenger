@@ -8,22 +8,13 @@
       - @dare.errors.full_messages.each do |msg|
         %li= msg
 
-/ = form_for([@challenge, @dare]) do |f|
-/   - @dare.challenger_id = current_user.id
-/   - @dare.challenge_id = @challenge.id
-  
-/   = f.hidden_field :challenger_id
-/   = f.hidden_field :challenge_id
 
-
-/   .field
-/     = collection_select(:dare, :acceptor_id, User.all, :id, :username)
-/   = f.submit "Bet", id: 'bet'
-    
 = form_tag users_search_path, method: :get, remote: true do 
   %p
+    = hidden_field_tag 'challenge', params[:challenge_id]
     = text_field_tag :query, params[:query]
     = submit_tag "Search", name: nil, id: 'search_for_users'
 
 #user_search_result
+
 
