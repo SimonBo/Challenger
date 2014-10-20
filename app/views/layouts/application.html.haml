@@ -12,6 +12,9 @@
 		.container
 			.row
 				.col-sm-8
+					#fb-root
+					- if user_signed_in?
+						#user_fb_token{"data-token" => current_user.oauth_token }
 					= render 'layouts/messages'
 					= yield
 				.col-sm-4
