@@ -68,11 +68,15 @@ class DaresController < ApplicationController
     @dare = Dare.new(dare_params)
 
     if @dare.save
+      challenger = User.find(params[:dare][:challenger_id])
+      acceptor = User.find(params[:dare][:acceptor_id])
       if params[:dare][:challenger_id] == params[:dare][:acceptor_id]
-        redirect_to challenges_path, notice: 'You accepted the challenge!'
+        UserMailer.self_challenge(challenger, @dare).deliver
+        redirect_to challenge_dare_path(@challenge, @dare), notice: 'You accepted the challenge!'
       else
-        acceptor = User.find(params[:dare][:acceptor_id]).username
-        redirect_to challenges_path, notice: "You challenged #{acceptor} to #{@challenge.name}!"
+        UserMailer.you_challenged(challenger, acceptor, @dare).deliver
+        UserMailer.you_were_challenged(challenger, acceptor, @dare).deliver
+        redirect_to challenge_dare_path(@challenge, @dare), notice: "You challenged #{acceptor.username} to #{@challenge.name}!"
       end
     else
       render :new

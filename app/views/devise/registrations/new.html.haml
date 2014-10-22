@@ -9,5 +9,5 @@
 			= f.input :password, required: true, input_html: { class: 'devise-input-limit-width' }
 			= f.input :password_confirmation, required: true, input_html: { class: 'devise-input-limit-width' }
 		.form-actions
-			= f.button :submit, "Sign up"
+			= f.button :submit, "Sign up", id: "sign_up_submit"
 	= render "devise/shared/links"

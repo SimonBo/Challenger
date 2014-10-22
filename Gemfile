@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+gem "minitest"
 group :production do
   gem 'thin'
   gem 'rails_12factor'
@@ -13,6 +13,7 @@ group :test do
   gem "selenium-webdriver", "~> 2.43.0"
   gem "shoulda-matchers", "~> 2.2.0"
   gem 'capybara-screenshot'
+  gem 'cucumber-rails', :require => false
 end
 
 gem 'whenever', :require => false
@@ -33,6 +34,7 @@ group :development do
   gem 'pry-byebug'
   gem 'guard-rspec', require: false
   gem 'rb-fsevent', '~> 0.9.3'
+  gem 'guard-cucumber'
 end
 
 group :development, :test do

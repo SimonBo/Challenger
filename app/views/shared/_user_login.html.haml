@@ -12,7 +12,7 @@
       %li
         = link_to 'Sign out', destroy_user_session_path, :method=>'delete'
 - else
-  = link_to user_omniauth_authorize_path(:facebook), id: 'sign_in' do
+  = link_to user_omniauth_authorize_path(:facebook), id: 'sign_in_fb' do
     %button.btn.btn-md.btn-primary Facebook Connect
   = link_to new_user_session_path do
     %button.btn.btn-sm.btn-default Sign in

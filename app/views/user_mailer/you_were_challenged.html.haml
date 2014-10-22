@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1
+      Congratulations! You've been challenged by #{@challenger.username.capitalize} to #{@dare.challenge.name}
+    %p
+      Show #{@challenger.username.capitalize} who's the boss!
+    %p
+      Go
+      = link_to 'here', challenge_dare_path(@dare.challenge_id, @dare)
+      to check out the details!
