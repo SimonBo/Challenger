@@ -23,5 +23,6 @@ class UsersController < ApplicationController
     @challenged_users = @user.dares.where.not(acceptor_id: @user.id)
   end
 
+  
 
 end

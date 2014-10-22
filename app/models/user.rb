@@ -12,12 +12,18 @@ class User < ActiveRecord::Base
 
   validates :username, presence: true, uniqueness: true, length: { in: 2..50 }
 
+  after_create :send_welcome_email
+
 
   include PgSearch
   pg_search_scope :search, against: [:username, :email],
                   using: {tsearch: {prefix: true, dictionary: "english" }}
 
   attr_accessor :login
+
+  def send_welcome_email
+    UserMailer.welcome_email(self).deliver
+  end
 
   def self.text_search(query)
     if query.present?
