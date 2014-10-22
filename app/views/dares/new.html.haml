@@ -1,42 +1,54 @@
-%h1
-  Challenge with a bet!
+.text-center
+  %h1
+    Who do you want to challenge to 
+  %h1.text-danger
+    = @challenge.name
+    ?
 
 - if @dare.errors.any?
   %h2
-    = "#{pluralize(@dare.errors.count, "error")} prohibited this dare from being saved:"
+    = "There was a problem:"
     %ul
       - @dare.errors.full_messages.each do |msg|
         %li= msg
 
-= form_for([@challenge, @dare]) do |f|
-  - @dare.challenger_id = current_user.id
-  - @dare.challenge_id = @challenge.id
-  
-  = hidden_field_tag :stripe_card_token
-  = f.hidden_field :challenger_id
-  = f.hidden_field :challenge_id
+#select_acceptor.panel-group
+  .panel.panel-default
+    .panel-heading
+      %h4.panel-title
+        %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#friends"}
+          Friends
+    #friends.panel-collapse.collapse.in.select_user
+      .panel-body
+        Friends go here
+  .panel.panel-default
+    .panel-heading
+      %h4.panel-title
+        %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#unhonored"}
+          They need more challenges!
+    #unhonored.panel-collapse.collapse.select_user
+      .panel-body
+        = render 'users/most_failed'
+  .panel.panel-default
+    .panel-heading
+      %h4.panel-title
+        %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#champions"}
+          The Fearless ones!
+    #champions.panel-collapse.collapse.select_user
+      .panel-body
+        = render 'users/most_success'
+  .panel.panel-default
+    .panel-heading
+      %h4.panel-title
+        %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#search_box"}
+          Find by name/email
+    #search_box.panel-collapse.collapse.select_user
+      .panel-body
+        = render 'users/search_box'
+
+#user_search_result
 
 
-  .field
-    = collection_select(:dare, :acceptor_id, User.all, :id, :username)
-    
-  .field
-    = f.label :with_bet, 'Add a bet?'
-    = f.check_box :with_bet
-  .field.betting_fields
-    = f.number_field :amount
-    = f.label :amount
 
-  .field.betting_fields
-    = label_tag :card_number, "Credit Card Number"
-    = text_field_tag :card_number, nil, name: nil
-  .field.betting_fields
-    = label_tag :card_code, "Security Code on Card (CVV)"
-    = text_field_tag :card_code, nil, name: nil
-  .field.betting_fields
-    = label_tag :card_month, "Card Expiration"
-    = select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"}
-    = select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year"}
-  #stripe_error.betting_fields
-    %noscript JavaScript is not enabled and is required for this form. First enable it in your web browser settings.
-  = f.submit "Bet", id: 'bet'
+
+

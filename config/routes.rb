@@ -10,10 +10,13 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users
-  # get "/challenges/:id/dares" => 'dares#create'
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "registrations" }
+  # devise_scope :user do
+  #   get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
+  # end
 
-
+  get 'users/search' => 'users#search'
+  get 'users/autocomplete' => 'users#autocomplete'
   get 'users/:id' => 'users#show', as: 'user'
   get 'users' => 'users#index', as: 'users'
   get 'dares_voting' => 'dares#show_voting', as: 'dares_voting'
@@ -26,7 +29,8 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'challenges#index'
+  get '/' => 'challenges#intro', as: 'intro'
+  root 'challenges#intro'
 
 
 

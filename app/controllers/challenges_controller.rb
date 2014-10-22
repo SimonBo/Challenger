@@ -1,7 +1,9 @@
 class ChallengesController < ApplicationController
-  before_action :set_challenge, except: [:index,:new, :create, :popular_challenges]
+  before_action :set_challenge, except: [:index,:new, :create, :popular_challenges, :intro]
   respond_to :js
 
+  def intro
+  end
 
   def index
     @challenges = Challenge.text_search(params[:query])

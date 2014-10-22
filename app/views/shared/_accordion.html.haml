@@ -7,7 +7,7 @@
             Notifications:
             %span#pending-notifications= current_user.my_pending_challenges.count if current_user.my_pending_challenges.any?
 
-      #collapseOne.panel-collapse.collapse.in.panel-body
+      #collapseOne.panel-collapse.collapse.in.panel-body.user_panel
         = render 'users/user_notifications'
     .panel.panel-default
       .panel-heading
@@ -15,7 +15,7 @@
           %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseTwo"}
             Accepted Challenges:
       #collapseTwo.panel-collapse.in.collapse
-        .panel-body
+        .panel-body.user_panel
           = render 'challenges/accepted_challenges' 
     .panel.panel-default
       .panel-heading
@@ -23,7 +23,7 @@
           %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseThree"}
             You have challenged:
       #collapseThree.panel-collapse.in.collapse
-        .panel-body
+        .panel-body.user_panel
           = render 'challenges/i_challenged'
     .panel.panel-default
       .panel-heading
@@ -31,7 +31,7 @@
           %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseFour"}
             Recently put to the vote:
       #collapseFour.panel-collapse.in.collapse
-        .panel-body
+        .panel-body.user_panel
           = render 'shared/newest_voting'
   = link_to new_challenge_path do
     %button.btn.btn-lg.btn-info New Challenge

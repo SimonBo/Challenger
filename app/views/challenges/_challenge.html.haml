@@ -1,8 +1,7 @@
-%p
-	Name: #{challenge.name}
-
-%p 
-	Description: #{challenge.description}
+%h3.challenge-name
+	= link_to challenge.name, challenge_path(challenge)
+%h5
+	= challenge.description
 
 - if user_signed_in?
 	.btn-group

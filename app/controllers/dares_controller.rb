@@ -66,13 +66,16 @@ class DaresController < ApplicationController
   def create
     @challenge = Challenge.find(params[:challenge_id])
     @dare = Dare.new(dare_params)
-    if params[:dare][:with_bet] == "1"
-      @dare.prepare_with_payment(params[:stripe_card_token], current_user)      
-    end
+
     if @dare.save
-      redirect_to root_path, notice: 'You accepted the challenge!'
+      if params[:dare][:challenger_id] == params[:dare][:acceptor_id]
+        redirect_to challenges_path, notice: 'You accepted the challenge!'
+      else
+        acceptor = User.find(params[:dare][:acceptor_id]).username
+        redirect_to challenges_path, notice: "You challenged #{acceptor} to #{@challenge.name}!"
+      end
     else
-      redirect_to root_path, alert: 'There was a problem, try again!'
+      render :new
     end  
   end
 
@@ -99,7 +102,7 @@ class DaresController < ApplicationController
           end
         end
       else
-        redirect_to root_path, notice: 'Yay!'
+        redirect_to challenges_path, notice: 'Yay!'
       end
     else
       redirect_to root_path, notice: 'Something went wrong'

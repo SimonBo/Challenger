@@ -1,22 +1,17 @@
 NotificationPoller =
 	poll: ->
-		setTimeout @request, 10000
+		setTimeout @request, 30000
 
 	cleanup: ->
-		$('.collapsed:has(a)').each ->
-			console.log 'Showing divs'
-			$(this).removeClass('collapsed').collapse('show')
-		$('.collapse:not(:has(a))').each ->
-			unless $(this).hasClass('collapsed')
-				console.log 'Hiding divs'
+		$('.user_panel.collapsed:has(a)').each ->
+				$(this).removeClass('collapsed').collapse('show')
+		$('.user_panel.collapse:not(:has(a))').each ->
+			unless $(this).hasClass('collapsed') 
 				$(this).addClass('collapsed').collapse('hide')
 
 	request: ->
 		$.getScript "/notifications"
 		NotificationPoller.cleanup()
-		console.log "Request"
-
-		
 		NotificationPoller.poll()
 
 
