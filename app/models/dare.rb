@@ -133,6 +133,8 @@ class Dare < ActiveRecord::Base
           self.voting_status = 'Failed'
         end
         save!
+        UserMailer.challenger_voting_ended(self.challenger, self.acceptor, self).deliver
+        UserMailer.acceptor_voting_ended(self.challenger, self.acceptor, self).deliver
       else
         false
       end
@@ -158,6 +160,7 @@ class Dare < ActiveRecord::Base
       self.voting_start_date = DateTime.now
       self.status = 'Voting'
       save!
+      UserMailer.voting_started(self.challenger, self.acceptor, self).deliver
     end
   end
 

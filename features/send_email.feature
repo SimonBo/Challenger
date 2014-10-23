@@ -44,3 +44,17 @@ I get emails when I take actions
 	# 	And I reject proof
 	# 	Then he gets proof rejection email
 	# 	And I get voting start email
+
+	Scenario: The proof I uploaded wasn't validated by the challenger and the time has expired
+		Given I upload proof
+		And 7 days pass
+		And the challenger doesn't accept or reject my proof
+		Then the challenge is put to the vote
+		And I get voting start email
+		And the challenger gets voting start email 
+
+	Scenario: The voting on the challenge I created has finished and I won
+		Given the voting has started
+		And the acceptor wins the voting
+		Then the challenger gets voting end email
+		And the acceptor gets voting end email

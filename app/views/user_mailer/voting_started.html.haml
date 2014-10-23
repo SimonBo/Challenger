@@ -1,0 +1,13 @@
+!!!
+%html
+	%head
+		%meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+	%body
+		%h1
+			The voting has begun!
+		%p
+			Visit
+			= link_to @dare.challenge.name, challenge_dare_path(@dare.challenge_id, @dare)
+			to see how it's going!
+
+

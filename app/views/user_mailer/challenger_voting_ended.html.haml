@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1
+      The voting for 
+      = link_to @dare.challenge.name, challenge_dare_path(@dare.challenge_id, @dare)
+      has finished!
+    %p
+      - if @dare.status == 'Success'
+        #{@acceptor.username.capitalize} has won!
+      - else
+        #{@acceptor.username.capitalize} has lost!

@@ -62,4 +62,26 @@ class UserMailer < ActionMailer::Base
     mail(to: @challenger.email, subject: "You rejected #{@acceptor.username.capitalize}'s proof!")
   end
 
+  def voting_started(challenger, acceptor, dare)
+    @challenger = challenger
+    @acceptor = acceptor  
+    @dare = dare
+    recipients = [@challenger.email, @acceptor.email]
+    mail(to: recipients, subject: "#{@dare.challenge.name} was put to the vote!")
+  end
+
+  def acceptor_voting_ended(challenger, acceptor, dare)
+    @challenger = challenger
+    @acceptor = acceptor  
+    @dare = dare
+    mail(to: @acceptor.email, subject: "The voting for #{@dare.challenge.name} has ended!")
+  end
+
+  def challenger_voting_ended(challenger, acceptor, dare)
+    @challenger = challenger
+    @acceptor = acceptor  
+    @dare = dare
+    mail(to: @challenger.email, subject: "The voting for #{@dare.challenge.name} has ended!")
+    
+  end
 end

@@ -130,7 +130,68 @@ Then(/^he gets proof rejection email$/) do
 end
 
 Then(/^I get voting start email$/) do
-  expect(ActionMailer::Base.deliveries.last.to).to eq [@challenger.email]
-  expect(ActionMailer::Base.deliveries.last.subject).to eq "You rejected #{@acceptor.username.capitalize}'s proof!"
+  expect(ActionMailer::Base.deliveries.last.to).to include (@challenger.email)
+  expect(ActionMailer::Base.deliveries.last.subject).to eq "#{@dare.challenge.name} was put to the vote!"
+end
+
+Given(/^I upload proof$/) do
+  @challenge = FactoryGirl.create(:challenge)
+  @challenger = FactoryGirl.create(:user)
+  @acceptor = FactoryGirl.create(:user)
+  @dare = FactoryGirl.create(:dare, challenger_id: @challenger.id, acceptor_id: @acceptor.id, challenge_id: @challenge.id)
+
+  @dare.utube_link = @dare.utube_link + ["cD4TAgdS_Xw"]
+  @dare.save!
+end
+
+Given(/^(\d+) days pass$/) do |arg1|
+  @dare.start_date = arg1.to_i.days.ago
+  @dare.save!
+end
+
+Given(/^the challenger doesn't accept or reject my proof$/) do
+expect(@dare.proof_status).to eq 'Unaccepted'
+end
+
+Then(/^the challenge is put to the vote$/) do
+  @dare.up_for_voting?
+  expect(@dare.status).to eq 'Voting'
+end
+
+Then(/^the challenger gets voting start email$/) do
+  expect(ActionMailer::Base.deliveries.last.subject).to eq "#{@dare.challenge.name} was put to the vote!"
+end
+
+Given(/^the voting has started$/) do
+  @challenge = FactoryGirl.create(:challenge)
+  @challenger = FactoryGirl.create(:user)
+  @acceptor = FactoryGirl.create(:user)
+  @dare = FactoryGirl.create(:dare, challenger_id: @challenger.id, acceptor_id: @acceptor.id, challenge_id: @challenge.id)
+
+  @dare.utube_link = @dare.utube_link + ["cD4TAgdS_Xw"]
+  @dare.status = 'Voting'
+  @dare.proof_status = 'Rejected'
+  @dare.voting_start_date = DateTime.now
+  @dare.save!
+end
+
+Given(/^the acceptor wins the voting$/) do
+  3.times do |i|
+    FactoryGirl.create(:vote, dare_id: @dare.id, user_id: FactoryGirl.build_stubbed(:user).id) 
+  end
+  FactoryGirl.create(:vote, dare_id: @dare.id, vote_for: false)
+  @dare.voting_start_date = 5.days.ago
+  @dare.voting_finished?
+
+  expect(@dare.status).to eq 'Success'
+end
+
+Then(/^the challenger gets voting end email$/) do
+  expect(ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.length-2].to).to eq [@challenger.email]
+  expect(ActionMailer::Base.deliveries.last.subject).to eq "The voting for #{@dare.challenge.name} has ended!" 
+end
+
+Then(/^the acceptor gets voting end email$/) do
+  expect(ActionMailer::Base.deliveries.last.to).to include (@acceptor.email)
 end
 
