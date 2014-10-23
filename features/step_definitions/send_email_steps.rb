@@ -107,4 +107,30 @@ Then(/^I get end of challenge email$/) do
   expect(ActionMailer::Base.deliveries.last.to).to eq [@challenger.email]
 end
 
+Given(/^I reject proof$/) do
+  visit root_path
+
+  click_on "#{@acceptor.username}"
+  click_on "Sign out"
+
+  click_button 'Sign in'
+  fill_in 'Login', :with => @challenger.email
+  fill_in 'Password', :with => @challenger.password
+  click_button 'Log in'
+
+  within('#i_challenged') do
+    click_on "#{@challenge.name}"
+  end
+  click_on 'Reject proof'
+end
+
+Then(/^he gets proof rejection email$/) do
+  # expect(ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.length-2].to).to eq [@acceptor.email]
+  # expect(ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.length-2].subject).to eq "#{@challenger.username.capitalize} has rejected your proof!"
+end
+
+Then(/^I get voting start email$/) do
+  expect(ActionMailer::Base.deliveries.last.to).to eq [@challenger.email]
+  expect(ActionMailer::Base.deliveries.last.subject).to eq "You rejected #{@acceptor.username.capitalize}'s proof!"
+end
 

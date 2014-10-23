@@ -3,25 +3,6 @@ class DaresController < ApplicationController
   before_action :authenticate_user!
   before_action :set_challenger_acceptor, only: [:create, :accept_proof]  
 
-  # def upload_proof
-  #   if params[:dare][:vid_link].empty?
-  #     redirect_to challenge_dare_path(params[:challenge_id], @dare), alert: 'Link to video not provided'
-  #   else
-  #     vid_link = YouTubeAddy.extract_video_id(params[:dare][:vid_link])
-  #     if vid_link.length == 11
-  #       @dare.utube_link = @dare.utube_link + [vid_link]
-  #       @dare.save
-  #       if @acceptor == @challenger
-  #         redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
-  #       else
-  #         UserMailer.acceptor_uploaded_proof(challenger, acceptor, @dare).deliver
-  #         redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
-  #       end
-  #     else
-  #       redirect_to challenge_dare_path(params[:challenge_id], @dare), alert: 'The link is not a valid Youtube link'
-  #     end
-  #   end
-  # end
 
   def show_voting
     @dares_voting = Dare.where('status = ?', 'Voting')
@@ -63,6 +44,7 @@ class DaresController < ApplicationController
     @dare.proof_status = 'Rejected'
     @dare.voting_start_date = DateTime.now
     if @dare.save
+      UserMailer.challenger_rejected_proof(@dare.challenger, @dare.acceptor, @dare).deliver
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'You rejected the proof!'
     else
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Something went wrong!'

@@ -1,0 +1,12 @@
+!!!
+%html
+	%head
+		%meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+	%body
+		%h1
+			You have rejected #{@acceptor.username.capitalize}'s proof! 
+		%p
+			Let's see what other users think about this.
+		%p
+			Voting has started! Check it out at 
+			= link_to @dare.challenge.name, challenge_dare_path(@dare.challenge_id, @dare)

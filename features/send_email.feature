@@ -19,7 +19,7 @@ I get emails when I take actions
 	# 	And I challenge other user
 	# 	Then I should receive a challenge confirmation email
 	# 	And the acceptor should receive a challenge request email
-	
+
 	# @javascript
 	# Scenario: User I challenged uploads proof
 	# 	Given I challenged other user
@@ -27,11 +27,20 @@ I get emails when I take actions
 	# 	And he uploads proof
 	# 	Then I get a proof upload email
 
+	# @javascript
+	# Scenario: I accept proof
+	# 	Given I challenged other user
+	# 	And he accepted the challenge
+	# 	And he uploads proof
+	# 	And I accept proof
+	# 	Then he gets proof acceptance email
+	# 	And I get end of challenge email
+
 	@javascript
-	Scenario: I accept proof
+	Scenario: I reject proof
 		Given I challenged other user
 		And he accepted the challenge
 		And he uploads proof
-		And I accept proof
-		Then he gets proof acceptance email
-		And I get end of challenge email
+		And I reject proof
+		Then he gets proof rejection email
+		And I get voting start email
