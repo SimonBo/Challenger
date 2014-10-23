@@ -1,7 +1,7 @@
 class DaresController < ApplicationController
   before_action :set_dare, except: [:index, :new, :create, :show_voting]
   before_action :authenticate_user!
-  before_action :set_challenger_acceptor, only: [:create, :accept_proof]  
+  before_action :set_challenger_acceptor, only: [:create]  
 
 
   def show_voting
@@ -32,7 +32,8 @@ class DaresController < ApplicationController
     @dare.status = 'Success'
     @dare.proof_status = 'Accepted'
     if @dare.save
-      UserMailer.challenger_accepted_proof(@challenger, @acceptor, @dare).deliver
+      UserMailer.challenger_accepted_proof(@dare.challenger, @dare.acceptor, @dare).deliver
+      UserMailer.accepted_proof(@dare.challenger, @dare.acceptor, @dare).deliver
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'You accepted the proof!'
     else
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Something went wrong!'
@@ -45,6 +46,7 @@ class DaresController < ApplicationController
     @dare.voting_start_date = DateTime.now
     if @dare.save
       UserMailer.challenger_rejected_proof(@dare.challenger, @dare.acceptor, @dare).deliver
+      UserMailer.rejected_proof(@dare.challenger, @dare.acceptor, @dare).deliver
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'You rejected the proof!'
     else
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Something went wrong!'

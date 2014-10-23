@@ -36,11 +36,11 @@ I get emails when I take actions
 	# 	Then he gets proof acceptance email
 	# 	And I get end of challenge email
 
-	@javascript
-	Scenario: I reject proof
-		Given I challenged other user
-		And he accepted the challenge
-		And he uploads proof
-		And I reject proof
-		Then he gets proof rejection email
-		And I get voting start email
+	# @javascript
+	# Scenario: I reject proof
+	# 	Given I challenged other user
+	# 	And he accepted the challenge
+	# 	And he uploads proof
+	# 	And I reject proof
+	# 	Then he gets proof rejection email
+	# 	And I get voting start email

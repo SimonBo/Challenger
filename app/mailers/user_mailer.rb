@@ -39,7 +39,13 @@ class UserMailer < ActionMailer::Base
     @acceptor = acceptor  
     @dare = dare
     mail(to: @acceptor.email, subject: "#{@challenger.username.capitalize} has accepted your proof! Hurray, you won!")
-    mail(to: @challenger.email, subject: "You accepted #{@acceptor.username.capitalize}'s' proof. Let's celebrate!", template_name: 'accepted_proof')
+  end
+
+  def accepted_proof(challenger, acceptor, dare)
+    @challenger = challenger
+    @acceptor = acceptor  
+    @dare = dare
+    mail(to: @challenger.email, subject: "You accepted #{@acceptor.username.capitalize}'s' proof. Let's celebrate!")
   end
 
   def challenger_rejected_proof(challenger, acceptor, dare)
@@ -47,7 +53,13 @@ class UserMailer < ActionMailer::Base
     @acceptor = acceptor  
     @dare = dare
     mail(to: @acceptor.email, subject: "#{@challenger.username.capitalize} has rejected your proof!")
-    mail(to: @challenger.email, subject: "You rejected #{@acceptor.username.capitalize}'s proof!", template_name: 'rejected_proof')
+  end
+
+  def rejected_proof(challenger, acceptor, dare)
+    @challenger = challenger
+    @acceptor = acceptor  
+    @dare = dare
+    mail(to: @challenger.email, subject: "You rejected #{@acceptor.username.capitalize}'s proof!")
   end
 
 end

@@ -125,8 +125,8 @@ Given(/^I reject proof$/) do
 end
 
 Then(/^he gets proof rejection email$/) do
-  # expect(ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.length-2].to).to eq [@acceptor.email]
-  # expect(ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.length-2].subject).to eq "#{@challenger.username.capitalize} has rejected your proof!"
+  expect(ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.length-2].to).to eq [@acceptor.email]
+  expect(ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.length-2].subject).to eq "#{@challenger.username.capitalize} has rejected your proof!"
 end
 
 Then(/^I get voting start email$/) do
