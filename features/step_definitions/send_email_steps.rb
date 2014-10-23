@@ -51,3 +51,35 @@ end
 Then(/^the acceptor should receive a challenge request email$/) do
   expect(ActionMailer::Base.deliveries.last.to).to eq [@test_user.email]
 end
+
+Given(/^I challenged other user$/) do
+  @challenge = FactoryGirl.create(:challenge)
+  @challenger = FactoryGirl.create(:user)
+  @acceptor = FactoryGirl.create(:user)
+  @dare = FactoryGirl.create(:dare, challenger_id: @challenger.id, acceptor_id: @acceptor.id, challenge_id: @challenge.id)
+  expect(ActionMailer::Base.deliveries.count).to eq 2
+end
+
+Given(/^he accepted the challenge$/) do
+  visit root_path
+  click_button 'Sign in'
+  fill_in 'Login', :with => @acceptor.email
+  fill_in 'Password', :with => @acceptor.password
+  click_button 'Log in'
+
+  click_button 'Accept'
+end
+
+Given(/^he uploads proof$/) do
+  visit challenge_dare_path(@challenge, @dare)
+  fill_in 'dare_vid_link', with: "https://youtu.be/cD4TAgdS_Xw"
+  click_button "Upload Youtube Video"
+  save_and_open_screenshot
+end
+
+Then(/^I get a proof upload email$/) do
+  expect(page).to have_content 'Added proof'
+  expect(ActionMailer::Base.deliveries.count).to eq 3
+  # expect(ActionMailer::Base.deliveries.last.to).to eq [@challenger.email]
+end
+

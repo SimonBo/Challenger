@@ -26,4 +26,11 @@ class UserMailer < ActionMailer::Base
     @dare = dare
     mail(to: @acceptor.email, subject: "You've been challenged by #{@challenger.username.capitalize}")
   end
+
+  def acceptor_uploaded_proof(challenger, acceptor, dare)
+    @challenger = challenger
+    @acceptor = acceptor  
+    @dare = dare
+    mail(to: @challenger.email, subject: "#{@acceptor.username.capitalize} uploaded proof of completion of your challenge. Check it out!")
+  end
 end

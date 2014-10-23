@@ -1,0 +1,5 @@
+%h4
+  = "#{pluralize(@dare.errors.count, "error")} prohibited this dare from being saved:"
+  %ul
+    - @dare.errors.full_messages.each do |msg|
+      %li= msg

@@ -1,3 +1,7 @@
+- if @dare.errors.any?
+  #error_explanation
+    = render 'errors'
+
 - if @dare.acceptor_id == @dare.challenger_id
   %h3    
     #{@dare.challenger.username} has challenged himself to #{@dare.challenge.name} challenge!

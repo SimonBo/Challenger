@@ -66,10 +66,6 @@ class ChallengesController < ApplicationController
     end
   end
 
-  # def popular_challenges
-  #   @sorted_challenges = Challenge.order("dares_count DESC")
-  #   render "index.js"
-  # end
 
   private
 

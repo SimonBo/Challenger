@@ -10,14 +10,17 @@ class Dare < ActiveRecord::Base
   before_save :create_start_date
   before_save :set_proof_array
 
-  validate :cannot_challenge_if_acceptor_already_accepted
+  # validate :cannot_challenge_if_acceptor_already_accepted
 
   def cannot_challenge_if_acceptor_already_accepted
     if self.acceptor.my_accepted_challenges.where("challenge_id = ?", self.challenge_id).any?
-      errors[:base] << 'That user already accepted that challenge!'
+      errors.add(:acceptor_id, 'That user already accepted that challenge!')
     end
   end
 
+  def is_self_selected?
+    self.acceptor_id == self.challenger_id
+  end
   def self.newest_voting
     where(status: 'Voting').order("voting_start_date desc")
   end

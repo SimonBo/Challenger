@@ -4,7 +4,7 @@ describe DaresController do
   let(:challenger) { create(:user) }
   let(:acceptor) { create(:user) }
   let(:challenge) { create(:challenge) }
-  let(:dare) { create(:dare) }
+  let(:dare) { create(:dare, acceptor_id: acceptor) }
   let(:user) { create(:user) }
 
 

@@ -1,6 +1,27 @@
 class DaresController < ApplicationController
   before_action :set_dare, except: [:index, :new, :create, :show_voting]
   before_action :authenticate_user!
+  before_action :set_challenger_acceptor, only: [:create]  
+
+  # def upload_proof
+  #   if params[:dare][:vid_link].empty?
+  #     redirect_to challenge_dare_path(params[:challenge_id], @dare), alert: 'Link to video not provided'
+  #   else
+  #     vid_link = YouTubeAddy.extract_video_id(params[:dare][:vid_link])
+  #     if vid_link.length == 11
+  #       @dare.utube_link = @dare.utube_link + [vid_link]
+  #       @dare.save
+  #       if @acceptor == @challenger
+  #         redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
+  #       else
+  #         UserMailer.acceptor_uploaded_proof(challenger, acceptor, @dare).deliver
+  #         redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
+  #       end
+  #     else
+  #       redirect_to challenge_dare_path(params[:challenge_id], @dare), alert: 'The link is not a valid Youtube link'
+  #     end
+  #   end
+  # end
 
   def show_voting
     @dares_voting = Dare.where('status = ?', 'Voting')
@@ -68,15 +89,13 @@ class DaresController < ApplicationController
     @dare = Dare.new(dare_params)
 
     if @dare.save
-      challenger = User.find(params[:dare][:challenger_id])
-      acceptor = User.find(params[:dare][:acceptor_id])
       if params[:dare][:challenger_id] == params[:dare][:acceptor_id]
-        UserMailer.self_challenge(challenger, @dare).deliver
+        UserMailer.self_challenge(@challenger, @dare).deliver
         redirect_to challenge_dare_path(@challenge, @dare), notice: 'You accepted the challenge!'
       else
-        UserMailer.you_challenged(challenger, acceptor, @dare).deliver
-        UserMailer.you_were_challenged(challenger, acceptor, @dare).deliver
-        redirect_to challenge_dare_path(@challenge, @dare), notice: "You challenged #{acceptor.username} to #{@challenge.name}!"
+        UserMailer.you_challenged(@challenger, @acceptor, @dare).deliver
+        UserMailer.you_were_challenged(@challenger, @acceptor, @dare).deliver
+        redirect_to challenge_dare_path(@challenge, @dare), notice: "You challenged #{@acceptor.username} to #{@challenge.name}!"
       end
     else
       render :new
@@ -99,8 +118,13 @@ class DaresController < ApplicationController
           vid_link = YouTubeAddy.extract_video_id(params[:dare][:vid_link])
           if vid_link.length == 11
             @dare.utube_link = @dare.utube_link + [vid_link]
-            @dare.save
-            redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
+            @dare.save!
+            if @dare.is_self_selected?
+              redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
+            else
+              UserMailer.acceptor_uploaded_proof(@dare.challenger, @dare.acceptor, @dare).deliver
+              redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
+            end
           else
             redirect_to challenge_dare_path(params[:challenge_id], @dare), alert: 'The link is not a valid Youtube link'
           end
@@ -126,6 +150,11 @@ class DaresController < ApplicationController
 
   def set_dare
     @dare = Dare.find(params[:id])
+  end
+
+  def set_challenger_acceptor   
+    @challenger = User.find(params[:dare][:challenger_id])
+    @acceptor = User.find(params[:dare][:acceptor_id])
   end
 
   def dare_params
