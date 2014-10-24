@@ -224,3 +224,24 @@ Then(/^he gets challenge rejection email$/) do
   expect(ActionMailer::Base.deliveries.last.subject).to eq "You rejected #{@challenger.username.capitalize}'s challenge!"
   expect(ActionMailer::Base.deliveries.last.to).to eq [@acceptor.email]
 end
+
+Given(/^he didn't upload any proof$/) do
+
+end
+
+Given(/^the time to complete the challenge has ended$/) do
+  @dare.start_date = 7.days.ago
+  @dare.save!
+  @dare.no_proof_fail?
+  expect(@dare.status).to eq 'Failed'
+end
+
+Then(/^I get no proof fail email$/) do
+  expect(ActionMailer::Base.deliveries[-2].subject).to eq "#{@acceptor.username.capitalize}  failed the #{@dare.challenge.name} challenge!"
+  expect(ActionMailer::Base.deliveries[-2].to).to eq [@challenger.email]
+end
+
+Then(/^he gets no proof fail email$/) do
+  expect(ActionMailer::Base.deliveries.last.subject).to eq "You have failed the #{@dare.challenge.name} challenge!"
+  expect(ActionMailer::Base.deliveries.last.to).to eq [@acceptor.email]
+end

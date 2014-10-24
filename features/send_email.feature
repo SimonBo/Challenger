@@ -66,9 +66,18 @@ I get emails when I take actions
 	# 	Then I get challenge acceptance email
 	# 	And he gets challenge acceptance email
 
+	# @javascript
+	# Scenario: User rejects challenge
+	# 	Given I challenged other user
+	# 	And he rejected the challenge
+	# 	Then I get challenge rejection email
+	# 	And he gets challenge rejection email
+
 	@javascript
-	Scenario: User rejects challenge
+	Scenario: User didn't upload any proof and the time's up
 		Given I challenged other user
-		And he rejected the challenge
-		Then I get challenge rejection email
-		And he gets challenge rejection email
+		And he accepted the challenge
+		And he didn't upload any proof
+		And the time to complete the challenge has ended
+		Then I get no proof fail email
+		And he gets no proof fail email

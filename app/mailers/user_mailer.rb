@@ -110,6 +110,19 @@ class UserMailer < ActionMailer::Base
     @acceptor = acceptor  
     @dare = dare
     mail(to: @challenger.email, subject: "The voting for #{@dare.challenge.name} has ended!")
-    
+  end
+
+  def challenger_no_proof_fail(challenger, acceptor, dare)
+    @challenger = challenger
+    @acceptor = acceptor  
+    @dare = dare
+    mail(to: @challenger.email, subject: "#{@acceptor.username.capitalize}  failed the #{@dare.challenge.name} challenge!", template_name: 'challenger_no_proof_fail')
+  end
+
+  def acceptor_no_proof_fail(challenger, acceptor, dare)
+    @challenger = challenger
+    @acceptor = acceptor  
+    @dare = dare
+    mail(to: @acceptor.email, subject: "You have failed the #{@dare.challenge.name} challenge!")
   end
 end

@@ -85,6 +85,8 @@ class Dare < ActiveRecord::Base
     if self.utube_link.blank? && self.times_up? && self.unresolved?
       self.status = 'Failed'
       save!
+      UserMailer.challenger_no_proof_fail(self.challenger, self.acceptor, self).deliver
+      UserMailer.acceptor_no_proof_fail(self.challenger, self.acceptor, self).deliver
     end
   end
 
