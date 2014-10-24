@@ -187,11 +187,21 @@ Given(/^the acceptor wins the voting$/) do
 end
 
 Then(/^the challenger gets voting end email$/) do
-  expect(ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.length-2].to).to eq [@challenger.email]
+  expect(ActionMailer::Base.deliveries[-2].to).to eq [@challenger.email]
   expect(ActionMailer::Base.deliveries.last.subject).to eq "The voting for #{@dare.challenge.name} has ended!" 
 end
 
 Then(/^the acceptor gets voting end email$/) do
   expect(ActionMailer::Base.deliveries.last.to).to include (@acceptor.email)
+end
+
+Then(/^I get challenge acceptance email$/) do
+  expect(ActionMailer::Base.deliveries[-2].subject).to eq "#{@acceptor.username.capitalize} accepted your challenge!"
+  expect(ActionMailer::Base.deliveries[-2].to).to eq [@challenger.email]
+end
+
+Then(/^he gets challenge acceptance email$/) do
+  expect(ActionMailer::Base.deliveries.last.subject).to eq "You accepted #{@challenger.username.capitalize}'s challenge!"
+  expect(ActionMailer::Base.deliveries.last.to).to eq [@acceptor.email]
 end
 

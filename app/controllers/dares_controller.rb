@@ -12,6 +12,8 @@ class DaresController < ApplicationController
     @dare.status = 'Accepted'
     @dare.start_date = DateTime.now
     if @dare.save
+      UserMailer.user_accepted_challenge(@dare.challenger, @dare.acceptor, @dare).deliver
+      UserMailer.you_accepted_challenge(@dare.challenger, @dare.acceptor, @dare).deliver
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'You accepted the challenge!'
     else
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Something went wrong!'
