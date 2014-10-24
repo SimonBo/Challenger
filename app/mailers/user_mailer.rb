@@ -41,6 +41,20 @@ class UserMailer < ActionMailer::Base
     mail(to: @acceptor.email, subject: "You accepted #{@challenger.username.capitalize}'s challenge!")
   end
 
+  def user_rejected_challenge(challenger, acceptor, dare)
+    @challenger = challenger
+    @acceptor = acceptor  
+    @dare = dare
+    mail(to: @challenger.email, subject: "#{@acceptor.username.capitalize} rejected your challenge!")
+  end
+
+  def you_rejected_challenge(challenger, acceptor, dare)
+    @challenger = challenger
+    @acceptor = acceptor  
+    @dare = dare
+    mail(to: @acceptor.email, subject: "You rejected #{@challenger.username.capitalize}'s challenge!")
+  end
+
   def acceptor_uploaded_proof(challenger, acceptor, dare)
     @challenger = challenger
     @acceptor = acceptor  

@@ -59,9 +59,16 @@ I get emails when I take actions
 	# 	Then the challenger gets voting end email
 	# 	And the acceptor gets voting end email
 
+	# @javascript
+	# Scenario: User accepts challenge
+	# 	Given I challenged other user
+	# 	And he accepted the challenge
+	# 	Then I get challenge acceptance email
+	# 	And he gets challenge acceptance email
+
 	@javascript
-	Scenario: I accept challenge
+	Scenario: User rejects challenge
 		Given I challenged other user
-		And he accepted the challenge
-		Then I get challenge acceptance email
-		And he gets challenge acceptance email
+		And he rejected the challenge
+		Then I get challenge rejection email
+		And he gets challenge rejection email

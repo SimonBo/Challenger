@@ -4,7 +4,7 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
   %body
     %h1
-      Yay! You accepted #{@challenger.username.capitalize}'s challenge! Let's get to work!
+      You rejected #{@challenger.username.capitalize}'s challenge... Oh well, maybe next time.
     %p
       You can see the details
       = link_to "here", challenge_dare_path(@dare.challenge_id, @dare)

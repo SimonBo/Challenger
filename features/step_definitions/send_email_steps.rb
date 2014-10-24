@@ -205,3 +205,22 @@ Then(/^he gets challenge acceptance email$/) do
   expect(ActionMailer::Base.deliveries.last.to).to eq [@acceptor.email]
 end
 
+Given(/^he rejected the challenge$/) do
+  visit root_path
+  click_button 'Sign in'
+  fill_in 'Login', :with => @acceptor.email
+  fill_in 'Password', :with => @acceptor.password
+  click_button 'Log in'
+
+  click_button 'Reject'
+end
+
+Then(/^I get challenge rejection email$/) do
+  expect(ActionMailer::Base.deliveries[-2].subject).to eq "#{@acceptor.username.capitalize} rejected your challenge!"
+  expect(ActionMailer::Base.deliveries[-2].to).to eq [@challenger.email]
+end
+
+Then(/^he gets challenge rejection email$/) do
+  expect(ActionMailer::Base.deliveries.last.subject).to eq "You rejected #{@challenger.username.capitalize}'s challenge!"
+  expect(ActionMailer::Base.deliveries.last.to).to eq [@acceptor.email]
+end
