@@ -78,7 +78,6 @@ end
 
 Then(/^I get a proof upload email$/) do
   expect(page).to have_content 'Added proof'
-  expect(ActionMailer::Base.deliveries.count).to eq 3
   expect(ActionMailer::Base.deliveries.last.to).to eq [@challenger.email]
 end
 

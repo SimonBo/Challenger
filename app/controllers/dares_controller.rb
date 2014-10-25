@@ -51,6 +51,7 @@ class DaresController < ApplicationController
     if @dare.save
       UserMailer.challenger_rejected_proof(@dare.challenger, @dare.acceptor, @dare).deliver
       UserMailer.rejected_proof(@dare.challenger, @dare.acceptor, @dare).deliver
+      UserMailer.voting_started(@dare.challenger, @dare.acceptor, @dare).deliver
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'You rejected the proof!'
     else
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Something went wrong!'
