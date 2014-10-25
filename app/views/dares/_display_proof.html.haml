@@ -1,0 +1,23 @@
+- if @dare.utube_link?
+  %h3
+    Proof uploaded by #{@dare.acceptor.username}
+    - @dare.utube_link.each_with_index do |vid, index|
+      .embed-responsive.embed-responsive-16by9
+        %iframe.embed-responsive-item{:src => "http://www.youtube.com/embed/#{vid}"}
+      %br
+
+      - if current_user.is_acceptor?(@dare)
+        = link_to 'Delete proof', delete_proof_path(@dare.challenge_id, @dare, 'vid', vid), method: :put
+      - if current_user.is_challenger?(@dare) && @dare.proof_not_validated? && @dare.unresolved?
+        = link_to 'Accept proof', accept_proof_path(@dare.challenge_id, @dare.id), method: :put
+        = link_to 'Reject proof', reject_proof_path(@dare.challenge_id, @dare.id), method: :put
+  
+- if @dare.pic_link?
+  - @dare.pic_link.each_with_index do |pic, index|
+    .proof-img.img-responsive
+      = link_to (image_tag pic), pic
+      - if current_user.is_acceptor?(@dare)
+        = link_to 'Delete proof', delete_proof_path(@dare.challenge_id, @dare, 'pic', index), method: :put
+      - if current_user.is_challenger?(@dare) && @dare.proof_not_validated? && @dare.unresolved?
+        = link_to 'Accept proof', accept_proof_path(@dare.challenge_id, @dare.id), method: :put
+        = link_to 'Reject proof', reject_proof_path(@dare.challenge_id, @dare.id), method: :put

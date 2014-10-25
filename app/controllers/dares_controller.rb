@@ -59,8 +59,13 @@ class DaresController < ApplicationController
   end
 
   def delete_proof
-    @dare.utube_link.delete(params[:proof_id])
-    @dare.utube_link_will_change!
+    if params[:proof_type] == 'pic'
+      @dare.pic_link.delete_at(params[:proof_id].to_i)
+      @dare.pic_link_will_change!
+    else
+      @dare.utube_link.delete(params[:proof_id])
+      @dare.utube_link_will_change!
+    end
     if @dare.save
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Proof deleted!'
     else
@@ -119,6 +124,10 @@ class DaresController < ApplicationController
             redirect_to challenge_dare_path(params[:challenge_id], @dare), alert: 'The link is not a valid Youtube link'
           end
         end
+      elsif params[:dare][:pic_link]
+        @dare.pic_link = @dare.pic_link + [params[:dare][:pic_link]]
+        @dare.save!
+        redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
       else
         redirect_to challenges_path, notice: 'Yay!'
       end
@@ -148,7 +157,7 @@ class DaresController < ApplicationController
   end
 
   def dare_params
-    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link, :start_date, :end_date, :with_bet, :vid_link)
+    params.require(:dare).permit(:status, :amount, :acceptor_id, :challenger_id, :challenge_id, :utube_link, :start_date, :end_date, :with_bet, :vid_link, :pic_link)
   end
 
 end
