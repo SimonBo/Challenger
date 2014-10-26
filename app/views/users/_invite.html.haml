@@ -1,0 +1,7 @@
+= simple_form_for [@challenge, @dare] do |f|
+  - if @dare.errors.any?
+    #error_explanation
+      = render 'errors'
+
+  = f.input :email
+  = f.button :submit

@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  get 'invitations/new'
+
+  get 'invitations/create'
+
+  get 'invitation/new'
+
+  get 'invitation/create'
+
   resources :challenges do
     resources :dares do
       member do
