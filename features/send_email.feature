@@ -81,15 +81,18 @@ I get emails when I take actions
 	# 	And the time to complete the challenge has ended
 	# 	Then I get no proof fail email
 	# 	And he gets no proof fail email
-      @javascript
-      Scenario: Self challenge
-        Given I challenge myself
-        And I upload  proof
-        And I click "Finished uploading proof"
-        Then other users can vote whether my proof is valid
-        And I get voting result email after 5 days
+      # @javascript
+      # Scenario: Self challenge
+      #   Given I challenge myself
+      #   And I upload  proof
+      #   And I click "Finished uploading proof"
+      #   Then other users can vote whether my proof is valid
+      #   And I get voting result email after 5 days
 
       Scenario: I invite a new user
         Given I challenge a new user
         Then he gets an invitation email
+        And he can click a button that takes him to the website
+        And he can accept challenge and register as new user
         And I get invitation response email when he responds
+

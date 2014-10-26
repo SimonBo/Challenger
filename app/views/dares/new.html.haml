@@ -45,6 +45,14 @@
     #search_box.panel-collapse.collapse.select_user
       .panel-body
         = render 'users/search_box'
+  .panel.panel-default
+    .panel-heading
+      %h4.panel-title
+        %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#invite"}
+          Invite your friends
+    #invite.panel-collapse.collapse.select_user
+      .panel-body
+        = render 'users/invite'
 
 #user_search_result
 

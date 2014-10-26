@@ -285,7 +285,20 @@ Then(/^I get voting result email after (\d+) days$/) do |arg1|
 end
 
 Given(/^I challenge a new user$/) do
-  pending # express the regexp above with the code you wish you had
+  @challenge = FactoryGirl.create(:challenge)
+  @challenger = FactoryGirl.create(:user)
+
+  visit root_path
+  click_button 'Sign in'
+  fill_in 'Login', :with => @challenger.email
+  fill_in 'Password', :with => @challenger.password
+  click_button 'Log in'
+
+  visit challenges_path
+  click_button 'Challenge others'
+
+  
+
 end
 
 Then(/^he gets an invitation email$/) do

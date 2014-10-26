@@ -6,7 +6,7 @@
         %iframe.embed-responsive-item{:src => "http://www.youtube.com/embed/#{vid}"}
       %br
 
-      - if current_user.is_acceptor?(@dare)
+      - if current_user.is_acceptor?(@dare) && @dare.status != 'Voting'
         = link_to 'Delete proof', delete_proof_path(@dare.challenge_id, @dare, 'vid', vid), method: :put
       - if current_user.is_challenger?(@dare) && @dare.proof_not_validated? && @dare.unresolved? && @dare.acceptor_id != @dare.challenger_id
         = link_to 'Accept proof', accept_proof_path(@dare.challenge_id, @dare.id), method: :put
@@ -17,7 +17,7 @@
     .proof-img.img-responsive
       = link_to (image_tag pic), pic
       
-    - if current_user.is_acceptor?(@dare)
+    - if current_user.is_acceptor?(@dare) && @dare.status != 'Voting'
       = link_to 'Delete proof', delete_proof_path(@dare.challenge_id, @dare, 'pic', index), method: :put
     - if current_user.is_challenger?(@dare) && @dare.proof_not_validated? && @dare.unresolved? && @dare.acceptor_id != @dare.challenger_id
       = link_to 'Accept proof', accept_proof_path(@dare.challenge_id, @dare.id), method: :put
