@@ -3,8 +3,10 @@ class Dare < ActiveRecord::Base
   belongs_to :challenge, counter_cache: true
   belongs_to :acceptor, class_name: "User"
   belongs_to :challenger, class_name: "User"
+  belongs_to :invitation
 
   has_many :votes
+
 
   before_save :change_status
   before_save :create_start_date

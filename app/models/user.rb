@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
   has_many :challenges, through: :dares
   has_many :votes
 
+  has_many :sent_invitations, :class_name => 'Invitation', :foreign_key => 'user_id'
+  belongs_to :invitation
+
   validates :username, presence: true, uniqueness: true, length: { in: 2..50 }
 
   after_create :send_welcome_email
