@@ -81,6 +81,7 @@ I get emails when I take actions
 	# 	And the time to complete the challenge has ended
 	# 	Then I get no proof fail email
 	# 	And he gets no proof fail email
+  
       # @javascript
       # Scenario: Self challenge
       #   Given I challenge myself
@@ -90,7 +91,11 @@ I get emails when I take actions
       #   And I get voting result email after 5 days
 
       Scenario: I invite a new user
-        Given I challenge a new user
+        Given there is at least one challenge in database
+        And I am logged in
+        And I am on the page with all the challenges
+        And I click on 'Invite your friend'
+        And I provide my friend's email
         Then he gets an invitation email
         And he can click a button that takes him to the website
         And he can accept challenge and register as new user
