@@ -244,3 +244,54 @@ Then(/^he gets no proof fail email$/) do
   expect(ActionMailer::Base.deliveries.last.subject).to eq "You have failed the #{@dare.challenge.name} challenge!"
   expect(ActionMailer::Base.deliveries.last.to).to eq [@acceptor.email]
 end
+
+Given(/^I challenge myself$/) do
+  @challenge = FactoryGirl.create(:challenge)
+  @challenger = FactoryGirl.create(:user)
+  @dare = FactoryGirl.create(:dare, challenger_id: @challenger.id, acceptor_id: @challenger.id, challenge_id: @challenge.id)
+end
+
+Given(/^I upload  proof$/) do
+  @dare.utube_link = @dare.utube_link + ["cD4TAgdS_Xw"]
+  @dare.save!
+end
+
+Given(/^I click "(.*?)"$/) do |arg1|
+  visit root_path
+  click_button 'Sign in'
+  fill_in 'Login', :with => @challenger.email
+  fill_in 'Password', :with => @challenger.password
+  click_button 'Log in'
+
+  visit challenges_path
+  within('#accepted_challenges') do
+    click_on "#{@challenge.name}"
+  end
+
+  click_on arg1
+end
+
+Then(/^other users can vote whether my proof is valid$/) do
+  # expect(@dare.status).to eq 'Voting'
+  expect(page).to have_content "Status: Voting"
+end
+
+Then(/^I get voting result email after (\d+) days$/) do |arg1|
+  @dare.voting_start_date = 5.days.ago
+  @dare.voting_finished?
+
+  expect(ActionMailer::Base.deliveries.last.to).to eq [@challenger.email]
+  expect(ActionMailer::Base.deliveries.last.subject).to eq "The voting for #{@dare.challenge.name} has ended!" 
+end
+
+Given(/^I challenge a new user$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^he gets an invitation email$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I get invitation response email when he responds$/) do
+  pending # express the regexp above with the code you wish you had
+end

@@ -7,3 +7,6 @@
   = f.label :pic_link, value: 'Image link'
   = f.text_field :pic_link, value: ''
   = f.submit "Upload Image", class: "btn btn-success"
+
+- if @dare.utube_link.any? || @dare.pic_link.any?
+  = link_to "Finished uploading proof", reject_proof_path(@dare.challenge_id, @dare.id), method: :put

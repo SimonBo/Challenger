@@ -46,13 +46,18 @@ class DaresController < ApplicationController
 
   def reject_proof
     @dare.status = 'Voting'
-    @dare.proof_status = 'Rejected'
+    @dare.proof_status = 'Rejected' unless @dare.is_self_selected?
     @dare.voting_start_date = DateTime.now
     if @dare.save
-      UserMailer.challenger_rejected_proof(@dare.challenger, @dare.acceptor, @dare).deliver
-      UserMailer.rejected_proof(@dare.challenger, @dare.acceptor, @dare).deliver
-      UserMailer.voting_started(@dare.challenger, @dare.acceptor, @dare).deliver
-      redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'You rejected the proof!'
+      if @dare.is_self_selected?
+        UserMailer.self_selected_voting_started(@dare.challenger, @dare).deliver
+        redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'You finished uploading proof!'
+      else
+        UserMailer.challenger_rejected_proof(@dare.challenger, @dare.acceptor, @dare).deliver
+        UserMailer.rejected_proof(@dare.challenger, @dare.acceptor, @dare).deliver
+        UserMailer.voting_started(@dare.challenger, @dare.acceptor, @dare).deliver
+        redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'You rejected the proof!'
+      end
     else
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Something went wrong!'
     end

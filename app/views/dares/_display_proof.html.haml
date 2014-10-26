@@ -8,7 +8,7 @@
 
       - if current_user.is_acceptor?(@dare)
         = link_to 'Delete proof', delete_proof_path(@dare.challenge_id, @dare, 'vid', vid), method: :put
-      - if current_user.is_challenger?(@dare) && @dare.proof_not_validated? && @dare.unresolved?
+      - if current_user.is_challenger?(@dare) && @dare.proof_not_validated? && @dare.unresolved? && @dare.acceptor_id != @dare.challenger_id
         = link_to 'Accept proof', accept_proof_path(@dare.challenge_id, @dare.id), method: :put
         = link_to 'Reject proof', reject_proof_path(@dare.challenge_id, @dare.id), method: :put
   
@@ -16,8 +16,9 @@
   - @dare.pic_link.each_with_index do |pic, index|
     .proof-img.img-responsive
       = link_to (image_tag pic), pic
-      - if current_user.is_acceptor?(@dare)
-        = link_to 'Delete proof', delete_proof_path(@dare.challenge_id, @dare, 'pic', index), method: :put
-      - if current_user.is_challenger?(@dare) && @dare.proof_not_validated? && @dare.unresolved?
-        = link_to 'Accept proof', accept_proof_path(@dare.challenge_id, @dare.id), method: :put
-        = link_to 'Reject proof', reject_proof_path(@dare.challenge_id, @dare.id), method: :put
+      
+    - if current_user.is_acceptor?(@dare)
+      = link_to 'Delete proof', delete_proof_path(@dare.challenge_id, @dare, 'pic', index), method: :put
+    - if current_user.is_challenger?(@dare) && @dare.proof_not_validated? && @dare.unresolved? && @dare.acceptor_id != @dare.challenger_id
+      = link_to 'Accept proof', accept_proof_path(@dare.challenge_id, @dare.id), method: :put
+      = link_to 'Reject proof', reject_proof_path(@dare.challenge_id, @dare.id), method: :put

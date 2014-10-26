@@ -21,6 +21,7 @@ class Dare < ActiveRecord::Base
   def is_self_selected?
     self.acceptor_id == self.challenger_id
   end
+  
   def self.newest_voting
     where(status: 'Voting').order("voting_start_date desc")
   end
@@ -135,8 +136,12 @@ class Dare < ActiveRecord::Base
           self.voting_status = 'Failed'
         end
         save!
-        UserMailer.challenger_voting_ended(self.challenger, self.acceptor, self).deliver
-        UserMailer.acceptor_voting_ended(self.challenger, self.acceptor, self).deliver
+        if self.is_self_selected?
+          UserMailer.self_selected_voting_ended(self.challenger, self).deliver
+        else
+          UserMailer.challenger_voting_ended(self.challenger, self.acceptor, self).deliver
+          UserMailer.acceptor_voting_ended(self.challenger, self.acceptor, self).deliver
+        end
       else
         false
       end

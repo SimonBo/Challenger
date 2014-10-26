@@ -112,6 +112,18 @@ class UserMailer < ActionMailer::Base
     mail(to: @challenger.email, subject: "The voting for #{@dare.challenge.name} has ended!")
   end
 
+  def self_selected_voting_started(challenger, dare)
+    @challenger = challenger
+    @dare = dare
+    mail(to: @challenger.email, subject: "The voting for #{@dare.challenge.name} has started!")
+  end
+
+  def self_selected_voting_ended(challenger, dare)
+    @challenger = challenger
+    @dare = dare
+    mail(to: @challenger.email, subject: "The voting for #{@dare.challenge.name} has ended!")
+  end
+
   def challenger_no_proof_fail(challenger, acceptor, dare)
     @challenger = challenger
     @acceptor = acceptor  

@@ -1,9 +1,9 @@
-# Feature: Send Email
-# As a user
-# I get emails when I take actions
-# 	Before do
-# 	  ActionMailer::Base.deliveries = []
-# 	end
+Feature: Send Email
+As a user
+I get emails when I take actions
+	Before do
+	  ActionMailer::Base.deliveries = []
+	end
 
 # 	@javascript
 # 	Scenario: Registration
@@ -73,11 +73,23 @@
 # 		Then I get challenge rejection email
 # 		And he gets challenge rejection email
 
-# 	@javascript
-# 	Scenario: User didn't upload any proof and the time's up
-# 		Given I challenged other user
-# 		And he accepted the challenge
-# 		And he didn't upload any proof
-# 		And the time to complete the challenge has ended
-# 		Then I get no proof fail email
-# 		And he gets no proof fail email
+	# @javascript
+	# Scenario: User didn't upload any proof and the time's up
+	# 	Given I challenged other user
+	# 	And he accepted the challenge
+	# 	And he didn't upload any proof
+	# 	And the time to complete the challenge has ended
+	# 	Then I get no proof fail email
+	# 	And he gets no proof fail email
+      @javascript
+      Scenario: Self challenge
+        Given I challenge myself
+        And I upload  proof
+        And I click "Finished uploading proof"
+        Then other users can vote whether my proof is valid
+        And I get voting result email after 5 days
+
+      Scenario: I invite a new user
+        Given I challenge a new user
+        Then he gets an invitation email
+        And I get invitation response email when he responds
