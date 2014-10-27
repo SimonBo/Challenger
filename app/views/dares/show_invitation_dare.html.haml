@@ -1,0 +1,18 @@
+%h1
+  This is an Invitation Challenge
+%p
+  Recipient: #{@dare.invitation.recipient_email}
+
+%p 
+  Challenger: #{@dare.challenger.username}
+
+- if user_signed_in?
+  = link_to accept_challenge_challenge_dare_path(@dare.challenge_id, @dare.id), method: :put do
+    %button.btn.btn-success Accept
+  = link_to reject_challenge_challenge_dare_path(@dare.challenge_id, @dare.id), method: :put do
+    %button.btn.btn-danger Reject
+- else
+  = link_to invitation_register_path(@dare.invitation.token) do
+    %button.btn.btn-success Accept
+  = link_to new_user_registration_path do
+    %button.btn.btn-danger Reject

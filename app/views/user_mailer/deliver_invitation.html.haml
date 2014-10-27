@@ -7,5 +7,5 @@
       #{@inviter.username} wants you to accept #{@dare.challenge.name} challenge!
     %h2
       Click
-      = link_to 'here', challenge_dare_url(@dare.challenge_id, @dare.id)
+      = link_to 'here', invitation_dare_url(@dare.challenge_id, @dare.id, @invitation.token)
       to accept/decline.

@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
 
-get 'challenges/:challenge_id/dares/:id/:token' => 'dares#show', as: 'invitation_dare'
+get 'challenges/:challenge_id/dares/:id/:token' => 'dares#show_invitation_dare', as: 'invitation_dare'
+
+
+devise_scope :user do
+  get "/users/sign_up/:token" => "devise/registrations#new", as: 'invitation_register'
+end
 
 resources :invitations, only: [:create, :new]
 

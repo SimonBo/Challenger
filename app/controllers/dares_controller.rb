@@ -1,8 +1,12 @@
 class DaresController < ApplicationController
-  before_action :set_dare, except: [:index, :new, :create, :show_voting]
-  before_action :authenticate_user!
+  before_action :set_dare, except: [:index, :new, :create, :show_voting, :show_invitation_dare]
+  before_action :authenticate_user!, except: :show_invitation_dare
   before_action :set_challenger_acceptor, only: [:create]  
 
+  def show_invitation_dare
+    @invitation = Invitation.where("token = ?", params[:token]).first
+    @dare = Dare.where("invitation_id = ?", @invitation.id).first
+  end
 
   def show_voting
     @dares_voting = Dare.where('status = ?', 'Voting')

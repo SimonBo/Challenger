@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   
   before_filter :configure_permitted_parameters, if: :devise_controller?
   after_filter :store_location
+  before_filter :store_email_from_invitation
 
   protected
 
@@ -44,6 +45,7 @@ def store_location
   return unless request.get? 
   if (request.path != "/users/sign_in" &&
       request.path != "/users/sign_up" &&
+      request.path != "/users/sign_up/:token" &&
       request.path != "/users/password/new" &&
       request.path != "/users/password/edit" &&
       request.path != "/users/confirmation" &&
@@ -53,8 +55,12 @@ def store_location
   end
 end
 
-def after_sign_in_path_for(resource)
-  session[:previous_url] || root_path
+
+def store_email_from_invitation
+  if params[:token].present?
+    invitation = Invitation.where("token = ?", params[:token]).first
+    @new_user_email = invitation.recipient_email
+  end
 end
   
 end
