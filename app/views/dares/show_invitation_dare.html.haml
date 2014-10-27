@@ -1,10 +1,12 @@
 %h1
   This is an Invitation Challenge
-%p
+%p#new-user-email{"data-email" => "#{@dare.invitation.recipient_email}" }
   Recipient: #{@dare.invitation.recipient_email}
 
 %p 
   Challenger: #{@dare.challenger.username}
+
+
 
 - if user_signed_in?
   = link_to accept_challenge_challenge_dare_path(@dare.challenge_id, @dare.id), method: :put do

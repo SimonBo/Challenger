@@ -4,8 +4,11 @@ class DaresController < ApplicationController
   before_action :set_challenger_acceptor, only: [:create]  
 
   def show_invitation_dare
-    @invitation = Invitation.where("token = ?", params[:token]).first
-    @dare = Dare.where("invitation_id = ?", @invitation.id).first
+      @invitation = Invitation.where("token = ?", params[:token]).first
+      @dare = Dare.where("invitation_id = ?", @invitation.id).first
+    if @dare.status != 'Invitation-pending'
+      redirect_to challenge_dare_path(@dare.challenge_id, @dare.id), notice: 'This invitation has already been processed'
+    end
   end
 
   def show_voting
