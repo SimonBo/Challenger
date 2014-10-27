@@ -1,52 +1,56 @@
-- if @dare.errors.any?
-  #error_explanation
-    = render 'errors'
-
-- if @dare.acceptor_id == @dare.challenger_id
-  %h3    
-    #{@dare.challenger.username} has challenged himself to #{@dare.challenge.name} challenge!
--else
-  %h3
-    #{@dare.challenger.username} has challenged #{@dare.acceptor.username} to #{@dare.challenge.name} challenge!
-
-- if @dare.rejected?
-  %h2
-    #{@dare.acceptor.username} has rejected the challenge:(
-
+- if @dare.is_invitation?
+  = render 'invitation_dare'
 - else
-  Started on:
-  = @dare.created_at
-  
-  %p
-    Status:
-    = @dare.status
-  - if @dare.times_up?
-    Time for finishing this challenge has ended on
-  - elsif @dare.resolved?   
-    %h4
-      This challenged has already finished
-  - elsif @dare.voting_in_progress?
-    %h4
-      We are not sure whether the challenge has been accomplished, help us decide whether the proof uploaded is valid
+
+  - if @dare.errors.any?
+    #error_explanation
+      = render 'errors'
+
+  - if @dare.acceptor_id == @dare.challenger_id
+    %h3    
+      #{@dare.challenger.username} has challenged himself to #{@dare.challenge.name} challenge!
+  -else
+    %h3
+      #{@dare.challenger.username} has challenged #{@dare.acceptor.username} to #{@dare.challenge.name} challenge!
+
+  - if @dare.rejected?
+    %h2
+      #{@dare.acceptor.username} has rejected the challenge:(
+
   - else
-    %br
-    Finishing in:
-    %time{"data-livestamp" => (@dare.created_at + 7.days).to_i}
+    Started on:
+    = @dare.created_at
+    
+    %p
+      Status:
+      = @dare.status
+    - if @dare.times_up?
+      Time for finishing this challenge has ended on
+    - elsif @dare.resolved?   
+      %h4
+        This challenged has already finished
+    - elsif @dare.voting_in_progress?
+      %h4
+        We are not sure whether the challenge has been accomplished, help us decide whether the proof uploaded is valid
+    - else
+      %br
+      Finishing in:
+      %time{"data-livestamp" => (@dare.created_at + 7.days).to_i}
 
 
-  - if @dare.status == 'Success'
-    %h4
-      #{@dare.acceptor.username} has successfully accomplished the #{@dare.challenge.name} challenge!
+    - if @dare.status == 'Success'
+      %h4
+        #{@dare.acceptor.username} has successfully accomplished the #{@dare.challenge.name} challenge!
 
-  - elsif user_signed_in? && current_user.is_acceptor?(@dare) && @dare.still_have_time? && @dare.unresolved?
-    = render 'upload_proof'
+    - elsif user_signed_in? && current_user.is_acceptor?(@dare) && @dare.still_have_time? && @dare.unresolved?
+      = render 'upload_proof'
 
-  = render 'display_proof'
-  
+    = render 'display_proof'
+    
 
 
-  - if @dare.voting_in_progress?
-    = render 'voting'
+    - if @dare.voting_in_progress?
+      = render 'voting'
 
-  - if @dare.after_voting?
-    = render 'voting_result'
+    - if @dare.after_voting?
+      = render 'voting_result'

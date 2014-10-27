@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1
+      #{@inviter.username} wants you to accept #{@dare.challenge.name} challenge!
+    %h2
+      Click
+      = link_to 'here', challenge_dare_path(@dare.challenge_id, @dare.id)
+      to accept/decline.

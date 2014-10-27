@@ -8,11 +8,18 @@ class Invitation < ActiveRecord::Base
 
   before_create :generate_token
 
+  attr_accessor :challenge_id
+
+  def prepare_dare(challenge)
+    new_dare = Dare.create!(challenge_id: challenge, challenger_id: self.user_id, status: "Invitation-pending")
+    self.dare_id = new_dare.id
+    save!
+  end
 
   private
 
   def recipient_is_not_registered
-    errors.add :recipient_email, 'is already registered' if User.where("email = ?", recipient_email)
+    errors.add :recipient_email, 'is already registered' if User.where("email = ?", recipient_email).any?
   end
 
   def generate_token

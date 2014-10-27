@@ -7,6 +7,13 @@ class UserMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'Welcome to My Awesome Site')
   end
 
+  def deliver_invitation(invitation)
+    @invitation = invitation
+    @inviter = User.find(@invitation.user_id)
+    @dare = Dare.find(@invitation.dare_id)
+    mail(to: @invitation.recipient_email, subject: "#{@inviter.username} wants to challenge you! Check it out.")
+  end
+
   def self_challenge(user, dare)
     @user = user
     @dare = dare

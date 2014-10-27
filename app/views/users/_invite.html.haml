@@ -1,7 +1,8 @@
-= simple_form_for [@challenge, @dare] do |f|
-  - if @dare.errors.any?
+= simple_form_for @invitation do |f|
+  - if @invitation.errors.any?
     #error_explanation
       = render 'errors'
-
-  = f.input :email
+  - @invitation.challenge_id = @dare.challenge_id
+  = f.hidden_field :challenge_id
+  = f.input :recipient_email
   = f.button :submit

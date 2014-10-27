@@ -105,6 +105,7 @@ class DaresController < ApplicationController
   def new
     @dare = Dare.new
     @challenge = Challenge.find(params[:challenge_id])
+    @invitation = Invitation.new
   end
 
 

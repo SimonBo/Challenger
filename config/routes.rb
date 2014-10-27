@@ -1,12 +1,8 @@
 Rails.application.routes.draw do
 
-  get 'invitations/new'
+get 'challenges/:challenge_id/dares/:id/:token' => 'dares#show', as: 'invitation_dare'
 
-  get 'invitations/create'
-
-  get 'invitation/new'
-
-  get 'invitation/create'
+resources :invitations, only: [:create, :new]
 
   resources :challenges do
     resources :dares do
