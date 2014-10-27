@@ -9,6 +9,9 @@ class DaresController < ApplicationController
   end
 
   def accept_challenge
+    if @dare.status = 'Invitation-pending'
+      @dare.acceptor_id = current_user.id
+    end
     @dare.status = 'Accepted'
     @dare.start_date = DateTime.now
     if @dare.save

@@ -10,7 +10,7 @@ class InvitationsController < ApplicationController
     if @invitation.save!
         challenge = params[:invitation][:challenge_id]
         @invitation.prepare_dare(challenge)
-        UserMailer.deliver_invitation(@invitation)
+        UserMailer.deliver_invitation(@invitation).deliver
         flash[:notice] = "Thank you, invitation sent."
         redirect_to challenges_path
     else
