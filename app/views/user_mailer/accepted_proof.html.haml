@@ -5,3 +5,6 @@
   %body
     %h1
       Yay! You accepted #{@acceptor.username.capitalize}'s proof! Let's celebrate
+    %p
+      You can see the details
+      = link_to "here", challenge_dare_url(@dare.challenge_id, @dare)

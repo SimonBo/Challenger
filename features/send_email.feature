@@ -101,3 +101,7 @@ I get emails when I take actions
         And he can accept challenge and register as new user
         And I get invitation response email when he responds
 
+      Scenario: I invite a user that's already registered
+        Given I invite a new user
+        And the user is already registered
+        Then I see info that I challenged him and that he's a registered user

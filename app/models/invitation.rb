@@ -11,8 +11,9 @@ class Invitation < ActiveRecord::Base
   attr_accessor :challenge_id
 
   def prepare_dare(challenge)
-    new_dare = Dare.create!(challenge_id: challenge, challenger_id: self.user_id, status: "Invitation-pending")
+    new_dare = Dare.create!(challenge_id: challenge, challenger_id: self.user_id, status: "Invitation-pending", invitation_id: self.id)
     self.dare_id = new_dare.id
+    self.status = 'Pending'
     save!
   end
 

@@ -5,7 +5,7 @@
   %body
     %h1
       The voting for 
-      = link_to @dare.challenge.name, challenge_dare_path(@dare.challenge_id, @dare)
+      = link_to @dare.challenge.name, challenge_dare_url(@dare.challenge_id, @dare)
       has finished!
     %p
       - if @dare.status == 'Success'

@@ -7,6 +7,6 @@
       Congratulations! You accepted #{@dare.challenge.name}
     %p
       Oh, you are so brave!
-      = link_to @dare.challenge.name, challenge_dare_path(@dare.challenge_id, @dare)
+      = link_to @dare.challenge.name, challenge_dare_url(@dare.challenge_id, @dare)
       is no walk in the park! Enjoy:)
       %br/

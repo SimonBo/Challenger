@@ -9,5 +9,5 @@
       Let see what #{@acceptor.username} is made of!
     %p
       You can follow #{@acceptor.username}'s progress 
-      = link_to 'here', challenge_dare_path(@dare.challenge_id, @dare)
+      = link_to 'here', challenge_dare_url(@dare.challenge_id, @dare)
       %br/

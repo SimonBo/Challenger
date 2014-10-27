@@ -7,4 +7,4 @@
       #{@acceptor.username.capitalize} didn't upload any proof and he's run out of time:(
     %p
       You can see the details
-      = link_to "here", challenge_dare_path(@dare.challenge_id, @dare)
+      = link_to "here", challenge_dare_url(@dare.challenge_id, @dare)
