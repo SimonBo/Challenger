@@ -153,4 +153,8 @@ class User < ActiveRecord::Base
   def self.sorted_by_failed_accepted_dares
     self.joins(:accepted_dares).select("count(dares.*) as failed_dare_count, users.*").where("dares.status = ?","Failed").group("users.id").order("failed_dare_count DESC")
   end
+
+  def self.no_success
+    self.joins(:accepted_dares).select("count(dares.*) as no_success_dare_count, users.*").where("dares.status != ?","Success").group("users.id").order("no_success_dare_count DESC")
+  end
 end

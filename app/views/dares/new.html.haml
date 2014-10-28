@@ -13,30 +13,22 @@
         %li= msg
 
 #select_acceptor.panel-group
+  / .panel.panel-default
+  /   .panel-heading
+  /     %h4.panel-title
+  /       %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#friends"}
+  /         Friends
+  /   #friends.panel-collapse.collapse.in.select_user
+  /     .panel-body
+  /       Coming soon!
   .panel.panel-default
     .panel-heading
       %h4.panel-title
-        %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#friends"}
-          Friends
-    #friends.panel-collapse.collapse.in.select_user
+        %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#ranking"}
+          Ranking
+    #ranking.panel-collapse.collapse.select_user
       .panel-body
-        Friends go here
-  .panel.panel-default
-    .panel-heading
-      %h4.panel-title
-        %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#unhonored"}
-          They need more challenges!
-    #unhonored.panel-collapse.collapse.select_user
-      .panel-body
-        = render 'users/most_failed'
-  .panel.panel-default
-    .panel-heading
-      %h4.panel-title
-        %a{"data-parent" => "#select_acceptor", "data-toggle" => "collapse", :href => "#champions"}
-          The Fearless ones!
-    #champions.panel-collapse.collapse.select_user
-      .panel-body
-        = render 'users/most_success'
+        = render 'users/ranking'
   .panel.panel-default
     .panel-heading
       %h4.panel-title

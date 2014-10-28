@@ -1,0 +1,10 @@
+
+%span.sort-arrow-up.hidden &#x25B2
+%span.sort-arrow-down &#x25BC
+- User.all.each do |user|
+  #user-ranking    
+    %h5 
+      = link_to user.username, user_path(user)
+      has completed
+      = pluralize user.completed_challanges.count, 'challenge'
+      = render partial: 'users/challenge_user', locals: {:user => user}
