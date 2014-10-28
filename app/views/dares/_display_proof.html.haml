@@ -3,7 +3,7 @@
     Proof uploaded by #{@dare.acceptor.username}
     - @dare.utube_link.each_with_index do |vid, index|
       .embed-responsive.embed-responsive-16by9
-        %iframe.embed-responsive-item{:src => "http://www.youtube.com/embed/#{vid}"}
+        %iframe.embed-responsive-item{:src => "https://www.youtube.com/embed/#{vid}"}
       %br
 
       - if current_user.is_acceptor?(@dare) && @dare.status != 'Voting'

@@ -14,6 +14,13 @@ class Dare < ActiveRecord::Base
 
   # validate :cannot_challenge_if_acceptor_already_accepted
 
+ def process
+        self.no_proof_fail?
+        self.success_unvalidated?
+        self.up_for_voting? 
+        self.voting_finished? 
+ end
+
   def is_invitation?
     self.status = 'invitation-pending'
   end
@@ -33,7 +40,7 @@ class Dare < ActiveRecord::Base
   end
   
   def resolved?
-    self.status.include?("Success") || self.status.include?("Failed")
+    self.status == "Success" || self.status == "Failed"
   end
 
   def set_proof_array
@@ -73,19 +80,19 @@ class Dare < ActiveRecord::Base
 
 
   def rejected?
-    self.status.include? "Rejected"
+    self.status == "Rejected"
   end
 
   def times_up?
-    self.start_date.midnight <= 7.days.ago if self.start_date
+    self.start_date.midnight <= 7.days.ago if self.start_date?
   end
 
   def still_have_time?
-    self.start_date.midnight > 7.days.ago if self.start_date
+    self.start_date.midnight > 7.days.ago if self.start_date?
   end
 
   def unresolved?
-    self.status.include?("Pending") || self.status.include?("Accepted")
+    self.status == "Pending" || self.status == "Accepted"
   end
 
   def no_proof_fail?
@@ -102,7 +109,9 @@ class Dare < ActiveRecord::Base
   end
 
   def time_for_proof_validation_ended?
-    self.start_date.midnight <= 12.days.ago 
+    if self.start_date?
+      self.start_date.midnight <= 9.days.ago 
+    end
   end
 
   def success_unvalidated?
@@ -128,7 +137,7 @@ class Dare < ActiveRecord::Base
   end
 
   def voting_end_date
-    self.voting_start_date.midnight + 5.days if self.voting_start_date
+    self.voting_start_date.midnight + 5.days if self.voting_start_date?
   end
 
   def voting_finished?
@@ -165,7 +174,7 @@ class Dare < ActiveRecord::Base
 
 
   def proof?
-    self.utube_link?
+    self.utube_link? || self.pic_link?
   end
 
   def up_for_voting?

@@ -1,12 +1,11 @@
 namespace :dares do
   desc "Filter all dares"
-  task fail_no_proof: :environment do
+  task process: :environment do
 
-    Dare.all.each do |dare|
-      dare.no_proof_fail?
-      dare.success_unvalidated?
-      dare.up_for_voting? 
-      dare.voting_finished? 
+    Dare.find_each do |dare|
+      unless dare.status == 'Failed' || dare.status == 'Rejected'
+        dare.process
+      end
     end
   end
 end
