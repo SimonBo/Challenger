@@ -4,5 +4,5 @@
       = render 'errors'
   - @invitation.challenge_id = @dare.challenge_id
   = f.hidden_field :challenge_id
-  = f.input :recipient_email
+  = f.input :recipient_email, required: false, input_html: {class: 'width-100'}
   = f.button :submit

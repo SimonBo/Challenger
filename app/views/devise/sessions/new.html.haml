@@ -3,8 +3,8 @@
 	= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), id: 'sign_in'
 	= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
 		.form-inputs
-			= f.input :login, autofocus: true, input_html: { class: 'devise-input-limit-width' }
-			= f.input :password, input_html: { class: 'devise-input-limit-width' }
+			= f.input :login, autofocus: true, input_html: { class: 'width-100' }
+			= f.input :password, input_html: { class: 'width-100' }
 			= f.input :remember_me, as: :boolean if devise_mapping.rememberable?
 		.form-actions
 			= f.button :submit, "Log in"
