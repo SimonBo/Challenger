@@ -132,7 +132,7 @@ class Dare < ActiveRecord::Base
   end
 
   def voting_finished?
-    unless self.after_voting?
+    unless self.after_voting? || self.voting_start_date.nil?
       if self.voting_end_date <= DateTime.now
         if self.won_voting?
           self.status = 'Success'
