@@ -1,10 +1,30 @@
+.table-responsive
+  %table.table
+    %thead
+      %tr
+        %th
+          Username
+        %th
+          Completed
+        %th
+          Failed
+        %th
+    %tbody
+      - User.all.each do |user|
+        %tr
+          %td
+            = user.username
+          %td
+            = user.completed_challanges.count
+          %td
+            = user.failed_challenges.count
+          %td
+            = form_for([@challenge, @dare]) do |f|
+              - @dare.challenger_id = current_user.id
+              - @dare.challenge_id = @challenge.id
+              - @dare.acceptor_id = user.id
 
-%span.sort-arrow-up.hidden &#x25B2
-%span.sort-arrow-down &#x25BC
-- User.all.each do |user|
-  #user-ranking    
-    %h5 
-      = link_to user.username, user_path(user)
-      has completed
-      = pluralize user.completed_challanges.count, 'challenge'
-      = render partial: 'users/challenge_user', locals: {:user => user}
+              = f.hidden_field :challenger_id
+              = f.hidden_field :challenge_id
+              = f.hidden_field :acceptor_id
+              = f.submit "&#x2713;".html_safe
