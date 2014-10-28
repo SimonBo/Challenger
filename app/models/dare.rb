@@ -105,12 +105,12 @@ class Dare < ActiveRecord::Base
     self.start_date.midnight <= 12.days.ago 
   end
 
-  # def success_unvalidated?
-  #   if self.proof? && self.time_for_proof_validation_ended? && self.proof_not_validated?
-  #     self.status = 'Success'
-  #     save!
-  #   end
-  # end
+  def success_unvalidated?
+    if self.proof? && self.time_for_proof_validation_ended? && self.proof_not_validated?
+      self.status = 'Success'
+      save!
+    end
+  end
 
 
 
