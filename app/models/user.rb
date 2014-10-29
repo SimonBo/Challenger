@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true, length: { in: 2..50 }
 
   after_create :send_welcome_email
+  after_create :post_joined_challenger
 
 
   include PgSearch
@@ -23,6 +24,12 @@ class User < ActiveRecord::Base
                   using: {tsearch: {prefix: true, dictionary: "english" }}
 
   attr_accessor :login
+
+  def post_joined_challenger
+    if self.provider == "facebook"
+      self.facebook.put_connections("me", "feed", :message => "Today, I joined the Challenger. It's uber cool. Check it out at simon-challenger.herokuapp.com")
+    end
+  end
 
   def send_welcome_email
     UserMailer.welcome_email(self).deliver
