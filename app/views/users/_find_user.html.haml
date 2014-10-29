@@ -1,10 +1,26 @@
 - if @users.empty?	
-	%h4
-		Sorry, we ain't have nobody like that
+  %h4
+    Sorry, we ain't have nobody like that
 - else
-	- @users.each do |user|
-		%h3	
-			= link_to user.username, user_path(user)
-			has completed
-			= pluralize user.accepted_dares.where('status = ?', 'Success').count, 'challenge'
-		= render partial: 'users/challenge_user', locals: {:user => user}
+  .table-responsive
+  %table.table#user-search-table
+    %thead
+      %tr
+        %th
+          Username
+        %th
+          Completed
+        %th
+          Failed
+        %th
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td
+            = user.username
+          %td
+            = user.completed_challanges.count
+          %td
+            = user.failed_challenges.count
+          %td.pull-right
+            = render partial: 'users/challenge_user', locals: {:user => user}

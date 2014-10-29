@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141026232000) do
+ActiveRecord::Schema.define(version: 20141029141652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,13 +34,11 @@ ActiveRecord::Schema.define(version: 20141026232000) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "amount"
     t.string   "utube_link",                               array: true
     t.string   "vid_link"
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "voting_start_date"
-    t.boolean  "with_bet",          default: false
     t.string   "proof_status",      default: "Unaccepted"
     t.string   "voting_status",     default: "None"
     t.string   "pic_link",          default: [],           array: true
@@ -90,7 +88,6 @@ ActiveRecord::Schema.define(version: 20141026232000) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "stripe_customer_token"
     t.string   "provider",               default: ""
     t.string   "uid"
     t.string   "oauth_token"
