@@ -144,4 +144,11 @@ class UserMailer < ActionMailer::Base
     @dare = dare
     mail(to: @acceptor.email, subject: "You have failed the #{@dare.challenge.name} challenge!")
   end
+
+  def dare_expires_tommorrow(dare)
+    @acceptor = dare.acceptor
+    @challenger = dare.challenger
+    @dare = dare
+    mail(to: @acceptor.email, subject: "Your challenge expires tomorrow! Let #{@challenger.username} know what you've done.")
+  end
 end

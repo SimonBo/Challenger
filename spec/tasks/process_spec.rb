@@ -66,5 +66,12 @@ describe 'dares namespace rake task' do
       dare.process
       expect(dare.status).to eq 'Failed'
     end
+
+    it "should send email to acceptor if his challenge expires tomorrow" do
+      ActionMailer::Base.deliveries = []
+      dare.start_date = 6.days.ago
+      dare.process
+      expect(ActionMailer::Base.deliveries.last.subject).to eq "Your challenge expires tomorrow! Let #{user_challenger.username} know what you've done."
+    end
   end
 end

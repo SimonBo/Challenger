@@ -19,7 +19,14 @@ class Dare < ActiveRecord::Base
         self.success_unvalidated?
         self.up_for_voting? 
         self.voting_finished? 
+        self.dare_expires_tommorow?
  end
+
+  def dare_expires_tommorow?
+    if self.start_date.midnight <= 6.days.ago 
+      UserMailer.dare_expires_tommorrow(self).deliver
+    end
+  end
 
   def is_invitation?
     self.status = 'invitation-pending'

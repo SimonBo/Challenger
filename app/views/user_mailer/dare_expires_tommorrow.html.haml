@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1
+      You still have time to show everyone how you nailed #{@dare.challenge.name}! 
+    %p
+      Click
+      = link_to "here", challenge_dare_url(@dare.challenge_id, @dare)
+      to upload proof.
