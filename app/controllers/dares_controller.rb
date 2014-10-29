@@ -145,6 +145,7 @@ class DaresController < ApplicationController
       elsif params[:dare][:pic_link]
         @dare.pic_link = @dare.pic_link + [params[:dare][:pic_link]]
         @dare.save!
+        @dare.post_on_fb("uploaded_proof")
         redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
       else
         redirect_to challenges_path, notice: 'Yay!'

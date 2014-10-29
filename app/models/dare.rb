@@ -37,6 +37,12 @@ class Dare < ActiveRecord::Base
       when "uploaded_proof"
         attachment_for_acceptor = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Check it out here!"}
         acceptor.facebook.put_wall_post("I uploaded proof of completion of the #{challenge.name} challenge!", attachment_for_acceptor) 
+      when "Voting started"
+        attachment_for_acceptor = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Check it out here!"}
+        acceptor.facebook.put_wall_post("My #{challenge.name} challenge was put to the vote!", attachment_for_acceptor) 
+      when "Voting finished"
+        attachment_for_acceptor = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"See if I won here!"}
+        acceptor.facebook.put_wall_post("My #{challenge.name} challenge's voting has finished!", attachment_for_acceptor) 
       end
     end
   end
@@ -177,6 +183,7 @@ class Dare < ActiveRecord::Base
           self.voting_status = 'Failed'
         end
         save!
+        self.post_on_fb("Voting finished")
         if self.is_self_selected?
           UserMailer.self_selected_voting_ended(self.challenger, self).deliver
         else
@@ -208,6 +215,7 @@ class Dare < ActiveRecord::Base
       self.voting_start_date = DateTime.now
       self.status = 'Voting'
       save!
+      self.post_on_fb("Voting started")
       UserMailer.voting_started(self.challenger, self.acceptor, self).deliver
     end
   end
