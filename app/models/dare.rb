@@ -26,24 +26,27 @@ class Dare < ActiveRecord::Base
     acceptor = self.acceptor
     challenger = self.challenger
     challenge = self.challenge
-    if acceptor.can_post_on_fb? || challenger.can_post_on_fb?
-      url = Rails.application.routes.url_helpers.challenge_dare_url(self.challenge_id, self.id, :host => "simon-challenger.herokuapp.com")
+    url = Rails.application.routes.url_helpers.challenge_dare_url(self.challenge_id, self.id, :host => "simon-challenger.herokuapp.com")
+    if acceptor.can_post_on_fb?
       case event
       when "accepted_challenge"
-        attachment_for_acceptor = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Follow #{acceptor.username}'s progress here!"}
-        acceptor.facebook.put_wall_post("I accepted the #{challenge.name} challenge from the Challenger!", attachment_for_acceptor) 
-        attachment_for_challenger = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Follow #{challenger.username}'s challenge here!"}
-        challenger.facebook.put_wall_post("I challenged #{acceptor.username} to the #{challenge.name} on Challenger!", attachment_for_challenger) 
+        attachment = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Follow #{acceptor.username}'s progress here!"}
+        acceptor.facebook.put_wall_post("I accepted the #{challenge.name} challenge from the Challenger!", attachment) 
       when "uploaded_proof"
-        attachment_for_acceptor = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Check it out here!"}
-        acceptor.facebook.put_wall_post("I uploaded proof of completion of the #{challenge.name} challenge!", attachment_for_acceptor) 
+        attachment = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Check it out here!"}
+        acceptor.facebook.put_wall_post("I uploaded proof of completion of the #{challenge.name} challenge!", attachment) 
       when "Voting started"
-        attachment_for_acceptor = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Check it out here!"}
-        acceptor.facebook.put_wall_post("My #{challenge.name} challenge was put to the vote!", attachment_for_acceptor) 
+        attachment = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Check it out here!"}
+        acceptor.facebook.put_wall_post("My #{challenge.name} challenge was put to the vote!", attachment) 
       when "Voting finished"
-        attachment_for_acceptor = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"See if I won here!"}
-        acceptor.facebook.put_wall_post("My #{challenge.name} challenge's voting has finished!", attachment_for_acceptor) 
+        attachment = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"See if I won here!"}
+        acceptor.facebook.put_wall_post("My #{challenge.name} challenge's voting has finished!", attachment) 
       end
+    end
+
+    if  challenger.can_post_on_fb? && event == "accepted_challenge"
+      attachment = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Follow #{challenger.username}'s challenge here!"}
+      challenger.facebook.put_wall_post("I challenged #{acceptor.username} to the #{challenge.name} on Challenger!", attachment) 
     end
   end
 
