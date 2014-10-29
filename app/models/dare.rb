@@ -14,13 +14,32 @@ class Dare < ActiveRecord::Base
 
   # validate :cannot_challenge_if_acceptor_already_accepted
 
- def process
-        self.no_proof_fail?
-        self.success_unvalidated?
-        self.up_for_voting? 
-        self.voting_finished? 
-        self.dare_expires_tommorow?
- end
+  def process
+    self.no_proof_fail?
+    self.success_unvalidated?
+    self.up_for_voting? 
+    self.voting_finished? 
+    self.dare_expires_tommorow?
+  end
+
+  def post_on_fb(event)
+    acceptor = self.acceptor
+    challenger = self.challenger
+    challenge = self.challenge
+    if acceptor.can_post_on_fb? || challenger.can_post_on_fb?
+      url = Rails.application.routes.url_helpers.challenge_dare_url(self.challenge_id, self.id, :host => "simon-challenger.herokuapp.com")
+      case event
+      when "accepted_challenge"
+        attachment_for_acceptor = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Follow #{acceptor.username}'s progress here!"}
+        acceptor.facebook.put_wall_post("I accepted the #{challenge.name} challenge from the Challenger!", attachment_for_acceptor) 
+        attachment_for_challenger = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Follow #{challenger.username}'s challenge here!"}
+        challenger.facebook.put_wall_post("I challenged #{acceptor.username} to the #{challenge.name} on Challenger!", attachment_for_challenger) 
+      when "uploaded_proof"
+        attachment_for_acceptor = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Check it out here!"}
+        acceptor.facebook.put_wall_post("I uploaded proof of completion of the #{challenge.name} challenge!", attachment_for_acceptor) 
+      end
+    end
+  end
 
   def dare_expires_tommorow?
     if self.start_date.midnight <= 6.days.ago 
@@ -41,11 +60,11 @@ class Dare < ActiveRecord::Base
   def is_self_selected?
     self.acceptor_id == self.challenger_id
   end
-  
+
   def self.newest_voting
     where(status: 'Voting').order("voting_start_date desc")
   end
-  
+
   def resolved?
     self.status == "Success" || self.status == "Failed"
   end
@@ -138,7 +157,7 @@ class Dare < ActiveRecord::Base
   def votes_against
     self.votes.where("vote_for = ?", false).count
   end 
-  
+
   def won_voting?
     self.votes_for >= self.votes_against
   end

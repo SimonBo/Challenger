@@ -24,6 +24,7 @@ class DaresController < ApplicationController
     if @dare.save
       UserMailer.user_accepted_challenge(@dare.challenger, @dare.acceptor, @dare).deliver
       UserMailer.you_accepted_challenge(@dare.challenger, @dare.acceptor, @dare).deliver
+      @dare.post_on_fb("accepted_challenge")
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'You accepted the challenge!'
     else
       redirect_to challenge_dare_url(@dare.challenge_id, @dare.id), notice: 'Something went wrong!'
@@ -130,6 +131,7 @@ class DaresController < ApplicationController
           if vid_link.length == 11
             @dare.utube_link = @dare.utube_link + [vid_link]
             @dare.save!
+            @dare.post_on_fb("uploaded_proof")
             if @dare.is_self_selected?
               redirect_to challenge_dare_path(params[:challenge_id], @dare), notice: 'Added proof'
             else

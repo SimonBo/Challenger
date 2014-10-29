@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
 
   after_create :send_welcome_email
   after_create :post_joined_challenger
+  after_create :set_can_post_on_fb
 
 
   include PgSearch
@@ -25,8 +26,23 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
-  def post_joined_challenger
+  def set_can_post_on_fb
     if self.provider == "facebook"
+      permissions = self.facebook.get_connection("me", "permissions")
+      if permissions.include? ({"permission"=>"publish_actions", "status"=>"granted"})
+        self.can_post = true
+        save!
+      end
+    end
+  end
+
+  def can_post_on_fb?
+    self.can_post == true
+  end
+
+
+  def post_joined_challenger
+    if self.provider == "facebook" && self.can_post == true
       self.facebook.put_connections("me", "feed", :message => "Today, I joined the Challenger. It's uber cool. Check it out at simon-challenger.herokuapp.com")
     end
   end
