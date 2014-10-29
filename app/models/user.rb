@@ -180,4 +180,8 @@ class User < ActiveRecord::Base
   def self.no_success
     self.joins(:accepted_dares).select("count(dares.*) as no_success_dare_count, users.*").where("dares.status != ?","Success").group("users.id").order("no_success_dare_count DESC")
   end
+
+  def first_log_in?
+    self.sign_in_count == 1
+  end
 end

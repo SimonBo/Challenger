@@ -22,6 +22,9 @@ jQuery ->
 
 	if notifications.length > 0
 		NotificationPoller.poll()
+
+	if $("#about-fb-modal").length > 0
+		$("#about-fb-modal").modal()
 		
 
 

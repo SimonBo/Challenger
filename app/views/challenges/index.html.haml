@@ -1,6 +1,8 @@
+- if user_signed_in? and current_user.first_log_in?
+  = render 'about_fb'
 
 %h4
-	Sort by:
+  Sort by:
 = link_to 'Name', challenges_path(choice: 'name'), remote: true, class: 'sort_link'
 %span.sort-arrow-up.hidden &#x25B2
 %span.sort-arrow-down &#x25BC
@@ -15,7 +17,7 @@
 %h1 Listing challenges
 
 #challenges
-	= render @challenges
+  = render @challenges
 %br
 #errors
 #new-challenge-form
