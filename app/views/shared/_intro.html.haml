@@ -6,11 +6,15 @@
 	%h3
 		Accept a challenge, challenge your friends, do something you would be proud of...
 		 
-	%h3
-		Log in with your 	
-		= link_to user_omniauth_authorize_path(:facebook), id: 'sign_in' do
-			%button.btn.btn-md.btn-primary Facebook
-		or
-		= link_to  new_user_registration_path do
-			%button.btn.btn-md.btn-success Email
-		account and make it rain!
+	- if user_signed_in?
+		%h3
+			= link_to 'Choose your destiny!', challenges_path
+	- else
+		%h3
+			Log in with your 	
+			= link_to user_omniauth_authorize_path(:facebook), id: 'sign_in' do
+				%button.btn.btn-md.btn-primary Facebook
+			or
+			= link_to  new_user_registration_path do
+				%button.btn.btn-md.btn-success Email
+			account and make it rain!
