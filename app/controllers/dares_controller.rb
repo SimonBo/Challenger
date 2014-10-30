@@ -102,6 +102,7 @@ class DaresController < ApplicationController
     if @dare.save
       if params[:dare][:challenger_id] == params[:dare][:acceptor_id]
         UserMailer.self_challenge(@challenger, @dare).deliver
+        @dare.post_on_fb("accepted_challenge")
         redirect_to challenge_dare_path(@challenge, @dare), notice: 'You accepted the challenge!'
       else
         UserMailer.you_challenged(@challenger, @acceptor, @dare).deliver
