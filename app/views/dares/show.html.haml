@@ -40,7 +40,7 @@
 
   - elsif user_signed_in? && current_user.is_acceptor?(@dare) && @dare.still_have_time? && @dare.unresolved?
     = render 'upload_proof'
-
+  %br
   = render 'display_proof'
   
 
