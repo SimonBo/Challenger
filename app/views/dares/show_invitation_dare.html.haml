@@ -1,10 +1,12 @@
 %h1
   This is an Invitation Challenge
-%p#new-user-email{"data-email" => "#{@dare.invitation.recipient_email}" }
+%h3#new-user-email{"data-email" => "#{@dare.invitation.recipient_email}" }
   Recipient: #{@dare.invitation.recipient_email}
 
-%p 
+%h3 
   Challenger: #{@dare.challenger.username}
+%h4
+  = @dare.challenge.description
 
 
 
@@ -16,7 +18,5 @@
 - else
   = link_to invitation_register_path(@dare.invitation.token) do
     %button.btn.btn-success Accept
-  / = link_to new_user_registration_path do
-  /   %button.btn.btn-success Accept
-  = link_to new_user_registration_path do
+  = link_to invitation_register_path(@dare.invitation.token) do
     %button.btn.btn-danger Reject
