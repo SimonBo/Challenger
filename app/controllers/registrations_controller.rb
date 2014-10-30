@@ -2,6 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
   # skip_before_filter :require_no_authentication
   # prepend_before_filter :require_no_authentication, only: [ :new, :create, :cancel ]
   # prepend_before_filter :authenticate_scope!, :only => [:edit, :update, :destroy, :show]
+  # after_filter :enable_show_about_fb
 
   def update
     # For Rails 4
@@ -31,4 +32,8 @@ class RegistrationsController < Devise::RegistrationsController
   def after_sign_up_path_for(resource)
     challenges_path
   end
+
+  # def enable_show_about_fb
+  #   session[:about_fb] = true
+  # end
 end

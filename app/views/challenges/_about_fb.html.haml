@@ -1,13 +1,3 @@
-/ #about-fb-modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myLargeModalLabel", :role => "dialog", :tabindex => "-1"}
-/   .modal-dialog.modal-lg
-/     .modal-content
-/       .modal-title#myModalLabel
-/         %h4
-/           About Facebook Posts
-/       %h5    
-/         Thank you for allowing Challenger to post on your Facebook wall. By default, we will post when you accept a challenge, upload proof, your challenge is put to the vote and when the voting for your challenge ends. You can disable the posting in your profile(link to profile)
-
-
 #about-fb-modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
   .modal-dialog
     .modal-content
@@ -28,4 +18,4 @@
             %li your challenge is put to the vote
             %li the voting for your challenge ends
           You can disable the posting in your
-          = link_to 'profile', edit_user_registration_path
+          = link_to 'account settings', edit_user_registration_path

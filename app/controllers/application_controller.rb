@@ -10,28 +10,16 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << :username
-    devise_parameter_sanitizer.for(:sign_in) << :username
-    # devise_parameter_sanitizer.for(:account_update) << :username
-    devise_parameter_sanitizer.for(:sign_up) << :email
-    devise_parameter_sanitizer.for(:sign_in) << :email
-    # devise_parameter_sanitizer.for(:account_update) << :email
-    devise_parameter_sanitizer.for(:sign_up) << :provider
-    devise_parameter_sanitizer.for(:sign_in) << :provider
-    # devise_parameter_sanitizer.for(:account_update) << :provider
-    devise_parameter_sanitizer.for(:sign_up) << :uid
-    devise_parameter_sanitizer.for(:sign_in) << :uid
-    # devise_parameter_sanitizer.for(:account_update) << :uid
-    devise_parameter_sanitizer.for(:sign_up) << :oauth_token
-    devise_parameter_sanitizer.for(:sign_in) << :oauth_token
-    # devise_parameter_sanitizer.for(:account_update) << :oauth_token
-    devise_parameter_sanitizer.for(:sign_up) << :oauth_expires_at
-    devise_parameter_sanitizer.for(:sign_in) << :oauth_expires_at
-    # devise_parameter_sanitizer.for(:account_update) << :oauth_expires_at
-    # devise_parameter_sanitizer.for(:account_update) << :can_post
-
     devise_parameter_sanitizer.for(:account_update) do |u|
-      u.permit(:username, :email, :password, :password_confirmation, :can_post, :email)
+      u.permit(:username, :email, :password, :password_confirmation, :can_post, :email, :oauth_expires_at, :oauth_token, :provider, :uid)
+    end
+
+    devise_parameter_sanitizer.for(:sign_up) do |u|
+      u.permit(:username, :email, :password, :password_confirmation, :can_post, :email, :oauth_expires_at, :oauth_token, :provider, :uid)
+    end
+
+    devise_parameter_sanitizer.for(:sign_in) do |u|
+      u.permit(:username, :email, :password, :password_confirmation, :can_post, :email, :oauth_expires_at, :oauth_token, :provider, :uid)
     end
   end
 

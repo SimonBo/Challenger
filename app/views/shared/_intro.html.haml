@@ -4,11 +4,13 @@
 	%h3
 		Challenger to the rescue!!! 
 	%h3
-		Accept a challenge, challenge your friends, do something you would be proud of 
-		= link_to  '(or not…)!', challenge_path(7)
+		Accept a challenge, challenge your friends, do something you would be proud of...
 		 
 	%h3
 		Log in with your 	
 		= link_to user_omniauth_authorize_path(:facebook), id: 'sign_in' do
 			%button.btn.btn-md.btn-primary Facebook
+		or
+		= link_to  new_user_registration_path do
+			%button.btn.btn-md.btn-success Email
 		account and make it rain!
