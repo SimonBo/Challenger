@@ -15,9 +15,10 @@ class User < ActiveRecord::Base
 
   validates :username, presence: true, uniqueness: true, length: { in: 2..50 }
 
+  after_create :set_can_post_on_fb
   after_create :send_welcome_email
   # after_create :post_joined_challenger
-  after_create :set_can_post_on_fb
+  
 
 
   include PgSearch
@@ -49,10 +50,10 @@ class User < ActiveRecord::Base
 
   def send_welcome_email
     UserMailer.welcome_email(self).deliver
-      if self.provider == "facebook" && self.can_post == true
-        attachment = {"name"=>"Challenger", "link"=> "simon-challenger.herokuapp.com", "description"=>"Check it out!"}
-        self.facebook.put_wall_post("Today, I joined the Challenger. It's uber cool!", attachment) 
-     end
+    if self.provider == "facebook" && self.can_post == true
+      attachment = {"name"=>"Challenger", "link"=> "simon-challenger.herokuapp.com", "description"=>"Check it out!"}
+      self.facebook.put_wall_post("Today, I joined the Challenger. It's uber cool!", attachment) 
+   end
   end
 
   def self.text_search(query)
