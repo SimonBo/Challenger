@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   
   before_filter :configure_permitted_parameters, if: :devise_controller?
   after_filter :store_location
-  # before_filter :store_email_from_invitation
+  before_filter :store_email_from_invitation
 
   protected
 
@@ -36,7 +36,12 @@ class ApplicationController < ActionController::Base
   def store_location
   # store last url - this is needed for post-login redirect to whatever the user last visited.
   return unless request.get? 
-  if (request.path != "/users/sign_in" &&
+  if params[:token].present?
+    invitation = Invitation.where("token = ?", params[:token]).first
+    dare = invitation.dare
+    challenge = dare.challenge
+    session[:previous_url] = challenge_dare_path(challenge, dare)
+  elsif (request.path != "/users/sign_in" &&
     request.path != "/users/sign_up" &&
     request.path != "/users/sign_up/:token" &&
     request.path != "/users/password/new" &&
@@ -48,16 +53,25 @@ class ApplicationController < ActionController::Base
 end
 end
 
+def set_dare_from_invitation
+  if params[:token].present?
+    invitation = Invitation.where("token = ?", params[:token]).first
+    dare = invitation.dare
+    challenge = dare.challenge
+    session[:previous_url] = challenge_dare_path(challenge, dare)
+  end
+end
 
-# def store_email_from_invitation
-#   if params[:token].present?
-#     invitation = Invitation.where("token = ?", params[:token]).first
-#     # @new_user_email = invitation.recipient_email
-#     @new_user_email = Rails.cache.fetch("new_user_email") do 
-#       invitation.recipient_email
-#     end
 
-#   end
-# end
+def store_email_from_invitation
+  if params[:token].present?
+    invitation = Invitation.where("token = ?", params[:token]).first
+    @new_user_email = invitation.recipient_email
+    # @new_user_email = Rails.cache.fetch("new_user_email") do 
+    #   invitation.recipient_email
+    # end
+
+  end
+end
 
 end
