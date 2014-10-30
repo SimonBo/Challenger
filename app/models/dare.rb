@@ -44,7 +44,7 @@ class Dare < ActiveRecord::Base
       end
     end
 
-    if  challenger.can_post_on_fb? && event == "accepted_challenge"
+    if  challenger.can_post_on_fb? && event == "accepted_challenge" && challenger.id != acceptor.id
       attachment = {"name"=>"#{challenge.name}", "link"=> url, "description"=>"Follow #{challenger.username}'s challenge here!"}
       challenger.facebook.put_wall_post("I challenged #{acceptor.username} to the #{challenge.name} on Challenger!", attachment) 
     end
