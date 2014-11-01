@@ -1,28 +1,13 @@
-== README
+This is a project I did while studying at BitmakerLabs in Toronto, Canada in 2014.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The purpose of the app is to allow users challenge each other to do amazingly great or silly thing:)
+Users can sign up with email/facebook account and choose from a selection of challenges. A challenge can be used to dare yourself or other user.
+There is also an option to invite new people to the app (log in -> find a challenge -> select 'challenge others' -> 'invite').
+If you sign up with Facebook and allow posting permissions, the app will post on wall when you accept a challenge, upload proof, your challenge is put to the vote and when the voting ends.
 
-Things you may want to cover:
+This project is a hobby project, so some things are not as polished as they could be. 
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Plan for future implementation:
+add bitcoin betting
+add Twitter integration
+improve front end design
