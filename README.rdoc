@@ -11,3 +11,16 @@ Plan for future implementation:
 add bitcoin betting
 add Twitter integration
 improve front end design
+
+Technologies used:
+  rails
+  coffeescript
+  haml
+  rspec
+  capybara
+  cucumber
+  devise
+  koala for facebook integration
+  oauth
+  
+  
